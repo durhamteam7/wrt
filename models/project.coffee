@@ -1,4 +1,4 @@
-
+ 
 mongoose = require ('mongoose')
 
 Schema = mongoose.Schema
@@ -12,7 +12,7 @@ projectCore =
 		type: String,
 		required:true,
 	fitnessLevel:
-		type: Number
+		type: String,
 	requiresTraining:
 		type: Boolean
 
