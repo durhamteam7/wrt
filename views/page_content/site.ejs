@@ -1,0 +1,369 @@
+
+
+<style>
+  #loader {
+	background-color: black;
+	opacity: 0.9;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 101;
+	height: 100%;
+	width: 100%;
+  }
+
+  #loader div {
+	position: absolute;
+	top: 45%;
+	left: 45%;
+  }
+
+  #loader div p {
+	padding-top: 150px;
+	padding-left: 40px;
+	color: white;
+	font-size: 18px;
+  }
+
+  .spinner {
+	width: 40px;
+	height: 40px;
+	background-color: #6a9e46;
+	-webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+	animation: sk-rotateplane 1.2s infinite ease-in-out;
+  }
+
+  @-webkit-keyframes sk-rotateplane {
+	0% {
+	  -webkit-transform: perspective(120px);
+	}
+
+	50% {
+	  -webkit-transform: perspective(120px) rotateY(180deg);
+	}
+
+	100% {
+	  -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+	}
+  }
+
+  @keyframes sk-rotateplane {
+	0% {
+	  transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+	  -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+	}
+
+	50% {
+	  transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+	  -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+	}
+
+	100% {
+	  transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+	  -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+	}
+  }
+</style>
+
+<!--
+	<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+-->
+
+
+<script>
+  var id = '<%-siteId%>';
+</script>
+<!--Dodgy way of passing data to js-->
+
+<script type="text/javascript">
+//Standard debounce function
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+}
+
+</script>
+
+
+<script src="http://d1l4stvdmqmdzl.cloudfront.net/4.0.0-rc2/mongoose.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+<script src="/api/schemas/site" type="text/coffeescript"></script>
+<script type="text/coffeescript">
+  window.coffeeLoaded()
+</script>
+<script src="/coffee-script.js"></script>
+<script src="/site_controller.js"></script>
+
+<div ng-app="siteView" ng-controller="siteController" ng-keypress="keypress()">
+
+		<div id="nameContainer">
+			<label class="sr-only" for="siteName">Name</label>
+			<div class="editableDiv" id="siteName">
+			<!-- contenteditable='true'>-->
+			{{CsiSite.information.name}}
+			<a href="#" id="bin"><i class='fa fa-trash-o' onclick='confirmDeleteSite()'></i></a>
+			<script>
+      $(document).ready(function() {
+
+      //set opacity to 0.4 for all the images
+      //opacity = 1 - completely opaque
+      //opacity = 0 - invisible
+
+      $('#bin').css('opacity', 0.2);
+
+      // when hover over the selected image change the opacity to 1
+      $('#bin').hover(
+         function(){
+            $(this).stop().fadeTo('fast', 1);
+         },
+         function(){
+            $(this).stop().fadeTo('slow', 0.2);
+         });
+
+      });
+      </script>
+      </div>
+			<div id="stages">
+				<b>Sign Up</b>
+				- Preparation - Installation
+			</div>
+		</div>
+
+
+<script>
+
+function deleteSite(){
+	$.ajax({
+		'contentType':'application/json',
+		'url':'/api/site/'+id,
+		'method': 'DELETE',
+		'success':function(data,status){
+			window.location.replace('/dash');
+		}
+	});
+}
+
+function confirmDeleteSite(){
+	var x;
+	if (confirm("Are you sure you want to delete the Site?") == true) {
+		x = deleteSite();
+  }
+}
+
+</script>
+
+
+
+<!-- <img src='' height='300' width='300' id='siteImageDisp'><br><br> -->
+
+  <div id="loader">
+	<div>
+	  <div class="spinner"></div>
+	  <p>Loading Site...</p>
+	</div>
+  </div>
+  <div>
+	<script type="text/javascript">
+
+
+
+	  var roadClosedPos = 0;
+
+	  $(document).ready(function() {
+      setRoadPos();
+  		setArrowsFL();
+		carouselNormalization();
+
+
+		$("#myCarousel").carousel({
+		  wrap: false,
+		  interval: false
+		}).on('slid.bs.carousel', function() {
+
+		  setTimeout(angularNextPanel, 0); //Call angular panel async
+		//Google map not loading fix
+		  L.Util.requestAnimFrame(map.invalidateSize, map, !1, map._container);
+
+		  setRoadPos();
+		  setArrowsFL();
+
+
+
+					var close = debounce(function() {
+						$(".roadPanel").animate({bottom: roadClosedPos + 'px'}, "fast");
+            $(".content, .head").css("-webkit-filter","blur(0px)");
+					}, 500);
+
+					$(".roadPanel").mouseleave(close);
+					$(".roadPanel").hover(function(){$(".roadPanel").animate({bottom: '0px'}, "fast");
+          if (roadClosedPos !== 0){
+            $(".content, .head").css("-webkit-filter","blur(10px)");
+          }
+        });
+
+		});
+	  });
+
+	  function setArrowsFL() {
+	  //Hides the left (back) arrow on panel 1
+	  //Hides the right (next) arrow on last panel
+    console.log("setArrows")
+		curSlide = $('#myCarousel').find('.active');
+	  //Hide show next/prev arrows
+
+		if (curSlide.is(':first-child')) {
+		  $('.left').hide();
+		} else {
+		  $('.left').show();
+		}
+		if (curSlide.is(':last-child')) {
+		  $('.right').hide();
+		} else {
+		  $('.right').show();
+		}
+	  }
+
+	  function setRoadPos() {
+	  //Set default position for road map
+		var panelHeight = $('.active div').height();
+		var windowHeight = $(document).height();
+		var roadHeight = $(".roadPanel").height();
+		var top = $('.active div').offset().top;
+		var gap = windowHeight - top - panelHeight - roadHeight + 300;
+		if (gap < 50) {
+		  roadClosedPos = -270;
+
+		} else {
+			//alert((windowHeight-panelHeight-roadHeight))
+		  roadClosedPos = (gap - roadHeight);
+		  if (roadClosedPos > 0) {
+			roadClosedPos = 0;
+		  }
+		  if (roadClosedPos < -100) {
+			roadClosedPos = -270;
+
+		  }
+		}
+
+		$(".roadPanel").animate({bottom: roadClosedPos + 'px'
+		}, "fast");
+	  }
+
+	  window.addEventListener('resize', function() {
+		setRoadPos();
+	  }, true);
+
+	  function normalizeHeights(items,heights,tallest) {
+		items.each(function() { //add heights to array
+		  heights.push($(this).height());
+		});
+		tallest = Math.max.apply(null, heights); //cache largest value
+		items.each(function() {
+		  $(this).css('min-height', tallest + 'px');
+		});
+				return tallest;
+	  }
+
+	  function carouselNormalization() {
+	  //Sets carousel height to largest panel
+		var items = $('#myCarousel .item'), //grab all panels
+		  heights = [], //panel height values
+		  tallest; // tallest panel
+		tallest = normalizeHeights(items,heights,tallest);
+
+		$(window).on('resize orientationchange', function() {
+		  tallest = 0;
+		  heights = []; //reset vars
+		  items.each(function() {
+			$(this).css('min-height', '0'); //reset min-height
+		  });
+		  tallest =normalizeHeights(items,heights,tallest); //run it again
+		});
+	  }
+
+	</script>
+	<div class="carousel slide" data-ride="carousel" id="myCarousel">
+	  <div class="carousel-inner">
+		<div class="active item">
+		  <%- include('site_content/information.ejs') %>
+		</div>
+		<div class="item">
+		  <%- include('site_content/google_earth.ejs') %>
+		</div>
+		<div class="item">
+		  <%- include('site_content/calculations.ejs') %>
+		</div>
+		<div class="item">
+		  <%- include('site_content/return_on_investment.ejs') %>
+		</div>
+		<div class="item">
+		  <%- include('site_content/quotes_and_heads.ejs') %>
+		</div>
+		<div class="item">
+		  <%- include('site_content/upload_generic.ejs',email="csisignatures@workflowtouch.com",keyInObj="uploadHeadsSignatures.uploadedSignedDocuments",title="heads signatures",imgDest="headsSignatures",validationCheck="uploadHeadsSignatures") %>
+		</div>
+		<div class="item">
+		  <%- include('site_content/upload_generic.ejs',email="csisignatures@workflowtouch.com",keyInObj="uploadElectricityBill.uploadedBill",title="electricity bill",imgDest="electricityBill",validationCheck="uploadElectricityBill") %>
+		</div>
+		<div class="item">
+		  <%- include('site_content/submit_to_DNO.ejs') %>
+		</div>
+		<div class="item">
+		  <%- include('site_content/record_reply_from_DNO.ejs') %>
+		</div>
+		<div class="item">
+		  <%- include('site_content/note_Land_Registry_submission.ejs') %>
+		</div>
+		<div class="item">
+		  <%- include('site_content/upload_generic.ejs',email="email",keyInObj="uploadLrPdf.uploadedLrPdf",title="LR PDF",imgDest="lrPdf",validationCheck="uploadLrPdf") %>
+		</div>
+		<div class="item">
+		  <%- include('site_content/supply_lease_and_PPA.ejs') %>
+		</div>
+		<div class="item">
+		  <%- include('site_content/upload_generic.ejs',email="email",keyInObj="uploadFinalSignatures.uploadedFinalSignatures",title="signatures",imgDest="finalSignatures",validationCheck="uploadFinalSignatures")%>
+		</div>
+		<div class="item">
+		  <h1>Sign up Complete</h1>
+		</div>
+	  </div>
+	  <a class="carousel-control left" data-slide="prev" href="#myCarousel">
+		<span class="glyphicon glyphicon-chevron-left"></span>
+	  </a>
+	  <a class="carousel-control right" data-slide="next" href="#myCarousel">
+		<span class="glyphicon glyphicon-chevron-right"></span>
+	  </a>
+
+	</div>
+  </div>
+  <%- include('site_content/project_status.ejs') %>
+</div>
+
+
+<script>
+
+$('input[type="number"]').on('keypress', function(e){
+  return e.metaKey || // cmd/ctrl
+    e.which <= 0 || // arrow keys
+    e.which == 8 || // delete key
+    /[0-9]|\./.test(String.fromCharCode(e.which)); // numbers
+})
+
+</script>
+
+<!--		Inline LaTeX for documentation
+
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath:[['$','$'], ['\\(','\\)']]}});</script>
+	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+-->

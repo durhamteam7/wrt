@@ -1,0 +1,27 @@
+	<h1>Change Password</h1>
+	<form action='/staff/update/password' method="POST" id="passwordchangeform">
+		<label>Old Password <input type="password" class='form-control' name="oldPassword" id="old"></label><br>
+		<label>New Password <input type="password" class='form-control' name="newPassword" id="new"></label><br>
+		<label>Confirm <input type="password" class='form-control' name="confirmNewPassword" id="new2"></label><br>
+		<button onclick='javascript:checkThenSubmit()'>submit</button>
+	</form>
+
+	<script type="text/javascript">
+		function checkThenSubmit() {
+			if ($("#new").val()!== $('#new2').val()){
+				alert('check new passwords match');
+				return;
+			}
+
+			else if ($('#new').val().length < 7){
+				alert('password must be at least 7 characters');
+				return;
+			}
+
+			else {
+				$('#passwordchangeform').submit();
+			}
+		}
+
+	</script>
+</div>

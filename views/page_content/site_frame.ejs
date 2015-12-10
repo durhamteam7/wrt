@@ -1,0 +1,7 @@
+<%if (typeof(sites)!=='undefined'){sites.forEach(function(site){%>
+		<a href="site/<%-site.id%>">
+		<%=site.information.name%><br>
+		<span class="currentStageLabel">
+		<%-site.currentStageString%></span><br><br>
+		</a>
+<%});}%>

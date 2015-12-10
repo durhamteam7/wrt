@@ -1,0 +1,64 @@
+<h1>Main Dashboard</h1>
+
+<p>Just a demo of the beginnings of an authenticated api in Nodejs.</p>
+<p><a href="/logout">Logout</a></p>
+
+<h2>/api/volunteer/</h2>
+POST
+<form action="/api/volunteer/" method='POST'>
+	<button type="submit">New Volunteer</button>
+</form>
+
+GET
+<form action="/api/volunteer/" method='GET'>
+	<button type="submit">Get Volunteers</button>
+</form>
+
+(PUT and DELETE not impemented as very dangerous - global operations should only be done on backend)
+
+<h2>/api/volunteer/:id</h2>
+GET
+<form id="volGET">
+	<input id="volGETid">
+	<button type="go" id="volGETbutton">Get Volunteer</button>
+	<script>
+		$( "#volGETbutton" ).click(function() {
+		val = $("#volGETid").val()
+		  $.get( "/api/volunteer/"+val, function( data ) {
+		  console.log(data );
+		});
+		});
+	</script>
+</form>
+
+PUT (form not implemented)
+<form action="/api/volunteer/" method='GET'>
+	<input id="id">
+	<button type="submit">Update Volunteer</button>
+</form>
+
+DELETE (from not implemeneted)
+<form action="/api/volunteer/" method='GET'>
+	<input id="id">
+	<button type="submit">Delete Volunteer</button>
+</form>
+
+(POST not used)
+
+<h2>/api/volunteer/:q</h2>
+
+
+<h2>/api/project/</h2> (not implemented)
+
+POST
+<form action="/api/project/" method='POST'>
+	<button type="submit">New Project</button>
+</form>
+
+GET
+<form action="/api/project/" method='GET'>
+	<button type="submit">Get Projects</button>
+</form>
+
+<h2>/api/project/:id</h2>
+etc...

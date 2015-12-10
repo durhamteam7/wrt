@@ -1,0 +1,5 @@
+node_modules/**/*
+server.js
+static/bower_components/**/*
+static/map/**/*
+static/coffee-script.js
