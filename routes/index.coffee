@@ -22,17 +22,6 @@ router.get '/dash', (req, res, next) ->
 			###username:req.user.username###
 
 
-router.get '/template', (req, res, next) ->
-	res.render 'template',
-		content:'blank'
-		#username:req.user.username
-
-router.get '/volunteer/new', (req,res,next) ->
-	newVolunteer = new Volunteer()
-	newVolunteer.save (err) ->
-		if err
-			console.log err
-		res.redirect '/volunteer/'+newVolunteer._id
 
 #Route to make new users
 ###router.get '/user/new', (req,res,next) ->
@@ -47,17 +36,6 @@ router.get '/volunteer/new', (req,res,next) ->
 		if err
 			console.log err
 		res.redirect '/api/user/'+newUser._id###
-
-# GET template.
-router.get '/volunteer/:id', (req, res, next) ->
-	Volunteer.
-	findById(req.params.id).
-	exec (err,volunteer)->
-		res.render 'template',
-			content:'site',
-			volunteerId:req.params.id,
-			#username:req.user.username,
-			volunteer:volunteer
 
 
 router.post '/receiveajax', (req,res,next)->

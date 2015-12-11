@@ -32,6 +32,7 @@ mongoose.connect urls.mongoDB
 require './models/host.coffee'
 require './models/user.coffee'
 require './models/volunteer.coffee'
+require './models/project.coffee'
 User = mongoose.model 'User'
 
 #Mailin server
@@ -103,6 +104,9 @@ app.use passport.session()
 #Login - no authentication to get here
 app.use '/',require('./routes/login.coffee')
 
+#Allows Volunteer signup form to access project data without auth
+app.use '/api/project',require('./routes/api/projectUnauth.coffee')
+
 #app.use '/jsonpdfgen', require('./routes/pdf/unauthquotepdf.coffee') #another un-auth route
 
 app.use '/logout', require('./routes/logout.coffee')
@@ -112,7 +116,7 @@ app.post '/loginauth', passport.authenticate('local',
 		failureRedirect: '/login',
 		passReqToCallback : true
 	}),(req, res)->
-	console.log 'Passed Middleware'
+	console.log 'Passed login Middleware'
 	res.redirect '/'
 
 app.use '/webhook', require('./routes/webhook.coffee')

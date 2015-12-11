@@ -2,7 +2,7 @@ express = require 'express'
 router = express.Router()
 mongoose = require 'mongoose'
 
-Volunteer = mongoose.model 'Volunteer'
+Project = mongoose.model 'Project'
 User = mongoose.model 'User'
 
 ObjId = mongoose.Types.ObjectId
@@ -10,13 +10,13 @@ ObjId = mongoose.Types.ObjectId
 
 router.get '/', (req,res)->
 	try
-		Volunteer.
+		Project.
 		find().
-		exec (err, volunteer)->
+		exec (err, project)->
 			if err
 				return console.log err
 			try
-				res.json volunteer
+				res.json project
 			catch
 				res.json {'error':'no sites found'}
 	catch
@@ -24,14 +24,14 @@ router.get '/', (req,res)->
 
 router.get '/:id', (req,res)->
 	try
-		Volunteer.
+		Project.
 		findById(req.params.id).
-		exec (err, volunteer)->
+		exec (err, project)->
 			if err
 				return console.log err
 			try
 				console.log("JSONing")
-				res.json volunteer.toJSON()
+				res.json project.toJSON()
 			catch
 				res.json {'error':'site not found'}
 	catch
@@ -39,24 +39,24 @@ router.get '/:id', (req,res)->
 
 
 router.post '/', (req,res)->	#CREATE
-	console.log "Making new volunteer"
-	volunteer = new Volunteer()
-	volunteer.save (err)->
+	console.log "Making new project"
+	project = new Project()
+	project.save (err)->
 		if !err
-			res.json volunteer.toJSON()
+			res.json project.toJSON()
 
 
 router.patch '/:id',(req,res)->
-	Volunteer.
+	Project.
 	findById(req.params.id).
-	exec (err,volunteer)->
+	exec (err,project)->
 		if err
 			res.json err
-		else if volunteer == null
+		else if project == null
 			res.send 404
 		else
-			volunteer = recurseUpdate(site,req.body) #see function def below
-			volunteer.save (err)->
+			project = recurseUpdate(site,req.body) #see function def below
+			project.save (err)->
 				if err
 					console.log err
 					res.status 500
@@ -74,15 +74,15 @@ recurseUpdate = (obj,diff)->
 #
 
 router.delete '/:id', (req,res,next)->	#DELETE
-	Volunteer.
+	Project.
 	findById(req.params.id).
-	exec (err,volunteer)->
+	exec (err,project)->
 		if err
 			res.json err
 		else if site == null
 			res.sendStatus 404
 		else
-			Volunteer.findByIdAndRemove volunteer._id, (err)->
+			Project.findByIdAndRemove project._id, (err)->
 				if err
 					console.log err
 			res.sendStatus 204
