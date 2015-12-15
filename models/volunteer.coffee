@@ -81,6 +81,29 @@ volunteerCore =
 		color: String,
 
 #####emergency contact information - make as array
+	emergencyContacts: [{
+		name:
+			type: String,
+			required: true,
+		relationship:
+			type:String,
+			required: true,
+		address:
+			type: String,
+			required: true,
+		telHome:
+			type: String,
+			required: true,
+		telMob:
+			type: String,
+			required: true,
+		telOther:
+			type: String,
+		email:
+			type: String,
+			required: true,
+		}]
+
 
 	readHealthAndSafety: #make them open it before they agree
 		type: Boolean,
