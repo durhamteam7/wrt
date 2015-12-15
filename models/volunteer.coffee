@@ -8,11 +8,6 @@ Schema = mongoose.Schema
 ### Main Schema ###
 volunteerCore =
 
-	###otherModel:
-		type:Schema.Types.ObjectId,
-		ref:'CsiCompany',
-	###
-
 	title: #dropdown
 		type: String,
 		required: true,
@@ -85,7 +80,7 @@ volunteerCore =
 		model: String,
 		color: String,
 
-#####emergency contact information
+#####emergency contact information - make as array
 
 	readHealthAndSafety: #make them open it before they agree
 		type: Boolean,

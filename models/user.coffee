@@ -4,9 +4,9 @@ Schema = mongoose.Schema
 bcrypt   = require 'bcrypt-nodejs'
 
 userCore =
-	username:String,
-	email:String,
-	hash:String,
+	username: String,
+	email: String,
+	hash: String,
 
 User = new Schema userCore
 
