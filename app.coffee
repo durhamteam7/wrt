@@ -92,6 +92,8 @@ passport.use new LocalStrategy (username, password, done)->
 
 app.use session
 	secret:'verylongsecretnameherewhichweshouldnotrevealandchangeforproduction'
+	resave: true,
+	saveUninitialized: true
 
 app.use logger('dev')
 app.use bodyParser.json()
