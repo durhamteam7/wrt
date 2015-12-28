@@ -1,64 +1,109 @@
-<h1>Main Dashboard</h1>
+<div class="container">
+    <div class="row">
 
-<p>Just a demo of the beginnings of an authenticated api in Nodejs.</p>
-<p><a href="/logout">Logout</a></p>
+        <div class="alert alert-info" role="alert">
+            <a href="#" class="alert-link">5 new registrations to approve</a>
+        </div>
+        
+        <h1>Manage Volunteers</h1>
+        <br>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <form class="form-inline">
+                <label for="rows-to-show">Rows to show</label>
+                <select name="rows-to-show" class="form-control">
+                    <option value="5">5</option>
+                    <option selected value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+            </form>
+        </div>
+        <div class="col-xs-6">
+            <div class="btn-group pull-right">
+                <a href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add Volunteer
+                </a>
+                <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                    Communication
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <a href="" class="input-group-addon" id="basic-addon1">
+                    <span class="glyphicon glyphicon-search"></span>
+                </a>
+                <input type="text" class="form-control" placeholder="Search for...">
+            </div><!-- /input-group -->
+        </div>
+        
+    </div>
+    <br>
+    <div class="row">
+        
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Telephone</th>
+                    <th>Operations</th>
+                </tr>
+            </thead>
+            <tbody id="volunteer-table">
+                
+            </tbody>
+        </table>
+        <div class="col-xs-6">
+            <p>Showing 0 to 10 of 120 entries</p>
+        </div>
+        <nav class="col-xs-6">
+            <ul class="pagination pull-right">
+                <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo; Previous</span>
+                </a>
+                </li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">Next &raquo;</span>
+                </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+</div>
 
-<h2>/api/volunteer/</h2>
-POST
-<form action="/api/volunteer/" method='POST'>
-	<button type="submit">New Volunteer</button>
-</form>
 
-GET
-<form action="/api/volunteer/" method='GET'>
-	<button type="submit">Get Volunteers</button>
-</form>
-
-(PUT and DELETE not impemented as very dangerous - global operations should only be done on backend)
-
-<h2>/api/volunteer/:id</h2>
-GET
-<form id="volGET">
-	<input id="volGETid">
-	<button type="go" id="volGETbutton">Get Volunteer</button>
-	<script>
-		$( "#volGETbutton" ).click(function() {
-		val = $("#volGETid").val()
-		  $.get( "/api/volunteer/"+val, function( data ) {
-		  console.log(data );
-		});
-		});
-	</script>
-</form>
-
-PUT (form not implemented)
-<form action="/api/volunteer/" method='GET'>
-	<input id="id">
-	<button type="submit">Update Volunteer</button>
-</form>
-
-DELETE (from not implemeneted)
-<form action="/api/volunteer/" method='GET'>
-	<input id="id">
-	<button type="submit">Delete Volunteer</button>
-</form>
-
-(POST not used)
-
-<h2>/api/volunteer/:q</h2>
-
-
-<h2>/api/project/</h2> (not implemented)
-
-POST
-<form action="/api/project/" method='POST'>
-	<button type="submit">New Project</button>
-</form>
-
-GET
-<form action="/api/project/" method='GET'>
-	<button type="submit">Get Projects</button>
-</form>
-
-<h2>/api/project/:id</h2>
-etc...
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+    
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+            <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    
+    </div>
+</div>
