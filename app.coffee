@@ -107,7 +107,7 @@ app.use passport.session()
 app.use '/',require('./routes/login.coffee')
 
 #Allows Volunteer signup form to access project data without auth
-app.use '/api/project',require('./routes/api/projectUnauth.coffee')
+app.use '/api/projectUnauth',require('./routes/api/projectUnauth.coffee')
 
 #app.use '/jsonpdfgen', require('./routes/pdf/unauthquotepdf.coffee') #another un-auth route
 
@@ -152,6 +152,9 @@ app.use '/api/user', require('./routes/api/user.coffee')
 app.use '/api/schemas', require('./routes/api/schemas.coffee')
 
 app.use '/api/volunteer', require('./routes/api/volunteer.coffee')
+
+app.use '/api/project', require('./routes/api/project.coffee')
+
 
 app.use '/gridfs', require('./routes/gridfs.coffee')
 

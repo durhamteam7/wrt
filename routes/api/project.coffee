@@ -9,6 +9,7 @@ ObjId = mongoose.Types.ObjectId
 
 
 router.get '/', (req,res)->
+	console.log("getting")
 	try
 		Project.
 		find().
@@ -55,7 +56,7 @@ router.patch '/:id',(req,res)->
 		else if project == null
 			res.send 404
 		else
-			project = recurseUpdate(site,req.body) #see function def below
+			project = recurseUpdate(project,req.body) #see function def below
 			project.save (err)->
 				if err
 					console.log err
@@ -66,6 +67,7 @@ router.patch '/:id',(req,res)->
 recurseUpdate = (obj,diff)->				
 	#Loop through key value pairs, if value is an object recurse else update values
 	for key, value of diff
+		console.log key,value
 		if (typeof value) == 'object' && (typeof obj[key]) == 'object' #(Naively) just assumes 'object' type is key-value pairs
 			obj[key] = recurseUpdate(obj[key],value)
 		else
