@@ -1,4 +1,7 @@
-<div class="container">
+
+<script src="app.js"></script>
+
+<div class="container" ng-app="sortApp" ng-controller="mainController">
     <div class="row">
 
         <div class="alert alert-info" role="alert">
@@ -22,11 +25,11 @@
         </div>
         <div class="col-xs-6">
             <div class="btn-group pull-right">
-                <a href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                <a href="#" class="btn btn-success" ng-click="newVolunteer()">
                     <span class="glyphicon glyphicon-plus"></span>
                     Add Volunteer
                 </a>
-                <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#myModal">
+                <a href="#" class="btn btn-warning">
                     <span class="glyphicon glyphicon-envelope"></span>
                     Communication
                 </a>
@@ -37,7 +40,7 @@
                 <a href="" class="input-group-addon" id="basic-addon1">
                     <span class="glyphicon glyphicon-search"></span>
                 </a>
-                <input type="text" class="form-control" placeholder="Search for...">
+                <input type="text" class="form-control" ng-model="searchTerm" placeholder="Search for...">
             </div><!-- /input-group -->
         </div>
         
@@ -49,7 +52,13 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>First Name</th>
+                    <th>
+                    <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                        First Name 
+                        <span ng-show="sortType == 'fName' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'fName' && sortReverse" class="fa fa-caret-up"></spa
+                    </a>
+                    </th>
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Telephone</th>
@@ -57,7 +66,18 @@
                 </tr>
             </thead>
             <tbody id="volunteer-table">
-                
+                <tr ng-repeat="v in volunteers | orderBy:sortType:sortReverse | filter:searchTerm">
+                    <td><input type="checkbox" name="rowSelection" value="{{v._id}}"></td>
+                    <td>{{ v.name }}</td>
+                    <td>{{ v.lName }}</td>
+                    <td>{{ v.email }}</td>
+                    <td>{{ v.tel }}</td>
+                    <td>
+
+                        <a href=""  onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" ng-click="change(v._id,$index)"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a id="{{v._id}}bin" href="" onclick="return false;" ng-click="delete(v._id,$index)"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <div class="col-xs-6">
@@ -84,26 +104,33 @@
         </nav>
     </div>
     
-</div>
 
 
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+
+<!-- Modal for editing volunteer data -->
+<div ng-repeat="v in volunteers">
+
+<div id="editModal{{v._id}}" class="modal fade" role="dialog">
     <div class="modal-dialog">
-    
         <!-- Modal content-->
         <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Modal Header</h4>
+            <h4 class="modal-title">{{v.name}}</h4>
         </div>
         <div class="modal-body">
-            <p>Some text in the modal.</p>
+            Name:<input ng-model="v.name">
+            {{v.email}}
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-primary">Save</button>
         </div>
         </div>
-    
     </div>
+</div>
+
+</div>
+
+
 </div>
