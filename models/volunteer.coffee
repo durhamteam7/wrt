@@ -11,7 +11,10 @@ volunteerCore =
 	title: #dropdown
 		type: String,
 		required: true,
-	name:
+	fName:
+		type:String,
+		required: true,
+	lName:
 		type:String,
 		required: true,
 	address:
@@ -23,7 +26,7 @@ volunteerCore =
 		validate: /^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/,
 	telMob:
 		type: String,
-		required: true, 
+		required: true,
 		validate: /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/,
 	telOther:
 		type: String,
@@ -50,7 +53,7 @@ volunteerCore =
 		required: true,
 	physicalFitnessLevel:
 		type: String,
-		required: true, 
+		required: true,
 
 	experience: #dropdown
 		type: String,
@@ -61,7 +64,7 @@ volunteerCore =
 	photoConsent: #dropdown
 		type: Boolean,
 		required: true,
-	lastTetnus: 
+	lastTetnus:
 		type: Date,
 		required: true,
 	medCond:
@@ -72,15 +75,15 @@ volunteerCore =
 	interestedInMore:
 		type: Boolean,
 		required: true,
-		
+
 
 	hasTransport:
 		type: Boolean,
 		required: true,
 	car:
-		reg: 
+		reg:
 			type: String,
-			validate: /^([A-Z]{3}\s?(\d{3}|\d{2}|d{1})\s?[A-Z])|([A-Z]\s?(\d{3}|\d{2}|\d{1})\s?[A-Z]{3})|(([A-HK-PRSVWY][A-HJ-PR-Y])\s?([0][2-9]|[1-9][0-9])\s?[A-HJ-PR-Z]{3})$/, 
+			validate: /^([A-Z]{3}\s?(\d{3}|\d{2}|d{1})\s?[A-Z])|([A-Z]\s?(\d{3}|\d{2}|\d{1})\s?[A-Z]{3})|(([A-HK-PRSVWY][A-HJ-PR-Y])\s?([0][2-9]|[1-9][0-9])\s?[A-HJ-PR-Z]{3})$/,
 		make: String,
 		model: String,
 		color: String,
