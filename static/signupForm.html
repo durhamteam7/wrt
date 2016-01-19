@@ -1,11 +1,11 @@
 <html>
 <head>
 <title>Signup | Wear Rivers Trust</title>
+<link rel="stylesheet" href="http://www.wear-rivers-trust.org.uk/css/main.css" type="text/css" />
 </head>
 
 <body>
-<form name="SignupForm"
-action="" method="POST">
+<form name="SignupForm" action="/api/volunteerUnauth" method="POST">
 
 First Name:
 <input type="text" name="fName" size="25" value="">
@@ -14,29 +14,178 @@ Surname:
 <input type="text" name="lName" size="25" value="">
 
 Title:
-<input type="text" name="title" size="25" value="">
+<select name="title">
+	<option value="Mr">Mr</option>
+	<option value="Mrs">Mrs</option>
+	<option value="Miss">Miss</option>
+	<option value="Ms">Ms</option>
+	<option value="Dr">Dr</option>
+</select>
 
 Date of Birth:
 <input type="date" name="dob" size="25" value="">
 
 <br>
 Address:
-<textarea name="address" rows="5" cols="40"></textarea>
+<div style="vertical-align: top; display: inline-block">
+	<textarea name="address" rows="6" cols="40"></textarea>
+</div>
 
-Home tel:
-<input type="tel" name="telHome" size="25" value="">
+<div style="vertical-align: top; display: inline-block">
+	Home tel:
+	<input type="tel" name="telHome" size="25" value="">
 
-<br>Mobile:
-<input type="tel" name="telMob" size="25" value="">
+	<br>Mobile:
+	<input type="tel" name="telMob" size="25" value="">
 
-<br>Other tel:
-<input type="tel" name="telOther" size="25" value="">
+	<br>Other tel:
+	<input type="tel" name="telOther" size="25" value="">
 
-<br>Email:
-<input type="email" name="email" size="25" value="">
+	<br>Email:
+	<input type="email" name="email" size="25" value="">
 
-<br> Preferred method of contact:
-<input type="text" name="" size="25" value="">
+	<br> Preferred method of contact:
+	<select name="commPref">
+		<option value="telHome">home tel</option>
+		<option value="telMob">mobile</option>
+		<option value="telOther">other tel</option>
+		<option value="email">email</option>
+	</select>
+</div>
+
+<br><br>
+In what capacity would you like to volunteer?
+<select name="volunteeringType">
+	<option value="support at events">support at events</option>
+	<option value="field work">field work</option>
+	<option value="monitoring/testing">monitoring/testing</option>
+</select>
+
+<br>
+what days are you available to volunteer?
+<select name="availability">
+	<option value="weekdays">weekdays</option>
+	<option value="weekends">weekends</option>
+	<option value="both">both</option>
+</select>
+
+<br>
+do you have any medical conditions/allergies that we should be aware about?
+<br>
+<textarea name="medCond" rows="6" cols="120">Details:</textarea>
+
+<br>
+if relevant,what date was you last tetnus?
+<input type="date" name="lastTetnus" size="25" value="">
+<br>(if more than 10 years ago please consult your GP)
+
+<br><br>
+do you have transport
+<input type="radio" name="hasTransport" id="true" value="true">yes
+<input type="radio" name="hasTransport" id="false" value="false">no
+
+<br><br>
+if you don't have a car just skip this part
+
+<br>
+car make:
+<input type="text" name="make" size="25" value="">
+
+car model:
+<input type="text" name="mode" size="25" value="">
+
+car Colour:
+<input type="text" name="colour" size="25" value="">
+
+car reg:
+<input type="text" name="reg" size="25" value="">
+
+<br><br>
+Please list any relavant experience you may have:
+<br>
+<textarea name="experience" rows="6" cols="120">Details:</textarea>
+
+<br>
+where did you hear about volunteering for Wear Rivers Trust?
+<select name="heardFrom">
+	<option value="website">website</option>
+	<option value="local newspaper">local newspaper</option>
+	<option value="volunteer centre">volunteer centre</option>
+	<option value="wildlife volunteer">wildlife volunteer</option>
+	<option value="television">television</option>
+	<option value="college careers service">collegecarreers service</option>
+	<option value="friend">friend</option>
+</select>
+
+<br><br>
+Emergency contact (1)
+
+<br>
+Name:
+<input type="text" name="name" size="42" value="">
+
+Relationship:
+<input type="text" name="relationship" size="25" value="">
+
+<br>
+Address:
+<div style="vertical-align: top; display: inline-block">
+	<textarea name="address" rows="6" cols="40"></textarea>
+</div>
+
+<div style="vertical-align: top; display: inline-block">
+	Contact Details:
+	<input type="text" name="contactDetails" size="25" value="">
+
+	<br>Home tel:
+	<input type="tel" name="telHome" size="25" value="">
+
+	<br>Mobile:
+	<input type="tel" name="telMob" size="25" value="">
+
+	<br>Other tel:
+	<input type="tel" name="telOther" size="25" value="">
+</div>
+
+<br><br>
+Emergency contact (2)
+
+<br>
+Name:
+<input type="text" name="name" size="42" value="">
+
+Relationship:
+<input type="text" name="relationship" size="25" value="">
+
+<br>
+Address:
+<div style="vertical-align: top; display: inline-block">
+	<textarea name="address" rows="6" cols="40"></textarea>
+</div>
+
+<div style="vertical-align: top; display: inline-block">
+	Contact Details:
+	<input type="text" name="contactDetails" size="25" value="">
+
+	<br>Home tel:
+	<input type="tel" name="telHome" size="25" value="">
+
+	<br>Mobile:
+	<input type="tel" name="telMob" size="25" value="">
+
+	<br>Other tel:
+	<input type="tel" name="telOther" size="25" value="">
+</div>
+
+<br><br>
+Would you like to hear about other volunteering opportunities?
+<input type="radio" name="interestedInMore" id="true" value="true">yes
+<input type="radio" name="interestedInMore" id="false" value="false">no
+
+<br>
+Do you agree for any photographs to be published on our volunteer website and interpretation?
+<input type="radio" name="photoConsent" id="true" value="true">yes
+<input type="radio" name="photoConsent" id="false" value="false">no
 
 <br><br>
 <input type="submit" value="submit"><br>

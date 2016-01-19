@@ -15,11 +15,9 @@ angular.module('sortApp', [])
     updateVolunteers: function($params) {
       $params._method = 'patch';
       console.log("update method",$params )
-      if ($params.information && $params.information.name !== ""){
-        return $http.post('/api/volunteer/' + id, $params).success(function() {
+        return $http.post('/api/volunteer/' + $params._id, $params).success(function() {
           delete $params._method;
         });
-      }
     },
     deleteVolunteers: function(id) {
         return $http.delete('/api/volunteer/' + id).success(function() {
@@ -71,6 +69,11 @@ $scope.newVolunteer = function() {
 
 $scope.change = function(id) {  
   //
+   volunteer = $scope.volunteers[getIndexFromId(id)];
+   serverComm.updateVolunteers(volunteer).success(function(data) {
+    //Add record to $scope.volunteers
+    $scope.volunteers.push(data)
+  });
 }
 
 
@@ -79,7 +82,7 @@ function getIndexFromId(id){
       if($scope.volunteers[i]._id == id){
         return i
       }
-}
+  }
 }
 
 $scope.submitChange = function(id,index) {

@@ -1,4 +1,4 @@
-
+<title>Volunteer Database - Dashboard</title>
 <script src="app.js"></script>
 
 <div class="container" ng-app="sortApp" ng-controller="mainController">
@@ -55,8 +55,13 @@
                     <th>
                     <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
                         First Name 
+<<<<<<< HEAD
+                        <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></spa
+=======
                         <span ng-show="sortType == 'fName' && !sortReverse" class="fa fa-caret-down"></span>
                         <span ng-show="sortType == 'fName' && sortReverse" class="fa fa-caret-up"></span>
+>>>>>>> d0d02623dc6178277b409a9999d3e243602165a3
                     </a>
                     </th>
                     <th>Last Name</th>
@@ -112,7 +117,7 @@
 <div id="editModal{{v._id}}" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content">          
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">{{v.name}}</h4>
@@ -133,7 +138,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                <button class="btn btn-primary">Save</button>
+                <button class="btn btn-primary" ng-click"change()">Save</button>
             </div>
         </div>
     </div>
