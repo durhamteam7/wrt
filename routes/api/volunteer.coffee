@@ -47,6 +47,7 @@ router.post '/', (req,res)->	#CREATE
 
 
 router.patch '/:id',(req,res)->
+	console.log("modifying",req.params.id)
 	Volunteer.
 	findById(req.params.id).
 	exec (err,volunteer)->
@@ -55,7 +56,7 @@ router.patch '/:id',(req,res)->
 		else if volunteer == null
 			res.send 404
 		else
-			volunteer = recurseUpdate(site,req.body) #see function def below
+			volunteer = recurseUpdate(volunteer,req.body) #see function def below
 			volunteer.save (err)->
 				if err
 					console.log err
