@@ -68,7 +68,7 @@
             <tbody id="volunteer-table">
                 <tr ng-repeat="v in volunteers | orderBy:sortType:sortReverse | filter:searchTerm">
                     <td><input type="checkbox" name="rowSelection" value="{{v._id}}"></td>
-                    <td>{{ v.name }}</td>
+                    <td>{{ v.fName }}</td>
                     <td>{{ v.lName }}</td>
                     <td>{{ v.email }}</td>
                     <td>{{ v.telHome }}</td>
