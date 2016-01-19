@@ -11,8 +11,11 @@ volunteerCore =
 	title: #dropdown
 		type: String,
 		required: true,
-	name:
-		type:String,
+	fName:
+		type: String,
+		required: true,
+	lName:
+		type: String,
 		required: true,
 	address:
 		type: String,
