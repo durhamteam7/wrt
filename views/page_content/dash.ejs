@@ -15,7 +15,7 @@
         <div class="col-xs-3">
             <form class="form-inline">
                 <label for="rows-to-show">Rows to show</label>
-                <select name="rows-to-show" class="form-control">
+                <select ng-model="pageSize" name="rows-to-show" class="form-control">
                     <option value="5">5</option>
                     <option selected value="10">10</option>
                     <option value="15">15</option>
@@ -66,7 +66,7 @@
                 </tr>
             </thead>
             <tbody id="volunteer-table">
-                <tr ng-repeat="v in volunteers | orderBy:sortType:sortReverse | filter:searchTerm">
+                <tr ng-repeat="v in volunteers | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:sortType:sortReverse | filter:searchTerm">
                     <td><input type="checkbox" name="rowSelection" value="{{v._id}}"></td>
                     <td>{{ v.fName }}</td>
                     <td>{{ v.lName }}</td>
@@ -80,22 +80,22 @@
             </tbody>
         </table>
         <div class="col-xs-6">
-            <p>Showing 0 to {{volunteers.length}} of {{volunteers.length}} entries</p>
+            <p>Showing {{(currentPage * pageSize) + 1}} to {{rowsShown()}} of {{volunteers.length}} entries</p>
         </div>
         <nav class="col-xs-6">
-            <ul class="pagination pull-right">
-                <li>
-                <a href="#" aria-label="Previous">
+            <ul id="pagination" class="pagination pull-right">
+                <li ng-class="currentPage <= 0 ? 'disabled' : ''">
+                <a href="#" aria-label="Previous" ng-click="currentPage = currentPage - 1" ng-class="currentPage <= 0 ? 'hidden' : ''">
                     <span aria-hidden="true">&laquo; Previous</span>
                 </a>
                 </li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                <a href="#" aria-label="Next">
+                <li ng-repeat="id in getNumber(numberOfPages())" ng-class="isActive(id)">
+                    <a href="#" ng-click="currentPage = id"><!-- Why doesn't id work??? -->
+                        {{id + 1}}
+                    </a>
+                </li>
+                <li ng-class="currentPage >= numberOfPages() - 1 ? 'disabled' : ''">
+                <a href="#" aria-label="Next" ng-click="currentPage = currentPage + 1" ng-class="currentPage >= numberOfPages() - 1 ? 'hidden' : ''">
                     <span aria-hidden="true">Next &raquo;</span>
                 </a>
                 </li>
@@ -167,6 +167,5 @@
 </div>
 
 </div>
-
 
 </div>
