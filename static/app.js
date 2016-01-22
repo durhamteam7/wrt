@@ -35,7 +35,7 @@ angular.module('sortApp', [])
   $scope.searchTerm   = '';      // set the default search/filter term
 
   // create the list of volunteers 
-  $scope.volunteers = ""
+  $scope.volunteers = "";
 
   // Pagination variables
   $scope.currentPage = 0;
@@ -56,6 +56,7 @@ angular.module('sortApp', [])
   $scope.isActive = function(id) {
       return id == $scope.currentPage ? 'active' : '';
   }
+<<<<<<< HEAD
     
     $scope.getData = function(callback) {
     serverComm.getVolunteers().success(function(data) {
@@ -101,13 +102,13 @@ angular.module('sortApp', [])
         }
     }
 
-    $scope.submitChange = function(id,index) {
-    console.log("change");
+$scope.submitChange = function(id,index) {
+  console.log("change");
 
-    serverComm.updateVolunteers(id).success(function(data) {
+  serverComm.updateVolunteers(id).success(function(data) {
 
-    });
-    }
+  });
+}
 
     $scope.getData();
 }])
