@@ -13,44 +13,30 @@ serverUrl = process.env.SERVERURL || 'http://localhost:3000'
 
 #Routes here prefixed by /email/
 
-router.post '/toheads/:time/:id', (req,res)->
-	Volunteer.
-	findById(req.params.id).
-	exec (err,site)->
-		actualSiteString = ''
-		site.quotes.quotes.forEach (snapshot)->
-			#console.log snapshot.sentOut
-			if snapshot.sentOut==parseInt req.params.time
-				actualSiteString = encodeURIComponent snapshot.siteSnapshot
-		Host.
-		findOne {'service':'sendemail'}, (err,host)->
-			smtpTransport = nodemailer.createTransport 'SMTP',
-				host:host.host,
-				auth:
-					user:host.user,
-					pass:host.pass
-			console.log serverUrl+'/jsonpdfgen/quote/'+req.params.time+'/'+actualSiteString
-			smtpTransport.sendMail {
-				from:host.sender,
-				to:req.body.email,
-				subject:'CSI quotation',
-				text:'The quotation can be found attached',
-				attachments:[{
-					filename:'quote.pdf',
-					filePath:serverUrl+'/jsonpdfgen/quote/'+req.params.time+'/'+actualSiteString
-				}]
-			},(err,response)->
-				if err
-					console.log err
-				prevSentVersion = {timeQuoteCreated:req.params.time,timeSentOut:Date.now(),email:req.body.email,siteName:site.information.name}
-				site.quotes.previouslySentVersions.push(prevSentVersion)
-				console.log("start")
-				site.save (err)->
-					console.log("end")
-					if err
-						console.log err
-						return err
-			res.redirect '/site/'+req.params.id
+router.post '/', (req,res)->
+	actualSiteString = ''
+	Host.
+	findOne {'service':'MailGun'}, (err,host)->
+
+		smtpTransport = nodemailer.createTransport 'SMTP',
+			service: "Mailgun"
+			auth:
+				user:host.user,
+				pass:host.pass
+		#console.log serverUrl+'/jsonpdfgen/quote/'+req.params.time+'/'+actualSiteString
+		smtpTransport.sendMail {
+			from:"durhamteam7@gmail.com",
+			to:"durhamteam7@gmail.com",
+			subject:'WRT test',
+			text:'This is just a test email'#,
+			###attachments:[{
+				filename:'quote.pdf',
+				filePath:serverUrl+'/jsonpdfgen/quote/'+req.params.time+'/'+actualSiteString
+			}]###
+		},(err,response)->
+			if err
+				console.log err
+	#res.redirect '/site/'+req.params.id
 
 
 
