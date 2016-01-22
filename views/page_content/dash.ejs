@@ -85,9 +85,9 @@
         <nav class="col-xs-6">
             <ul id="pagination" class="pagination pull-right">
                 <li ng-class="currentPage <= 0 ? 'disabled' : ''">
-                <a href="#" aria-label="Previous" ng-click="currentPage = currentPage - 1" ng-class="currentPage <= 0 ? 'hidden' : ''">
-                    <span aria-hidden="true">&laquo; Previous</span>
-                </a>
+                    <a href="#" aria-label="Previous" ng-click="currentPage = currentPage - 1" ng-class="currentPage <= 0 ? 'hidden' : ''">
+                        <span aria-hidden="true">&laquo; Previous</span>
+                    </a>
                 </li>
                 <li ng-repeat="id in getNumber(numberOfPages())" ng-class="isActive(id)">
                     <a href="#" ng-click="currentPage = id"><!-- Why doesn't id work??? -->
@@ -95,9 +95,9 @@
                     </a>
                 </li>
                 <li ng-class="currentPage >= numberOfPages() - 1 ? 'disabled' : ''">
-                <a href="#" aria-label="Next" ng-click="currentPage = currentPage + 1" ng-class="currentPage >= numberOfPages() - 1 ? 'hidden' : ''">
-                    <span aria-hidden="true">Next &raquo;</span>
-                </a>
+                    <a href="#" aria-label="Next" ng-click="currentPage = currentPage + 1" ng-class="currentPage >= numberOfPages() - 1 ? 'hidden' : ''">
+                        <span aria-hidden="true">Next &raquo;</span>
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -106,63 +106,63 @@
 
 
 
-<!-- Modal for editing volunteer data -->
-<div ng-repeat="v in volunteers">
+    <!-- Modal for editing volunteer data -->
+    <div ng-repeat="v in volunteers">
 
-<div id="editModal{{v._id}}" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">          
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edit {{v.fName + " " + v.lName}}</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    First Name:<input class="form-control" ng-model="v.fName">
-                    Surname:<input class="form-control" ng-model="v.lName">
-                    Title:<input class="form-control" ng-model="v.title">
-                    Date of Birth:<input class="form-control" ng-model="v.dob">
-                    Address:<textarea rows="3" class="form-control" ng-model="v.address"></textarea>
-                    Home tel:<input class="form-control" ng-model="v.telHome">
-                    Mobile:<input class="form-control" ng-model="v.telMob">
-                    Other tel:<input class="form-control" ng-model="v.telOther">
-                    Email:<input class="form-control" ng-model="v.email">
-                    Preferred Method of Contact:<input class="form-control" ng-model="v.commPref">
+    <div id="editModal{{v._id}}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">          
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit {{v.fName + " " + v.lName}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        First Name:<input class="form-control" ng-model="v.fName">
+                        Surname:<input class="form-control" ng-model="v.lName">
+                        Title:<input class="form-control" ng-model="v.title">
+                        Date of Birth:<input class="form-control" ng-model="v.dob">
+                        Address:<textarea rows="3" class="form-control" ng-model="v.address"></textarea>
+                        Home tel:<input class="form-control" ng-model="v.telHome">
+                        Mobile:<input class="form-control" ng-model="v.telMob">
+                        Other tel:<input class="form-control" ng-model="v.telOther">
+                        Email:<input class="form-control" ng-model="v.email">
+                        Preferred Method of Contact:<input class="form-control" ng-model="v.commPref">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    <button class="btn btn-primary" ng-click"change()">Save</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Modal for email communication -->
+
+
+    <div id="emailModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Send communication</h4>
+                </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    Subject:<input class="form-control" ng-model="">
+                    Email body:<textarea rows="10" class="form-control" ng-model=""></textarea>
+                </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                 <button class="btn btn-primary" ng-click"change()">Save</button>
             </div>
         </div>
     </div>
-</div>
-
-</div>
-
-<!-- Modal for email communication -->
-
-
-<div id="emailModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Send communication</h4>
-            </div>
-        <div class="modal-body">
-            <div class="form-group">
-                Subject:<input class="form-control" ng-model="">
-                Email body:<textarea rows="10" class="form-control" ng-model=""></textarea>
-            </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            <button class="btn btn-primary" ng-click"change()">Save</button>
-        </div>
-    </div>
-</div>
 
 </div>
 
