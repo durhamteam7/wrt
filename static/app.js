@@ -28,12 +28,11 @@ angular.module('sortApp', [])
 };}])
 
 
-
 .controller('mainController', ['$scope', 'ajax', function($scope, serverComm) {
   
   $scope.sortType     = 'fName'; // set the default sort type
-  $scope.sortReverse  = false;  // set the default sort order
-  $scope.searchTerm   = '';     // set the default search/filter term
+  $scope.sortReverse  = false;   // set the default sort order
+  $scope.searchTerm   = '';      // set the default search/filter term
 
   // create the list of volunteers 
   $scope.volunteers = ""
@@ -95,11 +94,11 @@ angular.module('sortApp', [])
 
 
     function getIndexFromId(id){
-    for (i = 0; i < $scope.volunteers.length; i++) { 
-        if($scope.volunteers[i]._id == id){
-            return i
+        for (i = 0; i < $scope.volunteers.length; i++) { 
+            if($scope.volunteers[i]._id == id){
+                return i
+            }
         }
-    }
     }
 
     $scope.submitChange = function(id,index) {
