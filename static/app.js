@@ -56,7 +56,6 @@ angular.module('sortApp', [])
   $scope.isActive = function(id) {
       return id == $scope.currentPage ? 'active' : '';
   }
-<<<<<<< HEAD
     
     $scope.getData = function(callback) {
     serverComm.getVolunteers().success(function(data) {
