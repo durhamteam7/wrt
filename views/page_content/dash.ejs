@@ -86,7 +86,7 @@
             </tbody>
         </table>
         <div class="col-xs-6">
-            <p>Showing {{(currentPage * pageSize) + 1}} to {{rowsShown()}} of {{volunteers.length}} entries</p>
+            <p>Showing {{volunteers.length == 0 ? 0 : (currentPage * pageSize) + 1}} to {{rowsShown()}} of {{volunteers.length}} entries</p>
         </div>
         <nav class="col-xs-6">
             <ul id="pagination" class="pagination pull-right">
