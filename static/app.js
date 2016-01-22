@@ -36,7 +36,7 @@ angular.module('sortApp', [])
   $scope.searchTerm   = '';     // set the default search/filter term
 
   // create the list of volunteers 
-  $scope.volunteers = ""
+  $scope.volunteers = "";
 
   // Pagination variables
   $scope.currentPage = 0;
