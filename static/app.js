@@ -38,8 +38,26 @@ angular.module('sortApp', [])
   // create the list of volunteers 
   $scope.volunteers = ""
 
-
-
+  // Pagination variables
+  $scope.currentPage = 0;
+  $scope.pageSize = 10;
+  $scope.numberOfPages = function() {
+      return Math.ceil($scope.volunteers.length/$scope.pageSize);
+  }
+  $scope.rowsShown = function() {
+      if (($scope.currentPage * $scope.pageSize) + $scope.pageSize < $scope.volunteers.length) {
+          return Number(($scope.currentPage * $scope.pageSize) + $scope.pageSize);
+      } else {
+          return $scope.volunteers.length;
+      }
+  }
+  $scope.getNumber = function(num) {
+      return Array.apply(null, {length: num}).map(Number.call, Number)
+  }
+  $scope.isActive = function(id) {
+      return id == $scope.currentPage ? 'active' : '';
+  }
+  // Pagination end
   
 $scope.getData = function(callback) {
   serverComm.getVolunteers().success(function(data) {
@@ -97,4 +115,13 @@ $scope.submitChange = function(id,index) {
 }
 
     $scope.getData();
-}]);
+}])
+
+//We already have a limitTo filter built-in to angular,
+//let's make a startFrom filter
+.filter('startFrom', function() {
+    return function(input, start) {
+        start =+ start; //parse to int
+        return input.slice(start);
+    }
+});
