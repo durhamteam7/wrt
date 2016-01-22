@@ -54,16 +54,21 @@ $scope.getData = function(callback) {
 }
 
 $scope.delete = function(id,index) {
+  $scope.volunteers.splice(getIndexFromId(id), 1);
   serverComm.deleteVolunteers(id).success(function(data) {
     //Remove record from $scope.volunteers
-    $scope.volunteers.splice(getIndexFromId(id), 1);
   }); 
 }
 
 $scope.newVolunteer = function() {
   serverComm.addVolunteer().success(function(data) {
     //Add record to $scope.volunteers
-    $scope.volunteers.push(data)
+    $scope.volunteers.push(data);
+    console.log("#editModal"+data._id)
+    console.log($("#editModal"+data._id))
+    $("#editModal"+data._id).attr( "fish", "Beijing Brush Seller" );
+    $("#editModal"+data._id).modal("toggle");
+
   });
 }
 
@@ -71,8 +76,6 @@ $scope.change = function(id) {
   //
    volunteer = $scope.volunteers[getIndexFromId(id)];
    serverComm.updateVolunteers(volunteer).success(function(data) {
-    //Add record to $scope.volunteers
-    $scope.volunteers.push(data)
   });
 }
 

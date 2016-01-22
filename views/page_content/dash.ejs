@@ -47,19 +47,25 @@
     </div>
     <br>
     <div class="row">
-        
+
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th></th>
                     <th>
-                    <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
-                        First Name 
-                        <span ng-show="sortType == 'fName' && !sortReverse" class="fa fa-caret-down"></span>
-                        <span ng-show="sortType == 'fName' && sortReverse" class="fa fa-caret-up"></span>
-                    </a>
+                        <a href="#" ng-click="sortType = 'fName'; sortReverse = !sortReverse">
+                            First Name(s)
+                            <span ng-show="sortType == 'fName' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'fName' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
                     </th>
-                    <th>Last Name</th>
+                    <th>
+                        <a href="#" ng-click="sortType = 'lName'; sortReverse = !sortReverse">
+                            Last Name 
+                            <span ng-show="sortType == 'lName' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'lName' && sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </th>
                     <th>Email</th>
                     <th>Telephone</th>
                     <th>Operations</th>
@@ -67,8 +73,8 @@
             </thead>
             <tbody id="volunteer-table">
                 <tr ng-repeat="v in volunteers | orderBy:sortType:sortReverse | filter:searchTerm">
-                    <td><input type="checkbox" name="rowSelection" value="{{v._id}}"></td>
-                    <td>{{ v.name }}</td>
+                    <td><input type="checkbox" name="rowSelection" value="{{v._id}}selected"></td>
+                    <td>{{ v.fName }}</td>
                     <td>{{ v.lName }}</td>
                     <td>{{ v.email }}</td>
                     <td>{{ v.tel }}</td>
@@ -80,14 +86,14 @@
             </tbody>
         </table>
         <div class="col-xs-6">
-            <p>Showing 0 to 10 of 120 entries</p>
+            <p>Showing 0 to 10 of {{volunteers.length}} entries</p>
         </div>
         <nav class="col-xs-6">
             <ul class="pagination pull-right">
                 <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo; Previous</span>
-                </a>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo; Previous</span>
+                    </a>
                 </li>
                 <li class="active"><a href="#">1</a></li>
                 <li><a href="#">2</a></li>
@@ -95,9 +101,9 @@
                 <li><a href="#">4</a></li>
                 <li><a href="#">5</a></li>
                 <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">Next &raquo;</span>
-                </a>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">Next &raquo;</span>
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -106,40 +112,38 @@
 
 
 
-<!-- Modal for editing volunteer data -->
-<div ng-repeat="v in volunteers">
+    <!-- Modal for editing volunteer data -->
 
-<div id="editModal{{v._id}}" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">          
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">{{v.name}}</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    First Name:<input class="form-control" ng-model="v.fName">
-                    Surname:<input class="form-control" ng-model="v.lName">
-                    Title:<input class="form-control" ng-model="v.title">
-                    Date of Birth:<input class="form-control" ng-model="v.dob">
-                    Address:<input class="form-control" ng-model="v.address">
-                    Home tel:<input class="form-control" ng-model="v.telHome">
-                    Mobile:<input class="form-control" ng-model="v.telMob">
-                    Other tel:<input class="form-control" ng-model="v.telOther">
-                    Email:<input class="form-control" ng-model="v.email">
-                    Preferred Method of Contact:<input class="form-control" ng-model="v.commPref">
+        <div id="editModal{{v._id}}" class="modal fade" role="dialog"  ng-repeat="v in volunteers">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">          
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">{{v.fName}} {{v.lName}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            First Name:<input class="form-control" ng-model="v.fName">
+                            Surname:<input class="form-control" ng-model="v.lName">
+                            Title:<input class="form-control" ng-model="v.title">
+                            Date of Birth:<input class="form-control" ng-model="v.dob">
+                            Address:<input class="form-control" ng-model="v.address">
+                            Home tel:<input class="form-control" ng-model="v.telHome">
+                            Mobile:<input class="form-control" ng-model="v.telMob">
+                            Other tel:<input class="form-control" ng-model="v.telOther">
+                            Email:<input class="form-control" ng-model="v.email">
+                            Preferred Method of Contact:<input class="form-control" ng-model="v.commPref">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        <button class="btn btn-primary" data-dismiss="modal" ng-click="change(v._id)">Save</button>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                <button class="btn btn-primary" ng-click"change()">Save</button>
-            </div>
         </div>
-    </div>
-</div>
 
-</div>
 
 
 </div>
