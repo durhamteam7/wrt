@@ -14,29 +14,30 @@ serverUrl = process.env.SERVERURL || 'http://localhost:3000'
 #Routes here prefixed by /email/
 
 router.post '/', (req,res)->
-	actualSiteString = ''
+	console.log("emailing")
 	Host.
 	findOne {'service':'MailGun'}, (err,host)->
-
 		smtpTransport = nodemailer.createTransport 'SMTP',
 			service: "Mailgun"
 			auth:
 				user:host.user,
-				pass:host.pass
-		#console.log serverUrl+'/jsonpdfgen/quote/'+req.params.time+'/'+actualSiteString
-		smtpTransport.sendMail {
-			from:"durhamteam7@gmail.com",
-			to:"durhamteam7@gmail.com",
-			subject:'WRT test',
-			text:'This is just a test email'#,
-			###attachments:[{
-				filename:'quote.pdf',
-				filePath:serverUrl+'/jsonpdfgen/quote/'+req.params.time+'/'+actualSiteString
-			}]###
-		},(err,response)->
-			if err
-				console.log err
-	#res.redirect '/site/'+req.params.id
+				pass:host.pass 
+		console.log (req.body.select[0])
+		for volunteer in req.body.select
+			console.log(volunteer)
+			smtpTransport.sendMail {
+				from:"durhamteam7@gmail.com",
+				to:volunteer.email,
+				subject:req.body.subject,
+				text:req.body.body#,
+				###attachments:[{
+					filename:'filename.pdf',
+					filePath:serverUrl+'URL OF FILE'
+				}]###
+			},(err,response)->
+				if err
+					console.log err
+	res.sendStatus 200
 
 
 
