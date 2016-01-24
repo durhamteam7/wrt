@@ -72,7 +72,7 @@
                 </tr>
             </thead>
             <tbody id="volunteer-table">
-                <tr ng-repeat="v in volunteers | orderBy:sortType:sortReverse | filter:searchTerm">
+                <tr ng-repeat="v in volunteers | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:sortType:sortReverse | filter:searchTerm">
                     <td><input type="checkbox" name="rowSelection" value="{{v._id}}selected"></td>
                     <td>{{ v.fName }}</td>
                     <td>{{ v.lName }}</td>
