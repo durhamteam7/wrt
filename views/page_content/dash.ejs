@@ -1,4 +1,5 @@
-<title>Volunteer Database - Dashboard</title>
+    <title>Volunteer Database - Dashboard</title>
+<script src="checklist-model.js"></script>    
 <script src="app.js"></script>
 
 <div class="container" ng-app="sortApp" ng-controller="mainController">
@@ -73,7 +74,7 @@
             </thead>
             <tbody id="volunteer-table">
                 <tr ng-repeat="v in volunteers | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:sortType:sortReverse | filter:searchTerm">
-                    <td><input type="checkbox" name="rowSelection" value="{{v._id}}selected"></td>
+                    <td><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v"></td>
                     <td>{{ v.fName }}</td>
                     <td>{{ v.lName }}</td>
                     <td>{{ v.email }}</td>
@@ -108,8 +109,6 @@
             </ul>
         </nav>
     </div>
-
-
 
     <!-- Modal for editing volunteer data -->
     <div ng-repeat="v in volunteers">
@@ -159,14 +158,14 @@
                 </div>
             <div class="modal-body">
                 <div class="form-group">
-                    Subject:<input class="form-control" ng-model="">
-                    Email body:<textarea rows="10" class="form-control" ng-model=""></textarea>
+                    Recipients:<br><span ng-repeat="v in select"><span style="text-transform: uppercase;">{{v.fName}} {{v.lName}}</span> &lt;{{v.email}}&gt;, </span><br>
+                    Subject:<input class="form-control" ng-model="email.subject">
+                    Email body:<textarea rows="10" class="form-control" ng-model="email.body"></textarea>
                 </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                <button class="btn btn-primary" data-dismiss="modal" ng-click"change()">Save</button>
+                <button class="btn btn-primary" data-dismiss="modal" ng-click="sendEmail()">Send</button>
             </div>
         </div>
     </div>
-
 </div>

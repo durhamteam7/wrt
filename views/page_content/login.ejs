@@ -1,74 +1,269 @@
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
-    <title>Signin Template for Bootstrap</title>
+<!-- All the files that are required -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-    <!-- Bootstrap core CSS -->
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+<script>
+(function($) {
+    "use strict";
+  
+  // Options for Message
+  //----------------------------------------------
+  var options = {
+    'btn-loading': '<i class="fa fa-spinner fa-pulse"></i>',
+    'btn-success': '<i class="fa fa-check"></i>',
+    'btn-error': '<i class="fa fa-remove"></i>',
+    'msg-success': 'All Good! Redirecting...',
+    'msg-error': 'Wrong login credentials!',
+    'useAJAX': true,
+  };
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+  // Login Form
+  //----------------------------------------------
+  // Validation
+  $("#login-form").validate({
+    rules: {
+      lg_username: "required",
+      lg_password: "required",
+    },
+    errorClass: "form-invalid"
+  });
+  
+  // Form Submission
+  $("#login-form").submit(function() {
+    remove_loading($(this));
+    // Loading
+  //----------------------------------------------
+  function remove_loading($form)
+  {
+    $form.find('[type=submit]').removeClass('error success');
+    $form.find('.login-form-main-message').removeClass('show error success').html('');
+  }
 
-    <!-- Custom styles for this template -->
-    <link href="signin.css" rel="stylesheet">
+  function form_loading($form)
+  {
+    $form.find('[type=submit]').addClass('clicked').html(options['btn-loading']);
+  }
+  
+  function form_success($form)
+  {
+    $form.find('[type=submit]').addClass('success').html(options['btn-success']);
+    $form.find('.login-form-main-message').addClass('show success').html(options['msg-success']);
+  }
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+  function form_failed($form)
+  {
+    $form.find('[type=submit]').addClass('error').html(options['btn-error']);
+    $form.find('.login-form-main-message').addClass('show error').html(options['msg-error']);
+  }
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
+</script>
 
-  <body>
-
-    <div class="container-full">
-        <div class="row">
-       
-            <div class="col-lg-12 text-center v-center">
-                <div class="input-group" style="width:340px;text-align:center;margin:0 auto;">
-
-          <form action='/loginauth' method='POST' class="form-signin">
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="text" id="userName" name="username" class="form-control" placeholder="Email address" required autofocus>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-            <a href='/dash'><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></a>
-          </form>
-      </div>
+<!-- Where all the magic happens -->
+<!-- LOGIN FORM -->
+<div class="text-center" style="padding:50px 0">
+  <div class="logo">login</div>
+  <!-- Main Form -->
+  <div class="login-form-1">
+    <form action='/loginauth' method='POST'id="login-form" class="text-left">
+      <div class="login-form-main-message"></div>
+      <div class="main-login-form">
+        <div class="login-group">
+          <div class="form-group">
+            <label for="lg_username" class="sr-only">Username</label>
+            <input type="text" class="form-control" id="userName" name="username" placeholder="username">
+          </div>
+          <div class="form-group">
+            <label for="lg_password" class="sr-only">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="password">
+          </div>
+          
         </div>
-    </div>
-
-
-
-    </div> <!-- /container -->
-
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
-</html>
-
+        <a href='/dash'><button type="submit" class="login-button"><i class="fa fa-chevron-right"></i></button></a>
+      </div>
+      
+    </form>
+  </div>
+  <!-- end:Main Form -->
+</div>
 
 <!-- <form action='/loginauth' method='POST'>
-	<label>Username</label><input type="text" id="userName" name='username'>
-	<label>Password<input type="password" id="password" name="password" />
-	<a href='/dash'><button type="submit" class="btn-submit">Submit</button></a>
+  <label>Username</label><input type="text" id="userName" name='username'>
+  <label>Password<input type="password" id="password" name="password" />
+  <a href='/dash'><button type="submit" class="btn-submit">Submit</button></a>
 </form> -->
 
-<!-- save in sublime
-mpm start
-local host:3000
-to see changes -->
+
+<!-- CSS -->
+<style>
+html,
+body {
+  background: #efefef;
+  padding: 10px;
+  font-family: 'Varela Round';
+}
+/*=== 2. Anchor Link ===*/
+a {
+  color: #aaaaaa;
+  transition: all ease-in-out 200ms;
+}
+a:hover {
+  color: #333333;
+  text-decoration: none;
+}
+/*=== 3. Text Outside the Box ===*/
+.etc-login-form {
+  color: #919191;
+  padding: 10px 20px;
+}
+.etc-login-form p {
+  margin-bottom: 5px;
+}
+/*=== 4. Main Form ===*/
+.login-form-1 {
+  max-width: 300px;
+  border-radius: 5px;
+  display: inline-block;
+}
+.main-login-form {
+  position: relative;
+}
+.login-form-1 .form-control {
+  border: 0;
+  box-shadow: 0 0 0;
+  border-radius: 0;
+  background: transparent;
+  color: #555555;
+  padding: 7px 0;
+  font-weight: bold;
+  height:auto;
+}
+.login-form-1 .form-control::-webkit-input-placeholder {
+  color: #999999;
+}
+.login-form-1 .form-control:-moz-placeholder,
+.login-form-1 .form-control::-moz-placeholder,
+.login-form-1 .form-control:-ms-input-placeholder {
+  color: #999999;
+}
+.login-form-1 .form-group {
+  margin-bottom: 0;
+  border-bottom: 2px solid #efefef;
+  padding-right: 20px;
+  position: relative;
+}
+.login-form-1 .form-group:last-child {
+  border-bottom: 0;
+}
+.login-group {
+  background: #ffffff;
+  color: #999999;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+.login-group-checkbox {
+  padding: 5px 0;
+}
+/*=== 5. Login Button ===*/
+.login-form-1 .login-button {
+  position: absolute;
+  right: -25px;
+  top: 50%;
+  background: #ffffff;
+  color: #999999;
+  padding: 11px 0;
+  width: 50px;
+  height: 50px;
+  margin-top: -25px;
+  border: 5px solid #efefef;
+  border-radius: 50%;
+  transition: all ease-in-out 500ms;
+}
+.login-form-1 .login-button:hover {
+  color: #555555;
+  transform: rotate(450deg);
+}
+.login-form-1 .login-button.clicked {
+  color: #555555;
+}
+.login-form-1 .login-button.clicked:hover {
+  transform: none;
+}
+.login-form-1 .login-button.clicked.success {
+  color: #2ecc71;
+}
+.login-form-1 .login-button.clicked.error {
+  color: #e74c3c;
+}
+/*=== 6. Form Invalid ===*/
+label.form-invalid {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  display: block;
+  margin-top: -25px;
+  padding: 7px 9px;
+  background: #777777;
+  color: #ffffff;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 11px;
+}
+label.form-invalid:after {
+  top: 100%;
+  right: 10px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: transparent;
+  border-top-color: #777777;
+  border-width: 6px;
+}
+/*=== 7. Form - Main Message ===*/
+.login-form-main-message {
+  background: #ffffff;
+  color: #999999;
+  border-left: 3px solid transparent;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  font-weight: bold;
+  height: 0;
+  padding: 0 20px 0 17px;
+  opacity: 0;
+  transition: all ease-in-out 200ms;
+}
+.login-form-main-message.show {
+  height: auto;
+  opacity: 1;
+  padding: 10px 20px 10px 17px;
+}
+.login-form-main-message.success {
+  border-left-color: #2ecc71;
+}
+.login-form-main-message.error {
+  border-left-color: #e74c3c;
+}
+/*=== 9. Misc ===*/
+.logo {
+  padding: 15px 0;
+  font-size: 25px;
+  color: #aaaaaa;
+  font-weight: bold;
+}
+</style>
+
+
+
+
+
+
+
+
+
 
