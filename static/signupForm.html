@@ -2,194 +2,328 @@
 <head>
 <title>Signup | Wear Rivers Trust</title>
 <link rel="stylesheet" href="http://www.wear-rivers-trust.org.uk/css/main.css" type="text/css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-<form name="SignupForm" action="/api/volunteerUnauth" method="POST">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <h1 style="border-bottom: solid 1px #E1E1E1"> Sign up as a Volunteer</h1>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                
+                <form name="SignupForm" action="/api/volunteerUnauth" method="POST" class="form">
+                    
+                    <fieldset>
+                        <legend>Personal Information</legend>
 
-First Name:
-<input type="text" name="fName" size="25" value="">
+                        <div class="form-group">
+                            <label for="title">Title:</label>
+                            <select name="title" class="form-control">
+                                <option value="Mr">Mr</option>
+                                <option value="Mrs">Mrs</option>
+                                <option value="Miss">Miss</option>
+                                <option value="Ms">Ms</option>
+                                <option value="Dr">Dr</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fname">First Name:</label>
+                            <input type="text" name="fName" size="25" value="" class="form-control">
+                        </div>
 
-Surname:
-<input type="text" name="lName" size="25" value="">
+                        <div class="form-group">
+                            <label for="lName">Surname:</label>
+                            <input type="text" name="lName" size="25" value="" class="form-control">
+                        </div>
 
-Title:
-<select name="title">
-	<option value="Mr">Mr</option>
-	<option value="Mrs">Mrs</option>
-	<option value="Miss">Miss</option>
-	<option value="Ms">Ms</option>
-	<option value="Dr">Dr</option>
-</select>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth:</label>
+                            <input type="date" name="dob" size="25" value="" class="form-control">
+                        </div>
 
-Date of Birth:
-<input type="date" name="dob" size="25" value="">
+                        <div class="form-group">
+                            <label for="address">Address:</label>
+                            <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
+                        </div>
 
-<br>
-Address:
-<div style="vertical-align: top; display: inline-block">
-	<textarea name="address" rows="6" cols="40"></textarea>
-</div>
+                        <div class="form-group">
+                            <label for="telHome">Home tel:</label>
+                            <input type="tel" name="telHome" size="25" value="" class="form-control">
+                        </div>
 
-<div style="vertical-align: top; display: inline-block">
-	Home tel:
-	<input type="tel" name="telHome" size="25" value="">
+                        <div class="form-group">
+                            <label for="telMob">Mobile:</label>
+                            <input type="tel" name="telMob" size="25" value="" class="form-control">
+                        </div>
 
-	<br>Mobile:
-	<input type="tel" name="telMob" size="25" value="">
+                        <div class="form-group">
+                            <label for="telOther">Other tel:</label>
+                            <input type="tel" name="telOther" size="25" value="" class="form-control">
+                        </div>
 
-	<br>Other tel:
-	<input type="tel" name="telOther" size="25" value="">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" size="25" value="" class="form-control">
+                        </div>
 
-	<br>Email:
-	<input type="email" name="email" size="25" value="">
+                        <div class="form-group">
+                            <label for="commPref">Preferred method of contact:</label>
+                            <select name="commPref" class="form-control">
+                                <option value="telHome">Home tel</option>
+                                <option value="telMob">Mobile</option>
+                                <option value="telOther">Other tel</option>
+                                <option value="email">Email</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="volunteeringType">In what capacity would you like to volunteer?</label>
+                            <select name="volunteeringType" class="form-control">
+                                <option value="support at events">Support at Events</option>
+                                <option value="field work">Field Work</option>
+                                <option value="monitoring/testing">Monitoring/Testing</option>
+                            </select>
+                        </div>
 
-	<br> Preferred method of contact:
-	<select name="commPref">
-		<option value="telHome">home tel</option>
-		<option value="telMob">mobile</option>
-		<option value="telOther">other tel</option>
-		<option value="email">email</option>
-	</select>
-</div>
+                        <div class="form-group">
+                            <label for="availability">What days are you available to volunteer?</label>
+                            <select name="availability" class="form-control">
+                                <option value="weekdays">Weekdays</option>
+                                <option value="weekends">Weekends</option>
+                                <option value="both">Both</option>
+                            </select>
+                        </div>
 
-<br><br>
-In what capacity would you like to volunteer?
-<select name="volunteeringType">
-	<option value="support at events">support at events</option>
-	<option value="field work">field work</option>
-	<option value="monitoring/testing">monitoring/testing</option>
-</select>
+                        <div class="form-group">
+                            <label for="experience">Please list any relavant experience you may have:</label>
+                            <textarea name="experience" rows="6" cols="120" placeholder="" class="form-control"></textarea>
+                        </div>
 
-<br>
-what days are you available to volunteer?
-<select name="availability">
-	<option value="weekdays">weekdays</option>
-	<option value="weekends">weekends</option>
-	<option value="both">both</option>
-</select>
+                        <div class="form-group">
+                            <label for="medCond">Do you have any medical conditions/allergies that we should be aware about?</label>
+                            <textarea name="medCond" rows="6" cols="120" placeholder="" class="form-control"></textarea>
+                        </div>
 
-<br>
-do you have any medical conditions/allergies that we should be aware about?
-<br>
-<textarea name="medCond" rows="6" cols="120">Details:</textarea>
+                        <div class="form-group">
+                            <label for="lastTetnus">If relevant, what date was you last Tetanus?</label>
+                            <input type="date" name="lastTetnus" size="25" value="" class="form-control">
+                            <span class="help-block">(if more than 10 years ago please consult your GP)</span>
+                        </div>
+                        
+                    </fieldset>
+                    
+                    <br>
+                    
+                    <fieldset>
+                        
+                    <legend>Transport</legend>
+                        
+                        <div class="form-group">
+                            <label for="hasTransport">Do you have transport?</label>
+                            <br>
+                            <label class="radio-inline"><input type="radio" name="hasTransport" id="true" value="true">Yes</label>
+                            <label class="radio-inline"><input type="radio" name="hasTransport" id="false" value="false">No</label>
+                        </div>
 
-<br>
-if relevant,what date was you last tetnus?
-<input type="date" name="lastTetnus" size="25" value="">
-<br>(if more than 10 years ago please consult your GP)
+                        <div class="form-group">
+                            <span class="help-block">If you answered No you can skip this part</span>
+                        </div>
 
-<br><br>
-do you have transport
-<input type="radio" name="hasTransport" id="true" value="true">yes
-<input type="radio" name="hasTransport" id="false" value="false">no
+                        <div class="form-group">
+                            <label for="make">Car make:</label>
+                            <input type="text" name="make" size="25" value="" class="form-control">
+                        </div>
 
-<br><br>
-if you don't have a car just skip this part
+                        <div class="form-group">
+                            <label for="mode">Car model:</label>
+                            <input type="text" name="mode" size="25" value="" class="form-control">
+                        </div>
 
-<br>
-car make:
-<input type="text" name="make" size="25" value="">
+                        <div class="form-group">
+                            <label for="colour">Car colour:</label>
+                            <input type="text" name="colour" size="25" value="" class="form-control">
+                        </div>
 
-car model:
-<input type="text" name="mode" size="25" value="">
+                        <div class="form-group">
+                            <label for="reg">Car reg:</label>
+                            <input type="text" name="reg" size="25" value="" class="form-control">
+                        </div>
+                    
+                    </fieldset>
+                    
+                    <br>
+                    
+                    <fieldset>
 
-car Colour:
-<input type="text" name="colour" size="25" value="">
+                        <legend>Emergency contact (1)</legend>
 
-car reg:
-<input type="text" name="reg" size="25" value="">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" size="42" value="" class="form-control">
+                        </div>
 
-<br><br>
-Please list any relavant experience you may have:
-<br>
-<textarea name="experience" rows="6" cols="120">Details:</textarea>
+                        <div class="form-group">
+                            <label for="relationship">Relationship:</label>
+                            <input type="text" name="relationship" size="25" value="" class="form-control">
+                        </div>
 
-<br>
-where did you hear about volunteering for Wear Rivers Trust?
-<select name="heardFrom">
-	<option value="website">website</option>
-	<option value="local newspaper">local newspaper</option>
-	<option value="volunteer centre">volunteer centre</option>
-	<option value="wildlife volunteer">wildlife volunteer</option>
-	<option value="television">television</option>
-	<option value="college careers service">collegecarreers service</option>
-	<option value="friend">friend</option>
-</select>
+                        <div class="form-group">
+                            <label for="address">Address:</label>
+                            <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
+                        </div>
 
-<br><br>
-Emergency contact (1)
+                        <div class="form-group">
+                            <label for="contactDetails">Contact Details:</label>
+                            <input type="text" name="contactDetails" size="25" value="" class="form-control">
+                        </div>
 
-<br>
-Name:
-<input type="text" name="name" size="42" value="">
+                        <div class="form-group">
+                            <label for="telHome">Home tel:</label>
+                            <input type="tel" name="telHome" size="25" value="" class="form-control">
+                        </div>
 
-Relationship:
-<input type="text" name="relationship" size="25" value="">
+                        <div class="form-group">
+                            <label for="telMob">Mobile:</label>
+                            <input type="tel" name="telMob" size="25" value="" class="form-control">
+                        </div>
 
-<br>
-Address:
-<div style="vertical-align: top; display: inline-block">
-	<textarea name="address" rows="6" cols="40"></textarea>
-</div>
+                        <div class="form-group">
+                            <label for="telOther">Other tel:</label>
+                            <input type="tel" name="telOther" size="25" value="" class="form-control">
+                        </div>
+                        
+                    </fieldset>
+                    
+                    <br>
+                    
+                    <fieldset>
 
-<div style="vertical-align: top; display: inline-block">
-	Contact Details:
-	<input type="text" name="contactDetails" size="25" value="">
+                        <legend>Emergency contact (2)</legend>
 
-	<br>Home tel:
-	<input type="tel" name="telHome" size="25" value="">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" size="42" value="" class="form-control">
+                        </div>
 
-	<br>Mobile:
-	<input type="tel" name="telMob" size="25" value="">
+                        <div class="form-group">
+                            <label for="relationship">Relationship:</label>
+                            <input type="text" name="relationship" size="25" value="" class="form-control">
+                        </div>
 
-	<br>Other tel:
-	<input type="tel" name="telOther" size="25" value="">
-</div>
+                        <div class="form-group">
+                            <label for="address">Address:</label>
+                            <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
+                        </div>
 
-<br><br>
-Emergency contact (2)
+                        <div class="form-group">
+                            <label for="contactDetails">Contact Details:</label>
+                            <input type="text" name="contactDetails" size="25" value="" class="form-control">
+                        </div>
 
-<br>
-Name:
-<input type="text" name="name" size="42" value="">
+                        <div class="form-group">
+                            <label for="telHome">Home tel:</label>
+                            <input type="tel" name="telHome" size="25" value="" class="form-control">
+                        </div>
 
-Relationship:
-<input type="text" name="relationship" size="25" value="">
+                        <div class="form-group">
+                            <label for="telMob">Mobile:</label>
+                            <input type="tel" name="telMob" size="25" value="" class="form-control">
+                        </div>
 
-<br>
-Address:
-<div style="vertical-align: top; display: inline-block">
-	<textarea name="address" rows="6" cols="40"></textarea>
-</div>
+                        <div class="form-group">
+                            <label for="telOther">Other tel:</label>
+                            <input type="tel" name="telOther" size="25" value="" class="form-control">
+                        </div>
+                        
+                    </fieldset>
+                    
+                    <br>
+                    
+                    <fieldset>
+                        
+                        <legend>Other Information</legend>
 
-<div style="vertical-align: top; display: inline-block">
-	Contact Details:
-	<input type="text" name="contactDetails" size="25" value="">
+                        <div class="form-group">
+                            <label for="heardFrom">Where did you hear about volunteering for Wear Rivers Trust?</label>
+                            <select name="heardFrom" class="form-control">
+                                <option value="website">Website</option>
+                                <option value="local newspaper">Local Newspaper</option>
+                                <option value="volunteer centre">Volunteer Centre</option>
+                                <option value="wildlife volunteer">Wildlife Volunteer</option>
+                                <option value="television">Television</option>
+                                <option value="college careers service">College Careers Service</option>
+                                <option value="friend">Friend</option>
+                            </select>
+                        </div>
 
-	<br>Home tel:
-	<input type="tel" name="telHome" size="25" value="">
+                        <div class="form-group">
+                            <label for="interestedInMore">Would you like to hear about other volunteering opportunities?</label>
+                            <br>
+                            <label class="radio-inline"><input type="radio" name="interestedInMore" id="true" value="true">Yes</label>
+                            <label class="radio-inline"><input type="radio" name="interestedInMore" id="false" value="false">No</label>
+                        </div>
 
-	<br>Mobile:
-	<input type="tel" name="telMob" size="25" value="">
+                        <div class="form-group">
+                            <label for="photoConsent">Do you agree for any photographs to be published on our volunteer website and interpretation?</label>
+                            <br>
+                            <label class="radio-inline"><input type="radio" name="photoConsent" id="true" value="true">Yes</label>
+                            <label class="radio-inline"><input type="radio" name="photoConsent" id="false" value="false">No</label>
+                        </div>
+                    
+                    </fieldset>
+                    
+                    <br>
+                    
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary">
+                    </div>
 
-	<br>Other tel:
-	<input type="tel" name="telOther" size="25" value="">
-</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        /* Sticky footer styles
+        -------------------------------------------------- */
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+        body {
+            margin-top: 20px;
+            /* Margin bottom by footer height */
+            margin-bottom: 60px;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            /* Set the fixed height of the footer here */
+            height: 60px;
+            background-color: #f5f5f5;
+        }
 
-<br><br>
-Would you like to hear about other volunteering opportunities?
-<input type="radio" name="interestedInMore" id="true" value="true">yes
-<input type="radio" name="interestedInMore" id="false" value="false">no
-
-<br>
-Do you agree for any photographs to be published on our volunteer website and interpretation?
-<input type="radio" name="photoConsent" id="true" value="true">yes
-<input type="radio" name="photoConsent" id="false" value="false">no
-
-<br><br>
-<input type="submit" value="submit"><br>
-
-</form>
+    </style>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="text-center">
+                <br>
+                <strong class="text-muted">Wear Rivers Trust</strong>
+            </div>
+        </div>
+    </footer>
+    
 </body>
 </html>
