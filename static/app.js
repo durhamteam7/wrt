@@ -1,3 +1,9 @@
+function getTag(tagString){
+  return $(tagString)
+}
+
+console.log(getTag("body"))
+
 // app.js
 angular.module('sortApp', ["checklist-model"])
 
@@ -88,9 +94,13 @@ angular.module('sortApp', ["checklist-model"])
   }
 
   $scope.newVolunteer = function() {
+    //console.log(angular.element("#yes"))
     serverComm.addVolunteer().success(function(data) {
         //Add record to $scope.volunteers
-        $scope.volunteers.push(data)
+        $scope.volunteers.push(data);
+        getTag("#editModal"+data._id).modal();
+        console.log(getTag("#editModal"+data._id))
+
       });
   }
 
@@ -99,7 +109,7 @@ angular.module('sortApp', ["checklist-model"])
     volunteer = $scope.volunteers[getIndexFromId(id)];
     serverComm.updateVolunteers(volunteer).success(function(data) {
         //Add record to $scope.volunteers
-        $scope.volunteers.push(data)
+      
       });
   }
 

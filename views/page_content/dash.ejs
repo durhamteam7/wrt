@@ -1,5 +1,5 @@
     <title>Volunteer Database - Dashboard</title>
-<script src="checklist-model.js"></script>    
+<script src="checklist-model.js"></script>  
 <script src="app.js"></script>
 
 <div class="container" ng-app="sortApp" ng-controller="mainController">
@@ -111,9 +111,8 @@
     </div>
 
     <!-- Modal for editing volunteer data -->
-    <div ng-repeat="v in volunteers">
 
-    <div id="editModal{{v._id}}" class="modal fade" role="dialog">
+    <div id="editModal{{v._id}}" class="modal fade" role="dialog" ng-repeat="v in volunteers">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">          
@@ -143,7 +142,7 @@
         </div>
     </div>
 
-    </div>
+
 
     <!-- Modal for email communication -->
 
@@ -162,6 +161,7 @@
                     Subject:<input class="form-control" ng-model="email.subject">
                     Email body:<textarea rows="10" class="form-control" ng-model="email.body"></textarea>
                 </div>
+                Note: You can put tags in the email e.g. {fName};
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                 <button class="btn btn-primary" data-dismiss="modal" ng-click="sendEmail()">Send</button>
