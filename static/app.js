@@ -2,7 +2,7 @@ function getTag(tagString){
   return $(tagString)
 }
 
-console.log(getTag("body"))
+//console.log(getTag("body"))
 
 // app.js
 angular.module('sortApp', ["checklist-model"])
@@ -39,7 +39,7 @@ angular.module('sortApp', ["checklist-model"])
 
   };}])
 
-
+// Controller
 .controller('mainController', ['$scope', 'ajax', function($scope, serverComm) {
 
   $scope.sortType     = 'fName'; // set the default sort type
@@ -98,8 +98,8 @@ angular.module('sortApp', ["checklist-model"])
     serverComm.addVolunteer().success(function(data) {
         //Add record to $scope.volunteers
         $scope.volunteers.push(data);
-        getTag("#editModal"+data._id).modal();
-        console.log(getTag("#editModal"+data._id))
+        //getTag("#editModal" + data._id).modal();
+        //console.log(getTag("#editModal" + data._id));
 
       });
   }
@@ -114,12 +114,16 @@ angular.module('sortApp', ["checklist-model"])
   }
 
 
-  function getIndexFromId(id){
+  function getIndexFromId(id) {
     for (i = 0; i < $scope.volunteers.length; i++) { 
-      if($scope.volunteers[i]._id == id){
+      if ($scope.volunteers[i]._id == id) {
         return i
       }
     }
+  }
+  
+  $scope.getIdFromIndex = function(index) {
+    return $scope.volunteers[index].id
   }
 
   $scope.submitChange = function(id,index) {
@@ -145,7 +149,19 @@ angular.module('sortApp', ["checklist-model"])
 //let's make a startFrom filter
 .filter('startFrom', function() {
   return function(input, start) {
-        start =+ start; //parse to int
-        return input.slice(start);
-      }
-    });
+    start =+ start; //parse to int
+    return input.slice(start);
+    }
+})
+
+//Directive for DOM manipulation
+.directive('displayModal', function() {
+    
+    return {
+        restrict: 'A', // restricts the use of the directive (use it as an attribute)
+        link: function(scope, elm, attrs) { // fires when the element is created and is linked to the scope of the parent controller
+            elm.modal();
+        }
+    };
+    
+});
