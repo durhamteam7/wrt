@@ -45,7 +45,7 @@ angular.module('sortApp', ["checklist-model"])
   $scope.sortType     = 'fName'; // set the default sort type
   $scope.sortReverse  = false;   // set the default sort order
   $scope.searchTerm   = '';      // set the default search/filter term
-
+  $scope.modelShow = false
   // create the list of volunteers 
   $scope.volunteers = "";
 
@@ -94,6 +94,7 @@ angular.module('sortApp', ["checklist-model"])
   }
 
   $scope.newVolunteer = function() {
+    $scope.modelShow = true
     //console.log(angular.element("#yes"))
     serverComm.addVolunteer().success(function(data) {
         //Add record to $scope.volunteers
@@ -160,7 +161,11 @@ angular.module('sortApp', ["checklist-model"])
     return {
         restrict: 'A', // restricts the use of the directive (use it as an attribute)
         link: function(scope, elm, attrs) { // fires when the element is created and is linked to the scope of the parent controller
-            elm.modal();
+            console.log(scope.modelShow)
+            if (scope.modelShow){
+              console.log("MODEL TIME")
+              elm.modal();
+            }
         }
     };
     
