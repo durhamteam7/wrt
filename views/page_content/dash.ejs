@@ -112,7 +112,7 @@
 
     <!-- Modal for editing volunteer data -->
 
-    <div id="editModal{{v._id}}" class="modal fade" role="dialog" ng-repeat="v in volunteers">
+    <div id="editModal{{v._id}}" class="modal fade" role="dialog" ng-repeat="v in volunteers" ng-attr-data-display-modal="{{$last ? '' : undefined}}">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">          
@@ -122,7 +122,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        
                         
                         <fieldset>
                             <legend>Personal Information</legend>
