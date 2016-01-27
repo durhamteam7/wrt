@@ -8,6 +8,7 @@ nodemailer = require 'nodemailer'
 Host = mongoose.model 'Host'
 fs = require 'fs'
 Volunteer = mongoose.model 'Volunteer'
+jsontemplate = require 'json-templater'
 
 serverUrl = process.env.SERVERURL || 'http://localhost:3000'
 
@@ -15,27 +16,24 @@ serverUrl = process.env.SERVERURL || 'http://localhost:3000'
 
 router.post '/', (req,res)->
 	console.log("emailing")
-	#Preprocess body
-	#search through
-	#remove tags
-	#record location of the tags
-	
-
 
 	Host.
 	findOne {'service':'MailGun'}, (err,host)->
+		console.log("Connected to mail service")
 		smtpTransport = nodemailer.createTransport 'SMTP',
 			service: "Mailgun"
 			auth:
 				user:host.user,
 				pass:host.pass 
 		for volunteer in req.body.select
+			body = jsontemplate.string(req.body.body,volunteer)
+			subject = jsontemplate.string(req.body.subject,volunteer)
 			if (volunteer.commPref == "email")
 				smtpTransport.sendMail {
 					from:"durhamteam7@gmail.com",
-					to:volunteer.email,
-					subject:req.body.subject,
-					text:req.body.body#,
+					to:Volunteerunteer.email,
+					subject:subject,
+					text:body#,
 						###attachments:[{
 							filename:'filename.pdf',
 							filePath:serverUrl+'URL OF FILE'
@@ -45,6 +43,7 @@ router.post '/', (req,res)->
 						console.log err
 			else if (volunteer.commPref == "letter")
 				console.log("Send a letter...")
+				
 			else
 				console.log("Unknown comm pref...")
 				
