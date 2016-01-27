@@ -68,7 +68,10 @@
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th><input type="checkbox" ng-click="checkAll()" ng-value=""></th>
+                    <th>
+                        <select-all-checkbox checkboxes="filteredList" all-selected="allSelectedWtVolunteers" all-clear="noSelectedWtVolunteers" multiple="multipleWtVolunteers" ids="selectedWVolunteersIds"></select-all-checkbox>
+                        <!--<input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" />-->
+                    </th>
                     <th>
                         <a href="#" ng-click="sortType = 'fName'; sortReverse = !sortReverse">
                             First Name(s)
@@ -89,8 +92,8 @@
                 </tr>
             </thead>
             <tbody id="volunteer-table">
-                <tr ng-repeat="v in volunteers | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:sortType:sortReverse | filter:searchTerm">
-                    <td><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v"></td>
+                <tr ng-repeat="v in filteredList | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:sortType:sortReverse | filter:searchTerm">
+                    <td><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
                     <td>{{ v.fName }}</td>
                     <td>{{ v.lName }}</td>
                     <td>{{ v.email }}</td>
@@ -102,6 +105,21 @@
                 </tr>
             </tbody>
         </table>
+        
+        
+        <!-- new
+        Filtered:
+        <div class="col-sm-12" ng-repeat="v in filteredList">
+            <input type="checkbox" ng-model="v.isSelected"> {{v.fName}} {{v.lName}}
+        </div>
+        <br>
+        All:
+        <div class="col-sm-12" ng-repeat="v in volunteers">
+            <input type="checkbox" ng-model="v.isSelected"> {{v.fName}} {{v.lName}}
+        </div>
+        end new -->
+        
+        
         <div class="col-xs-6">
             <p>Showing {{volunteers.length == 0 ? 0 : (currentPage * pageSize) + 1}} to {{rowsShown()}} of {{volunteers.length}} entries</p>
         </div>
@@ -112,9 +130,9 @@
                         <span aria-hidden="true">&laquo; Previous</span>
                     </a>
                 </li>
-                <li ng-repeat="id in getNumber(numberOfPages())" ng-class="isActive(id)">
-                    <a href="#" ng-click="currentPage = id"><!-- Why doesn't id work?? -->
-                        {{id + 1}}
+                <li ng-repeat="n in range(numberOfPages())" ng-class="isActive(n)">
+                    <a href="#" ng-click="setPage(n)">
+                        {{n + 1}}
                     </a>
                 </li>
                 <li ng-class="currentPage >= numberOfPages() - 1 ? 'disabled' : ''">
@@ -447,7 +465,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                Recipients:<br><span ng-repeat="v in select"><span style="text-transform: uppercase;">{{v.fName}} {{v.lName}}</span> &lt;{{v.email}}&gt;, </span><br>
+                                Recipients:<br><span ng-repeat="v in selected()"><span style="text-transform: uppercase;">{{v.fName}} {{v.lName}}</span> &lt;{{v.email}}&gt;, </span><br>
                                 Subject:<input class="form-control" ng-model="email.subject">
                                 Body:<textarea rows="10" class="form-control" ng-model="email.body"></textarea>
                             </div>
