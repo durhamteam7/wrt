@@ -1,6 +1,22 @@
     <title>Volunteer Database - Dashboard</title>
-<script src="checklist-model.js"></script>  
-<script src="app.js"></script>
+    <script src="checklist-model.js"></script>  
+    <script src="http://static.scripting.com/bootstrap/1.4.0/js/bootstrap-tabs.js"></script>
+    <script src="app.js"></script>
+    <style type="text/css">
+        @media screen and (min-width: 768px) {
+            .modal-dialog {
+              width: 700px; /* New width for default modal */
+          }
+          .modal-sm {
+              width: 350px; /* New width for small modal */
+          }
+      }
+      @media screen and (min-width: 992px) {
+        .modal-lg {
+          width: 950px; /* New width for large modal */
+      }
+  }
+</style>
 
 <div class="container" ng-app="sortApp" ng-controller="mainController">
     <div class="row">
@@ -52,7 +68,7 @@
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th></th>
+                    <th><input type="checkbox" ng-click="checkAll()" ng-value=""></th>
                     <th>
                         <a href="#" ng-click="sortType = 'fName'; sortReverse = !sortReverse">
                             First Name(s)
@@ -121,302 +137,337 @@
                     <h4 class="modal-title">Edit {{v.title}} {{v.fName}} {{v.lName}}</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        
-                        <fieldset>
-                            <legend>Personal Information</legend>
 
-                            <div class="form-group">
-                                <label for="title">Title:</label>
-                                <select name="title" class="form-control" ng-model="v.title">
-                                    <option value="Mr">Mr</option>
-                                    <option value="Mrs">Mrs</option>
-                                    <option value="Miss">Miss</option>
-                                    <option value="Ms">Ms</option>
-                                    <option value="Dr">Dr</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="fname">First Name:</label>
-                                <input type="text" name="fName" size="25" value="" class="form-control" ng-model="v.fName">
-                            </div>
 
-                            <div class="form-group">
-                                <label for="lName">Surname:</label>
-                                <input type="text" name="lName" size="25" value="" class="form-control" ng-model="v.lName">
-                            </div>
+                    <div class="divDialogElements">
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="active"><a href="#personalInfo">Personal Info</a></li>
+                            <li class=""><a href="#transport">Transport</a></li>
+                            <li class=""><a href="#emergency1">Emergency Contact (1)</a></li>
+                            <li><a href="#emergency2">Emergency Contact (2)</a></li>
+                            <li ><a href="#other">Other Info</a></li>
+                        </ul>
+                        <div id="my-tab-content" class="tab-content">
+                            <div class="tab-pane" id="home">
 
-                            <div class="form-group">
-                                <label for="dob">Date of Birth:</label>
-                                <input type="date" name="dob" size="25" value="" class="form-control" ng-model="v.dob">
-                            </div>
 
-                            <div class="form-group">
-                                <label for="address">Address:</label>
-                                <textarea name="address" rows="6" cols="40" class="form-control" ng-model="v.address"></textarea>
                             </div>
+                            <div class="tab-pane active" id="personalInfo">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="title">Title:</label>
+                                        <select name="title" class="form-control" ng-model="v.title">
+                                            <option value="Mr">Mr</option>
+                                            <option value="Mrs">Mrs</option>
+                                            <option value="Miss">Miss</option>
+                                            <option value="Ms">Ms</option>
+                                            <option value="Dr">Dr</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="fname">First Name:</label>
+                                        <input type="text" name="fName" size="25" value="" class="form-control" ng-model="v.fName">
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="telHome">Home tel:</label>
-                                <input type="tel" name="telHome" size="25" value="" class="form-control" ng-model="v.telHome">
-                            </div>
+                                    <div class="form-group">
+                                        <label for="lName">Surname:</label>
+                                        <input type="text" name="lName" size="25" value="" class="form-control" ng-model="v.lName">
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="telMob">Mobile:</label>
-                                <input type="tel" name="telMob" size="25" value="" class="form-control" ng-model="v.telMob">
-                            </div>
+                                    <div class="form-group">
+                                        <label for="dob">Date of Birth:</label>
+                                        <input type="date" name="dob" size="25" value="" class="form-control" ng-model="v.dob">
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="telOther">Other tel:</label>
-                                <input type="tel" name="telOther" size="25" value="" class="form-control" ng-model="v.telOther">
-                            </div>
+                                    <div class="form-group">
+                                        <label for="address">Address:</label>
+                                        <textarea name="address" rows="6" cols="40" class="form-control" ng-model="v.address"></textarea>
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="email" name="email" size="25" value="" class="form-control" ng-model="v.email">
-                            </div>
+                                    <div class="form-group">
+                                        <label for="telHome">Home tel:</label>
+                                        <input type="tel" name="telHome" size="25" value="" class="form-control" ng-model="v.telHome">
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="commPref">Preferred method of contact:</label>
-                                <select name="commPref" class="form-control" ng-model="v.commPref">
-                                    <option value="telHome">Home tel</option>
-                                    <option value="telMob">Mobile</option>
-                                    <option value="telOther">Other tel</option>
-                                    <option value="email">Email</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="volunteeringType">In what capacity would you like to volunteer?</label>
-                                <select name="volunteeringType" class="form-control" ng-model="v.volunteeringType">
-                                    <option value="support at events">Support at Events</option>
-                                    <option value="field work">Field Work</option>
-                                    <option value="monitoring/testing">Monitoring/Testing</option>
-                                </select>
-                            </div>
+                                    <div class="form-group">
+                                        <label for="telMob">Mobile:</label>
+                                        <input type="tel" name="telMob" size="25" value="" class="form-control" ng-model="v.telMob">
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="availability">What days are you available to volunteer?</label>
-                                <select name="availability" class="form-control" ng-model="v.availability">
-                                    <option value="weekdays">Weekdays</option>
-                                    <option value="weekends">Weekends</option>
-                                    <option value="both">Both</option>
-                                </select>
-                            </div>
+                                    <div class="form-group">
+                                        <label for="telOther">Other tel:</label>
+                                        <input type="tel" name="telOther" size="25" value="" class="form-control" ng-model="v.telOther">
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="experience">Please list any relavant experience you may have:</label>
-                                <textarea name="experience" rows="6" cols="120" placeholder="" class="form-control" ng-model="v.experience"></textarea>
-                            </div>
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <input type="email" name="email" size="25" value="" class="form-control" ng-model="v.email">
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="medCond">Do you have any medical conditions/allergies that we should be aware about?</label>
-                                <textarea name="medCond" rows="6" cols="120" placeholder="" class="form-control" ng-model="v.medCond"></textarea>
-                            </div>
+                                    <div class="form-group">
+                                        <label for="commPref">Preferred method of contact:</label>
+                                        <select name="commPref" class="form-control" ng-model="v.commPref">
+                                            <option value="telHome">Home tel</option>
+                                            <option value="telMob">Mobile</option>
+                                            <option value="telOther">Other tel</option>
+                                            <option value="email">Email</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="volunteeringType">In what capacity would you like to volunteer?</label>
+                                        <select name="volunteeringType" class="form-control" ng-model="v.volunteeringType">
+                                            <option value="support at events">Support at Events</option>
+                                            <option value="field work">Field Work</option>
+                                            <option value="monitoring/testing">Monitoring/Testing</option>
+                                        </select>
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="lastTetnus">If relevant, what date was you last Tetanus?</label>
-                                <input type="date" name="lastTetnus" size="25" value="" class="form-control" ng-model="v.lastTetnus">
-                                <span class="help-block">(if more than 10 years ago please consult your GP)</span>
-                            </div>
-                            
-                        </fieldset>
-                        
-                        <br>
-                        
-                        <fieldset>
-                            
-                        <legend>Transport</legend>
-                            
-                            <div class="form-group">
-                                <label for="hasTransport">Do you have transport?</label>
-                                <br>
-                                <label class="radio-inline"><input type="radio" name="hasTransport" id="true" value="true">Yes</label>
-                                <label class="radio-inline"><input type="radio" name="hasTransport" id="false" value="false">No</label>
-                            </div>
+                                    <div class="form-group">
+                                        <label for="availability">What days are you available to volunteer?</label>
+                                        <select name="availability" class="form-control" ng-model="v.availability">
+                                            <option value="weekdays">Weekdays</option>
+                                            <option value="weekends">Weekends</option>
+                                            <option value="both">Both</option>
+                                        </select>
+                                    </div>
 
-                            <div class="form-group">
-                                <span class="help-block">If you answered No you can skip this part</span>
+                                    <div class="form-group">
+                                        <label for="experience">Please list any relavant experience you may have:</label>
+                                        <textarea name="experience" rows="6" cols="120" placeholder="" class="form-control" ng-model="v.experience"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="medCond">Do you have any medical conditions/allergies that we should be aware about?</label>
+                                        <textarea name="medCond" rows="6" cols="120" placeholder="" class="form-control" ng-model="v.medCond"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lastTetnus">If relevant, what date was you last Tetanus?</label>
+                                        <input type="date" name="lastTetnus" size="25" value="" class="form-control" ng-model="v.lastTetnus">
+                                        <span class="help-block">(if more than 10 years ago please consult your GP)</span>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="tab-pane" id="transport">
+                                <div class="form-group">
 
-                            <div class="form-group">
-                                <label for="make">Car make:</label>
-                                <input type="text" name="make" size="25" value="" class="form-control">
+                                    <div class="form-group">
+                                        <label for="hasTransport">Do you have transport?</label>
+                                        <br>
+                                        <label class="radio-inline"><input type="radio" name="hasTransport" id="true" value="true" ng-model="v.hasTransport">Yes</label>
+                                        <label class="radio-inline"><input type="radio" name="hasTransport" id="false" value="false" ng-model="v.hasTransport">No</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <span class="help-block">If you answered No you can skip this part</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="make">Car make:</label>
+                                        <input type="text" name="make" size="25" value="" class="form-control" ng-disabled="v.hasTransport=='false'">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="mode">Car model:</label>
+                                        <input type="text" name="mode" size="25" value="" class="form-control" ng-disabled="v.hasTransport=='false'">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="colour">Car colour:</label>
+                                        <input type="text" name="colour" size="25" value="" class="form-control" ng-disabled="v.hasTransport=='false'">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="reg">Car reg:</label>
+                                        <input type="text" name="reg" size="25" value="" class="form-control" ng-disabled="v.hasTransport=='false'">
+                                    </div>
+
+                                </fieldset>
                             </div>
-
+                        </div>
+                        <div class="tab-pane" id="emergency1">
                             <div class="form-group">
-                                <label for="mode">Car model:</label>
-                                <input type="text" name="mode" size="25" value="" class="form-control">
-                            </div>
 
+                                <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input type="text" name="name" size="42" value="" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="relationship">Relationship:</label>
+                                    <input type="text" name="relationship" size="25" value="" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="address">Address:</label>
+                                    <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="telHome">Home tel:</label>
+                                    <input type="tel" name="telHome" size="25" value="" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="telMob">Mobile:</label>
+                                    <input type="tel" name="telMob" size="25" value="" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="telOther">Other tel:</label>
+                                    <input type="tel" name="telOther" size="25" value="" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="contactDetails">Email:</label>
+                                    <input type="text" name="Em1email" size="25" value="" class="form-control">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="emergency2">
                             <div class="form-group">
-                                <label for="colour">Car colour:</label>
-                                <input type="text" name="colour" size="25" value="" class="form-control">
-                            </div>
 
+                                <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input type="text" name="name" size="42" value="" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="relationship">Relationship:</label>
+                                    <input type="text" name="relationship" size="25" value="" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="address">Address:</label>
+                                    <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="telHome">Home tel:</label>
+                                    <input type="tel" name="telHome" size="25" value="" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="telMob">Mobile:</label>
+                                    <input type="tel" name="telMob" size="25" value="" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="telOther">Other tel:</label>
+                                    <input type="tel" name="telOther" size="25" value="" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="contactDetails">Email:</label>
+                                    <input type="text" name="Em2email" size="25" value="" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="other">
                             <div class="form-group">
-                                <label for="reg">Car reg:</label>
-                                <input type="text" name="reg" size="25" value="" class="form-control">
+
+                                <div class="form-group">
+                                    <label for="heardFrom">Where did you hear about volunteering for Wear Rivers Trust?</label>
+                                    <select name="heardFrom" class="form-control">
+                                        <option value="website">Website</option>
+                                        <option value="local newspaper">Local Newspaper</option>
+                                        <option value="volunteer centre">Volunteer Centre</option>
+                                        <option value="wildlife volunteer">Wildlife Volunteer</option>
+                                        <option value="television">Television</option>
+                                        <option value="college careers service">College Careers Service</option>
+                                        <option value="friend">Friend</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="interestedInMore">Would you like to hear about other volunteering opportunities?</label>
+                                    <br>
+                                    <label class="radio-inline"><input type="radio" name="interestedInMore" id="true" value="true">Yes</label>
+                                    <label class="radio-inline"><input type="radio" name="interestedInMore" id="false" value="false">No</label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="photoConsent">Do you agree for any photographs to be published on our volunteer website and interpretation?</label>
+                                    <br>
+                                    <label class="radio-inline"><input type="radio" name="photoConsent" id="true" value="true">Yes</label>
+                                    <label class="radio-inline"><input type="radio" name="photoConsent" id="false" value="false">No</label>
+                                </div>
+
                             </div>
-                        
-                        </fieldset>
-                        
-                        <br>
-                        
-                        <fieldset>
-
-                            <legend>Emergency contact (1)</legend>
-
-                            <div class="form-group">
-                                <label for="name">Name:</label>
-                                <input type="text" name="name" size="42" value="" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="relationship">Relationship:</label>
-                                <input type="text" name="relationship" size="25" value="" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="address">Address:</label>
-                                <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="contactDetails">Contact Details:</label>
-                                <input type="text" name="contactDetails" size="25" value="" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telHome">Home tel:</label>
-                                <input type="tel" name="telHome" size="25" value="" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telMob">Mobile:</label>
-                                <input type="tel" name="telMob" size="25" value="" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telOther">Other tel:</label>
-                                <input type="tel" name="telOther" size="25" value="" class="form-control">
-                            </div>
-                            
-                        </fieldset>
-                        
-                        <br>
-                        
-                        <fieldset>
-
-                            <legend>Emergency contact (2)</legend>
-
-                            <div class="form-group">
-                                <label for="name">Name:</label>
-                                <input type="text" name="name" size="42" value="" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="relationship">Relationship:</label>
-                                <input type="text" name="relationship" size="25" value="" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="address">Address:</label>
-                                <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="contactDetails">Contact Details:</label>
-                                <input type="text" name="contactDetails" size="25" value="" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telHome">Home tel:</label>
-                                <input type="tel" name="telHome" size="25" value="" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telMob">Mobile:</label>
-                                <input type="tel" name="telMob" size="25" value="" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telOther">Other tel:</label>
-                                <input type="tel" name="telOther" size="25" value="" class="form-control">
-                            </div>
-                            
-                        </fieldset>
-                        
-                        <br>
-                        
-                        <fieldset>
-                            
-                            <legend>Other Information</legend>
-
-                            <div class="form-group">
-                                <label for="heardFrom">Where did you hear about volunteering for Wear Rivers Trust?</label>
-                                <select name="heardFrom" class="form-control">
-                                    <option value="website">Website</option>
-                                    <option value="local newspaper">Local Newspaper</option>
-                                    <option value="volunteer centre">Volunteer Centre</option>
-                                    <option value="wildlife volunteer">Wildlife Volunteer</option>
-                                    <option value="television">Television</option>
-                                    <option value="college careers service">College Careers Service</option>
-                                    <option value="friend">Friend</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="interestedInMore">Would you like to hear about other volunteering opportunities?</label>
-                                <br>
-                                <label class="radio-inline"><input type="radio" name="interestedInMore" id="true" value="true">Yes</label>
-                                <label class="radio-inline"><input type="radio" name="interestedInMore" id="false" value="false">No</label>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="photoConsent">Do you agree for any photographs to be published on our volunteer website and interpretation?</label>
-                                <br>
-                                <label class="radio-inline"><input type="radio" name="photoConsent" id="true" value="true">Yes</label>
-                                <label class="radio-inline"><input type="radio" name="photoConsent" id="false" value="false">No</label>
-                            </div>
-                        
-                        </fieldset>
-                        
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                    <button class="btn btn-primary" data-dismiss="modal" ng-click"change()">Save</button>
+
+
+
+
+
+
+
+
+
                 </div>
             </div>
-        </div>
-    </div>
-
-
-
-    <!-- Modal for email communication -->
-
-
-    <div id="emailModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Send communication</h4>
-                </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    Recipients:<br><span ng-repeat="v in select"><span style="text-transform: uppercase;">{{v.fName}} {{v.lName}}</span> &lt;{{v.email}}&gt;, </span><br>
-                    Subject:<input class="form-control" ng-model="email.subject">
-                    Email body:<textarea rows="10" class="form-control" ng-model="email.body"></textarea>
-                </div>
-                Note: You can put tags in the email e.g. {fName};
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                <button class="btn btn-primary" data-dismiss="modal" ng-click="sendEmail()">Send</button>
+                <button class="btn btn-primary" data-dismiss="modal" ng-click"change()">Save</button>
             </div>
         </div>
     </div>
 </div>
+
+
+
+<!-- Modal for email communication -->
+
+
+<div id="emailModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Send communication</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    Communication method:
+                    <select>
+                        <option>Communication Pref</option>
+                        <option>Force Email</option>
+                        <option>Force Letter</option>
+                    </select>
+                </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                Recipients:<br><span ng-repeat="v in select"><span style="text-transform: uppercase;">{{v.fName}} {{v.lName}}</span> &lt;{{v.email}}&gt;, </span><br>
+                                Subject:<input class="form-control" ng-model="email.subject">
+                                Body:<textarea rows="10" class="form-control" ng-model="email.body"></textarea>
+                            </div>
+                            Note: You can put tags in the email e.g. <span ng-non-bindable>{{fName}}<span ng-non-bindable>
+                        </div>
+                        <div class="col-sm-6">
+                            <h3>Preview</h3>
+                            <div class="form-group">
+                            {{subjectPreview}}
+                            <br><br>{{bodyPreview}}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    <button class="btn btn-primary" data-dismiss="modal" ng-click="sendEmail()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
