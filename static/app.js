@@ -47,7 +47,7 @@ angular.module('sortApp', ["checklist-model"])
   $scope.searchTerm   = '';      // set the default search/filter term
   $scope.modelShow = false
   // create the list of volunteers 
-  $scope.volunteers = "";
+  $scope.volunteers = {};
 
   $scope.select = [];
   $scope.email = {"subject":"","body":"","select":$scope.select}
@@ -75,6 +75,7 @@ angular.module('sortApp', ["checklist-model"])
 
   //Main data modification
   $scope.getData = function(callback) {
+    $scope.modelShow = false
     serverComm.getVolunteers().success(function(data) {
       if (typeof(data) === 'object') {
         $scope.volunteers = data;
