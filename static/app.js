@@ -66,8 +66,11 @@ angular.module('sortApp', ["checklist-model"])
       return $scope.volunteers.length;
     }
   }
-  $scope.getNumber = function(num) {
+  $scope.range = function(num) {
     return Array.apply(null, {length: num}).map(Number.call, Number)
+  }
+  $scope.setPage = function(num) {
+    $scope.currentPage = num;
   }
   $scope.isActive = function(id) {
     return id == $scope.currentPage ? 'active' : '';
@@ -78,6 +81,7 @@ angular.module('sortApp', ["checklist-model"])
     serverComm.getVolunteers().success(function(data) {
       if (typeof(data) === 'object') {
         $scope.volunteers = data;
+        $scope.filteredList = $scope.volunteers; // makes search work
         console.log("Get data", $scope.volunteers)
       }
       if (typeof callback !== "undefined"){
@@ -143,8 +147,105 @@ angular.module('sortApp', ["checklist-model"])
     });
   }
 
+  // Logic for check-all checkbox
+  $scope.checkAll = function () {
+      console.log("tick!");
+      console.log($scope.selectedAll);
+    if ($scope.selectedAll) {
+      $scope.selectedAll = true;
+    } else {
+      $scope.selectedAll = false;
+    }
+    angular.forEach($scope.volunteers, function (v) {
+      v.isSelected = $scope.selectedAll;
+    });
+  };
+  
+  $scope.selected = function() {
+      a = [];
+      angular.forEach($scope.filteredList, function (v) {
+      if (v.isSelected) {
+          a.push(v);
+      }
+    });
+    return a;
+  }
+  
+  //new
+  $scope.$watch('searchTerm', function () {
+    $scope.filteredList = $scope.$eval('volunteers | filter:searchTerm');
+  });
+  // end new
+
   $scope.getData();
 }])
+// new
+.directive('selectAllCheckbox', function () {
+  return {
+    replace: true,
+    restrict: 'E',
+    scope: {
+      checkboxes: '=',
+      allselected: '=allSelected',
+      allclear: '=allClear',
+      multiple: '=multiple',
+      ids: '=ids'
+    },
+    template: '<input type="checkbox" class="input-checkbox" ng-model="master" ng-change="masterChange()">',
+    controller: function ($scope, $element) {
+      $scope.masterChange = function () {
+        if ($scope.master) {
+          angular.forEach($scope.checkboxes, function (cb, index) {
+            cb.isSelected = true;
+          });
+        } else {
+         angular.forEach($scope.checkboxes, function (cb, index) {
+            cb.isSelected = false;
+          });
+        }
+      };
+      $scope.$watchCollection('checkboxes', function (newVal,oldVal) {
+        if(newVal !== oldVal){
+          var allSet = true,allClear = true, countSelected = 0;
+          $scope.ids = [];
+          angular.forEach($scope.checkboxes, function (cb, index) {
+            if(cb.isSelected){
+              countSelected ++;
+              $scope.ids.push(cb.id);
+            }
+            if (cb.isSelected) {
+              allClear = false;
+            } else {
+              allSet = false;
+            }
+          });
+          if(countSelected > 1){
+            $scope.multiple = true
+          }else{
+            $scope.multiple = false
+          }
+          if ($scope.allselected !== undefined) {
+            $scope.allselected = allSet;
+          }
+          if ($scope.allclear !== undefined) {
+            $scope.allclear = allClear;
+          }
+
+          $element.prop('indeterminate', false);
+          if (allSet) {
+            $scope.master = true;
+          } else if (allClear) {
+            $scope.master = false;
+          } else {
+            $scope.master = false;
+            $element.prop('indeterminate', true);
+          }
+        }
+      }, true);
+    }
+  };
+})
+//end new
 
 //We already have a limitTo filter built-in to angular,
 //let's make a startFrom filter
