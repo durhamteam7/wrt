@@ -74,6 +74,10 @@ angular.module('sortApp', ["checklist-model"])
   $scope.email = { "subject": "", "body": "", "select": $scope.select }
   $scope.emailPreview = { "subject": "", "body": "" }
 
+  $scope.tableHeadings = [{ key: "fName", title: "First Name(s)" },
+                          { key: "lName", title: "Last Name" },
+                          { key: "email", title: "Email" },
+                          { key: "telHome", title: "Telephone" }];
 
   // Pagination variables
   $scope.currentPage = 0;
@@ -220,6 +224,10 @@ angular.module('sortApp', ["checklist-model"])
 
   $scope.emailChange = function() {
     $scope.emailPreview = {"subject":Mustache.render($scope.email.subject, $scope.select[0]),"body":Mustache.render($scope.email.body, $scope.select[0])}
+  }
+  
+  $scope.logout = function() {
+    window.location = '/logout';
   }
 
   // Logic for check-all checkbox

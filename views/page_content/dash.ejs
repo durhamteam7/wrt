@@ -3,8 +3,11 @@
     <script src="//static.scripting.com/bootstrap/1.4.0/js/bootstrap-tabs.js"></script>
     <script src="/app.js"></script>
     <style type="text/css">
-        @media screen and (min-width: 768px) {
-            .modal-dialog {
+      .container {
+          margin-top: 20px;
+      }
+      @media screen and (min-width: 768px) {
+          .modal-dialog {
               width: 700px; /* New width for default modal */
           }
           .modal-sm {
@@ -12,119 +15,167 @@
           }
       }
       @media screen and (min-width: 992px) {
-        .modal-lg {
-          width: 950px; /* New width for large modal */
+          .modal-lg {
+              width: 950px; /* New width for large modal */
       }
   }
 </style>
 
 <div class="container" ng-app="sortApp" ng-controller="mainController">
     <div class="row">
+        <div class="col-xs-12">
 
-        <div class="alert alert-info" ng-class="mode == 'normal' ? 'alert-info' : 'alert-success'" role="alert">
-            <a href="#" class="alert-link" ng-click="mode == 'normal' ? getUnapproved() : getApproved()">{{ mode == "normal" ? getNumberOfUnapprovedVolunteers() + " new registrations to approve" : "Back to volunteer table"}} </a>
+            <div class="alert alert-info ng-hide" ng-class="mode == 'normal' ? 'alert-info' : 'alert-success'" ng-show="numberOfUnapprovedVolunteers > 0" role="alert">
+                <a href="#" class="alert-link" ng-click="mode == 'normal' ? getUnapproved() : getApproved()">{{ mode == "normal" ? getNumberOfUnapprovedVolunteers() + " new registrations to approve" : "Back to volunteer table"}} </a>
+            </div>
+            
+            <div class="page-header">
+                <h1>Manage Volunteers</h1>
+            </div>
+            
         </div>
-        
-        <h1>Manage Volunteers</h1>
-        <br>
     </div>
     <div class="row">
         <div class="col-xs-3">
-            <form class="form-inline">
-                <label for="rows-to-show">Rows to show</label>
-                <select ng-model="pageSize" name="rows-to-show" class="form-control">
-                    <option ng-repeat="n in pageSizeOptions" ng-selected="n == pageSizeOptions[1]" value="{{ n }}">{{ n }}</option>
-                </select>
-            </form>
-        </div>
-        <div class="col-xs-6">
-            <div class="btn-group pull-right">
-                <a href="#" class="btn btn-success" ng-click="newVolunteer()">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Add Volunteer
-                </a>
-
-                <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#emailModal" ng-disabled="select.length == 0" ng-class="{disabled:(select.length == 0)}">
-                    <span class="glyphicon glyphicon-envelope"></span>
-                    Communication
-                </a>
-            </div>
-        </div>
-        <div class="col-xs-3">
-            <div class="input-group">
+            <div class="input-group pull-left">
                 <a href="" class="input-group-addon" id="basic-addon1">
                     <span class="glyphicon glyphicon-search"></span>
                 </a>
                 <input type="text" class="form-control" ng-model="searchTerm" placeholder="Search for...">
             </div><!-- /input-group -->
         </div>
+        <div class="col-xs-2">
+            <form class="form-inline pull-left">
+                <select ng-model="pageSize" name="rows-to-show" class="form-control">
+                    <option ng-repeat="n in pageSizeOptions" ng-selected="n == pageSizeOptions[1]" value="{{ n }}">Show {{ n }} rows</option>
+                </select>
+            </form>
+        </div>
+        <div class="col-xs-4">
+            <div class="btn-group pull-right">
+                
+                <a href="#" class="btn btn-success" ng-click="newVolunteer()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add Volunteer
+                </a>
+
+                <a href="#" class="btn btn-info" data-toggle="modal" data-target="#emailModal" ng-disabled="select.length == 0" ng-class="{disabled:(select.length == 0)}">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                    Communication
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="btn-group pull-right">
+                
+                <a href="#" class="btn btn-default" data-toggle="modal" data-target="#settingsModal">
+                    <span class="glyphicon glyphicon-cog"></span>
+                    Settings
+                </a><!-- Opens a modal (yay modals!) to change settings such as table headings shown. -->
+                
+                <a href="#" class="btn btn-default" ng-click="logout()">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    Log Out
+                </a><!-- Opens a modal (yay modals!) to change settings such as table headings shown. -->
+                
+            </div>
+        </div>
         
     </div>
     <br>
     <div class="row">
+        <div class="col-xs-12">
 
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>
-                        <select-all-checkbox checkboxes="filteredList" all-selected="allSelectedWtVolunteers" all-clear="noSelectedWtVolunteers" multiple="multipleWtVolunteers" ids="selectedWVolunteersIds"></select-all-checkbox>
-                        <!--<input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" />-->
-                    </th>
-                    <th>
-                        <a href="#" ng-click="sortType = 'fName'; sortReverse = !sortReverse">
-                            First Name(s)
-                            <span ng-show="sortType == 'fName' && !sortReverse" class="fa fa-caret-down"></span>
-                            <span ng-show="sortType == 'fName' && sortReverse" class="fa fa-caret-up"></span>
-                        </a>
-                    </th>
-                    <th>
-                        <a href="#" ng-click="sortType = 'lName'; sortReverse = !sortReverse">
-                            Last Name 
-                            <span ng-show="sortType == 'lName' && !sortReverse" class="fa fa-caret-down"></span>
-                            <span ng-show="sortType == 'lName' && sortReverse" class="fa fa-caret-up"></span>
-                        </a>
-                    </th>
-                    <th>Email</th>
-                    <th>Telephone</th>
-                    <th>Operations</th>
-                </tr>
-            </thead>
-            <tbody id="volunteer-table">
-                <tr ng-repeat="v in filteredList | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:sortType:sortReverse | filter:searchTerm">
-                    <td><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
-                    <td>{{ v.fName }}</td>
-                    <td>{{ v.lName }}</td>
-                    <td>{{ v.email }}</td>
-                    <td>{{ v.telHome }}</td>
-                    <td>
-                        
-                        <a href=""  onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" ng-click="change(v._id,$index)"><span class="glyphicon glyphicon-pencil"></span></a>
-                        <a id="{{v._id}}bin" href="" onclick="return false;" ng-click="delete(v._id,$index)"><span class="glyphicon glyphicon-trash"></span></a>
-                        <a id="{{v._id}}approve" href="" onclick="return false;" ng-click="approve(v._id,$index)" ng-hide="mode == 'normal'"><span class="glyphicon glyphicon-ok"></span></a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        
-        
-        <!-- new
-        Filtered:
-        <div class="col-sm-12" ng-repeat="v in filteredList">
-            <input type="checkbox" ng-model="v.isSelected"> {{v.fName}} {{v.lName}}
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <select-all-checkbox checkboxes="filteredList" all-selected="allSelectedWtVolunteers" all-clear="noSelectedWtVolunteers" multiple="multipleWtVolunteers" ids="selectedWVolunteersIds"></select-all-checkbox>
+                            <!--<input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" />-->
+                        </th>
+                        <!--
+                        <th ng-repeat="heading in tableHeadings">
+                            <a href="#" ng-click="sortType = '{{ heading.key }}'; sortReverse = !sortReverse">
+                                {{ heading.title }}
+                                <span ng-show="sortType == '{{ heading.key }}' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == '{{ heading.key }}' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        Don't understand why this above doesn't work
+                        -->
+                        <th>
+                            <a href="#" ng-click="sortType = 'fName'; sortReverse = !sortReverse">
+                                First Name(s)
+                                <span ng-show="sortType == 'fName' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'fName' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="#" ng-click="sortType = 'lName'; sortReverse = !sortReverse">
+                                Last Name 
+                                <span ng-show="sortType == 'lName' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'lName' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="#" ng-click="sortType = 'email'; sortReverse = !sortReverse">
+                                Email
+                                <span ng-show="sortType == 'email' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'email' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="#" ng-click="sortType = 'telHome'; sortReverse = !sortReverse">
+                                Telephone
+                                <span ng-show="sortType == 'telHome' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'telHome' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th>
+                            Operations
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="volunteer-table">
+                    <tr ng-repeat="v in filteredList | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:sortType:sortReverse | filter:searchTerm">
+                        <td><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
+                        <td>{{ v.fName }}</td>
+                        <td>{{ v.lName }}</td>
+                        <td>{{ v.email }}</td>
+                        <td>{{ v.telHome }}</td>
+                        <td>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" ng-click="change(v._id,$index)" class="btn btn-xs btn-block btn-primary">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                </div>
+                                <div class="col-xs-4">
+                                    <a id="{{v._id}}bin" href="" onclick="return false;" ng-click="delete(v._id,$index)" class="btn btn-xs btn-block btn-danger">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </div>
+                                <div class="col-xs-4">
+                                    <a id="{{v._id}}approve" href="" onclick="return false;" ng-click="approve(v._id,$index)" ng-hide="mode == 'normal'" class="btn btn-xs btn-block btn-success">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
         </div>
-        <br>
-        All:
-        <div class="col-sm-12" ng-repeat="v in volunteers">
-            <input type="checkbox" ng-model="v.isSelected"> {{v.fName}} {{v.lName}}
-        </div>
-        end new -->
         
+    </div>
+    <div class="row">
         
         <div class="col-xs-6">
             <p>Showing {{volunteers.length == 0 ? 0 : (currentPage * pageSize) + 1}} to {{rowsShown()}} of {{volunteers.length}} entries</p>
         </div>
         <nav class="col-xs-6">
-            <ul id="pagination" class="pagination pull-right">
+            <ul id="pagination" class="pagination pull-right" style="margin-top: 0px;">
                 <li ng-class="currentPage <= 0 ? 'disabled' : ''">
                     <a href="#" aria-label="Previous" ng-click="currentPage = currentPage - 1" ng-class="currentPage <= 0 ? 'hidden' : ''">
                         <span aria-hidden="true">&laquo; Previous</span>
@@ -147,5 +198,3 @@
 
 <%- include('editModal.ejs') %>
 <%- include('emailModal.ejs') %>
-
-
