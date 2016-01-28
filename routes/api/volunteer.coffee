@@ -100,6 +100,22 @@ router.get '/:id', (req,res)->
 		res.redirect '/404.htm'
 
 
+router.post '/approve', (req,res)->	#CREATE APPROVED VOLUNTEER
+	console.log "Making new approved volunteer"
+	volunteer = new Volunteer()
+	volunteer["approved"] = true
+	volunteer.save (err)->
+		if !err
+			res.json volunteer.toJSON()
+
+router.post '/unapprove', (req,res)->	#CREATE UNAPPROVED VOLUNTEER
+	console.log "Making new unapproved volunteer"
+	volunteer = new Volunteer()
+	volunteer["approved"] = false
+	volunteer.save (err)->
+		if !err
+			res.json volunteer.toJSON()
+
 router.post '/', (req,res)->	#CREATE
 	console.log "Making new volunteer"
 	volunteer = new Volunteer()

@@ -33,7 +33,7 @@ angular.module('sortApp', ["checklist-model"])
       });
     },
     addVolunteer: function() {
-      return $http.post('/api/volunteer/').success(function() {
+      return $http.post('/api/volunteer/approve/').success(function() {
       });
     },
     updateVolunteers: function($params) {
@@ -54,8 +54,8 @@ angular.module('sortApp', ["checklist-model"])
         console.log("Emails sent")
       });
     }
-
-  };}])
+  };
+}])
 
 
 
