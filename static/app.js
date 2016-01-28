@@ -58,7 +58,8 @@ angular.module('sortApp', ["checklist-model"])
 
   // Pagination variables
   $scope.currentPage = 0;
-  $scope.pageSize = 10;
+  $scope.pageSizeOptions = [10, 25, 50, 100];
+  $scope.pageSize = $scope.pageSizeOptions[1];
   $scope.numberOfPages = function() {
     return Math.ceil($scope.volunteers.length/$scope.pageSize);
   }
