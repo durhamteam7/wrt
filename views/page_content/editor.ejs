@@ -1,0 +1,81 @@
+<script src="bootstrap-wysiwyg.js"></script>
+<link href="editor.css">
+
+<!-- include summernote css/js-->
+<link href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.7.3/summernote.css" rel="stylesheet">
+<script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.7.3/summernote.js"></script>
+
+<div id="summernote"></div>
+<input id="emailSubject" ng-model="email.body" ng-change="emailChange()" style="display:none">
+<script>
+  $(document).ready(function() {
+
+   var HelloButton = function (context) {
+    var ui = $.summernote.ui;
+    var button = ui.button({
+      contents: 'Insert Field <span class="caret"></span>'
+    });
+    return button.render();   // return button as jquery object 
+}
+
+
+$('#summernote').summernote({
+  height: 100,
+
+  toolbar: [
+  ['mybutton', ['hello']]
+  ],
+
+  buttons: {
+    hello: HelloButton
+  },
+
+  placeholder: 'Type message body...',
+  hint: {
+    words: ['{{fName}}', 'lname'],
+    match: /\b(\w{1,})$/,
+    search: function (keyword, callback) {
+      callback($.grep(this.words, function (item) {
+        return item.indexOf(keyword) === 0;
+      }));
+    }
+  }
+});
+
+// summernote.change
+$('#summernote').on('summernote.change', function(we, contents, $editable) {
+  console.log(contents.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+  $("#emailSubject").val(contents.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+});
+
+
+$(".note-mybutton").children().addClass("dropdown-toggle").attr("data-toggle","dropdown")
+
+//Define list of fields
+var fields = [{"desc":'First name',"val":"fName"},{"desc":'Last Name(s)',"val":"lName"}]
+
+fieldString = ""
+$.each(fields, function (idx, field) {
+  fieldString += '<a href="#" onClick="$(\'#summernote\').summernote(\'insertText\', \'{{'+field.val+'}}\');">'+field.desc+'</a>'
+});
+
+$(".note-mybutton").append('<div class="dropdown-menu note-drop dropdown-mybutton"><li id="tagList">'+
+fieldString+'</li></div>')
+});
+
+
+//Simulates input change
+    (function($){
+      var originalVal = $.fn.val;
+      $.fn.val = function(){
+        var result =originalVal.apply(this,arguments);
+        if(arguments.length>0)
+          $(this).change();
+        return result;
+      };
+    })(jQuery);
+
+</script>
+
+
+

@@ -57,6 +57,8 @@ angular.module('sortApp', ["checklist-model"])
 
   };}])
 
+
+
 // Controller
 .controller('mainController', ['$scope', 'ajax', function($scope, serverComm) {
 
@@ -69,7 +71,8 @@ angular.module('sortApp', ["checklist-model"])
   $scope.mode = "normal";
 
   $scope.select = [];
-  $scope.email = { "subject": "", "body": "", "select": $scope.select };
+  $scope.email = { "subject": "", "body": "", "select": $scope.select }
+  $scope.emailPreview = { "subject": "", "body": "" }
 
 
   // Pagination variables
@@ -211,11 +214,12 @@ angular.module('sortApp', ["checklist-model"])
   }
 
   $scope.sendEmail = function(id,index) {
-    console.log("change");
-
     serverComm.sendEmail($scope.email).success(function(data) {
-
     });
+  }
+
+  $scope.emailChange = function() {
+    $scope.emailPreview = {"subject":Mustache.render($scope.email.subject, $scope.select[0]),"body":Mustache.render($scope.email.body, $scope.select[0])}
   }
 
   // Logic for check-all checkbox
@@ -327,15 +331,35 @@ angular.module('sortApp', ["checklist-model"])
     }
 })
 
+.directive("contenteditable", function() {
+  return {
+    restrict: "A",
+    require: "ngModel",
+    link: function(scope, element, attrs, ngModel) {
+
+      function read() {
+        ngModel.$setViewValue(element.html());
+      }
+
+      ngModel.$render = function() {
+        element.html(ngModel.$viewValue || "");
+      };
+
+      element.bind("blur keyup change", function() {
+        scope.$apply(read);
+      });
+    }
+  };
+})
+
+
 //Directive for DOM manipulation
 .directive('displayModal', function() {
     
     return {
         restrict: 'A', // restricts the use of the directive (use it as an attribute)
         link: function(scope, elm, attrs) { // fires when the element is created and is linked to the scope of the parent controller
-            console.log(scope.modelShow)
             if (scope.modelShow){
-              console.log("MODEL TIME")
               elm.modal();
             }
         }

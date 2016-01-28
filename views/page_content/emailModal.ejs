@@ -1,0 +1,52 @@
+<!-- Modal for email communication -->
+
+
+<div id="emailModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Send communication</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    Communication method:
+                    <select>
+                        <option>Communication Pref</option>
+                        <option>Force Email</option>
+                        <option>Force Letter</option>
+                    </select>
+                </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                Recipients:<br><span ng-repeat="v in selected()"><span style="text-transform: uppercase;">{{v.fName}} {{v.lName}}</span> &lt;{{v.email}}&gt;, </span><br>
+                                Subject:<input class="form-control" ng-model="email.subject" ng-change="emailChange()">
+                                Body:<%- include('editor.ejs') %>
+                                
+                            </div>
+                            Note: You can put tags in the email e.g. <span ng-non-bindable>{{fName}}<span ng-non-bindable>
+                        </div>
+                        <div class="col-sm-6">
+                            <h3>Preview</h3>
+                            <div class="form-group">
+                                {{emailPreview.subject}}
+                                <br><br>{{emailPreview.body}}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    <button class="btn btn-primary" data-dismiss="modal" ng-click="sendEmail()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
