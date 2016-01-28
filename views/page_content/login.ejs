@@ -1,93 +1,47 @@
 
 <!-- All the files that are required -->
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<script>
-(function($) {
-    "use strict";
-  
-  // Options for Message
-  //----------------------------------------------
-  var options = {
-    'btn-loading': '<i class="fa fa-spinner fa-pulse"></i>',
-    'btn-success': '<i class="fa fa-check"></i>',
-    'btn-error': '<i class="fa fa-remove"></i>',
-    'msg-success': 'All Good! Redirecting...',
-    'msg-error': 'Wrong login credentials!',
-    'useAJAX': true,
-  };
+<section id="login">
+    <div class="container">
+      <div class="row">
+          <div class="col-xs-12">
+              <div class="form-wrap">
+              <img src="wearRiversLogo.png">
+                <h1>Volunteer Database</h1>
+                <h2>Login</h2>
+                    <form role="form" action='/loginauth' method='POST' id="login-form" autocomplete="off">
+                        <div class="form-group">
+                            <label for="email" class="sr-only">Email</label>
+                            <input type="text" id="userName" name='username' class="form-control" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="key" class="sr-only">Password</label>
+                            <input type="password" id="password" name="password"  class="form-control" placeholder="Password">
+                        </div>
+                        <div class="checkbox">
+                            <span class="character-checkbox" onclick="showPassword()"></span>
+                            <span class="label">Show password</span>
+                        </div>
+                        <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Log in">
+                    </form>
+                    <hr>
+              </div>
+        </div> <!-- /.col-xs-12 -->
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+</section>
 
-  // Login Form
-  //----------------------------------------------
-  // Validation
-  $("#login-form").validate({
-    rules: {
-      lg_username: "required",
-      lg_password: "required",
-    },
-    errorClass: "form-invalid"
-  });
-  
-  // Form Submission
-  $("#login-form").submit(function() {
-    remove_loading($(this));
-    // Loading
-  //----------------------------------------------
-  function remove_loading($form)
-  {
-    $form.find('[type=submit]').removeClass('error success');
-    $form.find('.login-form-main-message').removeClass('show error success').html('');
-  }
-
-  function form_loading($form)
-  {
-    $form.find('[type=submit]').addClass('clicked').html(options['btn-loading']);
-  }
-  
-  function form_success($form)
-  {
-    $form.find('[type=submit]').addClass('success').html(options['btn-success']);
-    $form.find('.login-form-main-message').addClass('show success').html(options['msg-success']);
-  }
-
-  function form_failed($form)
-  {
-    $form.find('[type=submit]').addClass('error').html(options['btn-error']);
-    $form.find('.login-form-main-message').addClass('show error').html(options['msg-error']);
-  }
-
-</script>
-
-<!-- Where all the magic happens -->
-<!-- LOGIN FORM -->
-<div class="text-center" style="padding:50px 0">
-  <div class="logo">login</div>
-  <!-- Main Form -->
-  <div class="login-form-1">
-    <form action='/loginauth' method='POST'id="login-form" class="text-left">
-      <div class="login-form-main-message"></div>
-      <div class="main-login-form">
-        <div class="login-group">
-          <div class="form-group">
-            <label for="lg_username" class="sr-only">Username</label>
-            <input type="text" class="form-control" id="userName" name="username" placeholder="username">
-          </div>
-          <div class="form-group">
-            <label for="lg_password" class="sr-only">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="password">
-          </div>
-          
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <p>© Team 7 - 2016</p>
+            </div>
         </div>
-        <a href='/dash'><button type="submit" class="login-button"><i class="fa fa-chevron-right"></i></button></a>
-      </div>
-      
-    </form>
-  </div>
-  <!-- end:Main Form -->
-</div>
+    </div>
+</footer>
+
 
 <!-- <form action='/loginauth' method='POST'>
   <label>Username</label><input type="text" id="userName" name='username'>
@@ -98,163 +52,106 @@
 
 <!-- CSS -->
 <style>
-html,
-body {
-  background: #efefef;
-  padding: 10px;
-  font-family: 'Varela Round';
+/*    --------------------------------------------------
+  :: Login Section
+  -------------------------------------------------- */
+#login {
+    padding-top: 50px;
+    text-align: center;
 }
-/*=== 2. Anchor Link ===*/
-a {
-  color: #aaaaaa;
-  transition: all ease-in-out 200ms;
+#login .form-wrap {
+    width: 30%;
+    margin: 0 auto;
 }
-a:hover {
-  color: #333333;
-  text-decoration: none;
+#login h1,#login h2 {
+    /*color: #1fa67b;*/
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom:-15px;
 }
-/*=== 3. Text Outside the Box ===*/
-.etc-login-form {
-  color: #919191;
-  padding: 10px 20px;
+#login h2 {
+    font-size: 14px;
+    padding-bottom: 20px;
+    margin-bottom:0;
+
 }
-.etc-login-form p {
-  margin-bottom: 5px;
+#login .form-group {
+    margin-bottom: 25px;
 }
-/*=== 4. Main Form ===*/
-.login-form-1 {
-  max-width: 300px;
-  border-radius: 5px;
-  display: inline-block;
+#login .checkbox {
+    margin-bottom: 20px;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
-.main-login-form {
-  position: relative;
+#login .checkbox.show:before {
+    content: '\e013';
+    /*color: #1fa67b;*/
+    font-size: 17px;
+    margin: 1px 0 0 3px;
+    position: absolute;
+    pointer-events: none;
+    font-family: 'Glyphicons Halflings';
 }
-.login-form-1 .form-control {
-  border: 0;
-  box-shadow: 0 0 0;
-  border-radius: 0;
-  background: transparent;
-  color: #555555;
-  padding: 7px 0;
-  font-weight: bold;
-  height:auto;
+#login .checkbox .character-checkbox {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    display: inline-block;
 }
-.login-form-1 .form-control::-webkit-input-placeholder {
-  color: #999999;
+#login .checkbox .label {
+    color: #6d6d6d;
+    font-size: 13px;
+    font-weight: normal;
 }
-.login-form-1 .form-control:-moz-placeholder,
-.login-form-1 .form-control::-moz-placeholder,
-.login-form-1 .form-control:-ms-input-placeholder {
-  color: #999999;
+#login .btn.btn-custom {
+    font-size: 14px;
+  margin-bottom: 20px;
 }
-.login-form-1 .form-group {
-  margin-bottom: 0;
-  border-bottom: 2px solid #efefef;
-  padding-right: 20px;
-  position: relative;
+.checkbox{
+  text-align: left;
 }
-.login-form-1 .form-group:last-child {
-  border-bottom: 0;
-}
-.login-group {
-  background: #ffffff;
-  color: #999999;
-  border-radius: 8px;
-  padding: 10px 20px;
-}
-.login-group-checkbox {
-  padding: 5px 0;
-}
-/*=== 5. Login Button ===*/
-.login-form-1 .login-button {
-  position: absolute;
-  right: -25px;
-  top: 50%;
-  background: #ffffff;
-  color: #999999;
-  padding: 11px 0;
-  width: 50px;
-  height: 50px;
-  margin-top: -25px;
-  border: 5px solid #efefef;
-  border-radius: 50%;
-  transition: all ease-in-out 500ms;
-}
-.login-form-1 .login-button:hover {
-  color: #555555;
-  transform: rotate(450deg);
-}
-.login-form-1 .login-button.clicked {
-  color: #555555;
-}
-.login-form-1 .login-button.clicked:hover {
-  transform: none;
-}
-.login-form-1 .login-button.clicked.success {
-  color: #2ecc71;
-}
-.login-form-1 .login-button.clicked.error {
-  color: #e74c3c;
-}
-/*=== 6. Form Invalid ===*/
-label.form-invalid {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 5;
+#login .forget {
+    font-size: 13px;
+  text-align: center;
   display: block;
-  margin-top: -25px;
-  padding: 7px 9px;
-  background: #777777;
-  color: #ffffff;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 11px;
 }
-label.form-invalid:after {
-  top: 100%;
-  right: 10px;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-color: transparent;
-  border-top-color: #777777;
-  border-width: 6px;
+
+/*    --------------------------------------------------
+  :: Inputs & Buttons
+  -------------------------------------------------- */
+.form-control {
+    /*color: #212121;*/
 }
-/*=== 7. Form - Main Message ===*/
-.login-form-main-message {
-  background: #ffffff;
-  color: #999999;
-  border-left: 3px solid transparent;
-  border-radius: 3px;
-  margin-bottom: 8px;
-  font-weight: bold;
-  height: 0;
-  padding: 0 20px 0 17px;
-  opacity: 0;
-  transition: all ease-in-out 200ms;
+.btn-custom {
+    /*color: #fff;*/
+  /*background-color: #1fa67b;*/
 }
-.login-form-main-message.show {
-  height: auto;
-  opacity: 1;
-  padding: 10px 20px 10px 17px;
+.btn-custom:hover,
+.btn-custom:focus {
+    /*color: #fff;*/
 }
-.login-form-main-message.success {
-  border-left-color: #2ecc71;
+
+/*    --------------------------------------------------
+    :: Footer
+  -------------------------------------------------- */
+#footer {
+    /*color: #6d6d6d;*/
+    font-size: 12px;
+    text-align: center;
 }
-.login-form-main-message.error {
-  border-left-color: #e74c3c;
+#footer p {
+    margin-bottom: 0;
 }
-/*=== 9. Misc ===*/
-.logo {
-  padding: 15px 0;
-  font-size: 25px;
-  color: #aaaaaa;
-  font-weight: bold;
+#footer a {
+    color: inherit;
 }
 </style>
 
@@ -267,3 +164,22 @@ label.form-invalid:after {
 
 
 
+<script>
+function showPassword() {
+    
+    var key_attr = $('#password').attr('type');
+    
+    if(key_attr != 'text') {
+        
+        $('.checkbox').addClass('show');
+        $('#password').attr('type', 'text');
+        
+    } else {
+        
+        $('.checkbox').removeClass('show');
+        $('#password').attr('type', 'password');
+        
+    }
+    
+}
+</script>
