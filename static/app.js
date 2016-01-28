@@ -14,6 +14,24 @@ angular.module('sortApp', ["checklist-model"])
       return $http.get('/api/volunteer/').success(function() {
       });
     },
+    getApprovedVolunteers: function() {
+      return $http.get('/api/volunteer/approved').success(function() {
+      });
+    },
+    getUnapprovedVolunteers: function() {
+      return $http.get('/api/volunteer/unapproved').success(function() {
+      });
+    },
+    approveVolunteers: function(id) {
+      return $http.patch('/api/volunteer/approve/' + id).success(function() {
+        console.log("approved")
+      });
+    },
+    unapproveVolunteers: function(id) {
+      return $http.patch('/api/volunteer/unapprove/' + id).success(function() {
+        console.log("unapproved")
+      });
+    },
     addVolunteer: function() {
       return $http.post('/api/volunteer/').success(function() {
       });
@@ -45,12 +63,13 @@ angular.module('sortApp', ["checklist-model"])
   $scope.sortType     = 'fName'; // set the default sort type
   $scope.sortReverse  = false;   // set the default sort order
   $scope.searchTerm   = '';      // set the default search/filter term
-  $scope.modelShow = false
+  $scope.modelShow    = false;
   // create the list of volunteers 
   $scope.volunteers = {};
+  $scope.mode = "normal";
 
   $scope.select = [];
-  $scope.email = {"subject":"","body":"","select":$scope.select}
+  $scope.email = { "subject": "", "body": "", "select": $scope.select };
 
 
   // Pagination variables
@@ -77,14 +96,35 @@ angular.module('sortApp', ["checklist-model"])
     return id == $scope.currentPage ? 'active' : '';
   }
 
-  //Main data modification
-  $scope.getData = function(callback) {
+  //Main data modification - Gets all approved volunteers
+  $scope.getApproved = function(callback) {
     $scope.modelShow = false
-    serverComm.getVolunteers().success(function(data) {
+    serverComm.getApprovedVolunteers().success(function(data) {
       if (typeof(data) === 'object') {
         $scope.volunteers = data;
         $scope.filteredList = $scope.volunteers; // makes search work
         console.log("Get data", $scope.volunteers)
+        
+        $scope.setNumberOfUnapprovedVolunteers();
+        
+        $scope.mode = "normal";
+      }
+      if (typeof callback !== "undefined"){
+        callback();
+      }
+    });
+  }
+  
+  // Gets all unapproved volunteers
+  $scope.getUnapproved = function(callback) {
+    $scope.modelShow = false
+    serverComm.getUnapprovedVolunteers().success(function(data) {
+      if (typeof(data) === 'object') {
+        $scope.volunteers = data;
+        $scope.filteredList = $scope.volunteers; // makes search work
+        console.log("Get data", $scope.volunteers)
+        
+        $scope.mode = "approving";
       }
       if (typeof callback !== "undefined"){
         callback();
@@ -92,10 +132,39 @@ angular.module('sortApp', ["checklist-model"])
     });
   }
 
+  $scope.setNumberOfUnapprovedVolunteers = function() {
+    serverComm.getUnapprovedVolunteers().success(function(data) {
+        $scope.numberOfUnapprovedVolunteers = data.length;
+        console.log(data.length);
+    });  
+  }
+
+  $scope.getNumberOfUnapprovedVolunteers = function() {
+      if ($scope.numberOfUnapprovedVolunteers == 0) {
+          return "No";
+      } else {
+          return $scope.numberOfUnapprovedVolunteers;
+      }
+  }
+
   $scope.delete = function(id,index) {
     serverComm.deleteVolunteers(id).success(function(data) {
         //Remove record from $scope.volunteers
         $scope.volunteers.splice(getIndexFromId(id), 1);
+      }); 
+  }
+
+  $scope.approve = function(id,index) {
+    serverComm.approveVolunteers(id).success(function(data) {
+        //Remove record from $scope.volunteers
+        $scope.volunteers.splice(getIndexFromId(id), 1);
+      }); 
+  }
+
+  $scope.unapprove = function(id,index) {
+    serverComm.unapproveVolunteers(id).success(function(data) {
+        //Remove record from $scope.volunteers
+        //$scope.volunteers.splice(getIndexFromId(id), 1);
       }); 
   }
 
@@ -178,8 +247,8 @@ angular.module('sortApp', ["checklist-model"])
     $scope.filteredList = $scope.$eval('volunteers | filter:searchTerm');
   });
   // end new
-
-  $scope.getData();
+  
+  $scope.getApproved();
 }])
 // new
 .directive('selectAllCheckbox', function () {

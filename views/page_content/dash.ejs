@@ -21,8 +21,8 @@
 <div class="container" ng-app="sortApp" ng-controller="mainController">
     <div class="row">
 
-        <div class="alert alert-info" role="alert">
-            <a href="#" class="alert-link">5 new registrations to approve</a>
+        <div class="alert alert-info" ng-class="mode == 'normal' ? 'alert-info' : 'alert-success'" role="alert">
+            <a href="#" class="alert-link" ng-click="mode == 'normal' ? getUnapproved() : getApproved()">{{ mode == "normal" ? getNumberOfUnapprovedVolunteers() + " new registrations to approve" : "Back to volunteer table"}} </a>
         </div>
         
         <h1>Manage Volunteers</h1>
@@ -96,8 +96,10 @@
                     <td>{{ v.email }}</td>
                     <td>{{ v.telHome }}</td>
                     <td>
+                        
                         <a href=""  onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" ng-click="change(v._id,$index)"><span class="glyphicon glyphicon-pencil"></span></a>
                         <a id="{{v._id}}bin" href="" onclick="return false;" ng-click="delete(v._id,$index)"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a id="{{v._id}}approve" href="" onclick="return false;" ng-click="approve(v._id,$index)" ng-hide="mode == 'normal'"><span class="glyphicon glyphicon-ok"></span></a>
                     </td>
                 </tr>
             </tbody>

@@ -120,6 +120,12 @@ volunteerCore =
 		required:true,
 
 
+	approved: #volunteers need to be approved, admin added volunteers are by default true
+		type: Boolean,
+		required: true,
+		default: false,
+
+
 	#stores an array of all the projects
 	projects: [{type:Schema.Types.ObjectId,ref:'Project'}]
 
