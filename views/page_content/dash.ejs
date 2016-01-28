@@ -33,10 +33,7 @@
             <form class="form-inline">
                 <label for="rows-to-show">Rows to show</label>
                 <select ng-model="pageSize" name="rows-to-show" class="form-control">
-                    <option value="5">5</option>
-                    <option selected value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
+                    <option ng-repeat="n in pageSizeOptions" ng-selected="n == pageSizeOptions[1]" value="{{ n }}">{{ n }}</option>
                 </select>
             </form>
         </div>
