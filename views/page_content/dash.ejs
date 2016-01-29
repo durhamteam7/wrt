@@ -94,20 +94,18 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>
+                        <th class="col-xs-1">
                             <select-all-checkbox checkboxes="filteredList" all-selected="allSelectedWtVolunteers" all-clear="noSelectedWtVolunteers" multiple="multipleWtVolunteers" ids="selectedWVolunteersIds"></select-all-checkbox>
                             <!--<input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" />-->
                         </th>
-                        <!--
-                        <th ng-repeat="heading in tableHeadings">
-                            <a href="#" ng-click="sortType = '{{ heading.key }}'; sortReverse = !sortReverse">
-                                {{ heading.title }}
-                                <span ng-show="sortType == '{{ heading.key }}' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '{{ heading.key }}' && sortReverse" class="fa fa-caret-up"></span>
+                        <th ng-repeat="th in tableHeadings">
+                            <a href="#" ng-click="sortType = '{{ th.key }}'; sortReverse = !sortReverse">
+                                {{ th.title }}
+                                <span ng-show="sortType == '{{ th.key }}' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == '{{ th.key }}' && sortReverse" class="fa fa-caret-up"></span>
                             </a>
                         </th>
-                        Don't understand why this above doesn't work
-                        -->
+                        <!--
                         <th>
                             <a href="#" ng-click="sortType = 'fName'; sortReverse = !sortReverse">
                                 First Name(s)
@@ -136,19 +134,17 @@
                                 <span ng-show="sortType == 'telHome' && sortReverse" class="fa fa-caret-up"></span>
                             </a>
                         </th>
-                        <th>
+                        -->
+                        <th class="col-xs-2">
                             Operations
                         </th>
                     </tr>
                 </thead>
                 <tbody id="volunteer-table">
                     <tr ng-repeat="v in filteredList | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:sortType:sortReverse | filter:searchTerm">
-                        <td><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
-                        <td>{{ v.fName }}</td>
-                        <td>{{ v.lName }}</td>
-                        <td>{{ v.email }}</td>
-                        <td>{{ v.telHome }}</td>
-                        <td>
+                        <td class="col-xs-1"><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
+                        <td ng-repeat="th in tableHeadings">{{ v[th.key] }}</td>
+                        <td class="col-xs-2">
                             <div class="row">
                                 <div class="col-xs-4">
                                     <a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" class="btn btn-xs btn-block btn-primary">
