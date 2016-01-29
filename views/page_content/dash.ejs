@@ -28,11 +28,10 @@
 
 <div id="loader">
     <div>
-      <div class="spinner"></div>
-      <p>Loading Site...</p>
+        <div class="spinner"></div>
+        <p>Loading Site...</p>
     </div>
-  </div>
-  <div>
+</div>
 
 <div class="container" ng-app="sortApp" ng-controller="mainController">
     <div class="row">
@@ -47,11 +46,11 @@
         </div>
         <div class="col-xs-6">
             <div class="btn-group pull-right margin-top">
-                <a href="#" class="btn btn-default" data-toggle="modal" data-target="#settingsModal">
+                <a href="" class="btn btn-default" data-toggle="modal" data-target="#settingsModal">
                     <span class="glyphicon glyphicon-cog"></span>
                     Settings
                 </a><!-- Opens a modal (yay modals!) to change settings such as table headings shown. -->
-                <a href="#" class="btn btn-default" ng-click="logout()">
+                <a href="/logout" class="btn btn-default">
                     <span class="glyphicon glyphicon-log-out"></span>
                     Log Out
                 </a><!-- Opens a modal (yay modals!) to change settings such as table headings shown. -->
@@ -204,3 +203,4 @@
 
 <%- include('editModal.ejs') %>
 <%- include('emailModal.ejs') %>
+<%- include('settingsModal.ejs') %>
