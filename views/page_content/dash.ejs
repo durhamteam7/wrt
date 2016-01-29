@@ -2,6 +2,7 @@
     <script src="/checklist-model.js"></script>
     <script src="//static.scripting.com/bootstrap/1.4.0/js/bootstrap-tabs.js"></script>
     <script src="/app.js"></script>
+    <link rel="stylesheet" href="loader.css">
     <style type="text/css">
       .container {
           margin-top: 20px;
@@ -24,6 +25,14 @@
       }
   }
 </style>
+
+<div id="loader">
+    <div>
+      <div class="spinner"></div>
+      <p>Loading Site...</p>
+    </div>
+  </div>
+  <div>
 
 <div class="container" ng-app="sortApp" ng-controller="mainController">
     <div class="row">

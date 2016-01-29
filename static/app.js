@@ -119,6 +119,7 @@ angular.module('sortApp', ["checklist-model"])
       if (typeof callback !== "undefined"){
         callback();
       }
+       $("#loader").fadeOut("slow");
     });
   }
   
