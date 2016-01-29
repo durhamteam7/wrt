@@ -8,7 +8,12 @@
 </head>
 
 <body>
+
+
     <div class="container">
+
+
+
         <div class="row">
             <div class="col-md-12">
                 <div class="text-center">
@@ -126,215 +131,258 @@
 
                     <fieldset>
 
-                        <legend>Project Selection</legend>
+                        <legend>Choose Projects</legend>
 
                         <div id="projectSection"></div>
 
-                    </fieldset>
+                        <script>
 
-                    <br>
-                    
-                    <fieldset>
+                            SCRIPT_URL = ""
 
-                        <legend>Transport</legend>
-                        
-                        <div class="form-group">
-                            <label for="hasTransport">Do you have transport?</label>
-                            <br>
-                            <label class="radio-inline"><input type="radio" name="hasTransport" id="true" value="true">Yes</label>
-                            <label class="radio-inline"><input type="radio" name="hasTransport" id="false" value="false">No</label>
-                        </div>
+                            //Do AJAX request to get project data
+                            $.getJSON(SCRIPT_URL+'/api/projectUnauth',function(projects){
+                                projects = [{"Name":"Electro Fishing","Description":"Electrofishing uses electricity to stun fish before they are caught. Electrofishing is a common scientific survey method used to sample fish populations to determine abundance, density, and species composition. Electro fishing is sessional and occurs during July –September and we generally ask volunteers to attend for a full day.","Fitness_Level":"moderate"},
+                                {"Name":"Riverfly Monitoring","Description":"Riverflies, along with other freshwater invertebrates, are at the heart of the freshwater ecosystem and are a vital link in the aquatic food chain. Riverfly populations are affected by many factors, predominately water quality, habitat diversity, water level and flow rate. We monitor Riverfly as their numbers are indictors of water quality and can alert authorities to incidents of pollution or other issues. We ask volunteers to carry out a monthly sample which can takes an estimate 1 hour of their time.","Fitness_Level":"low-moderate"}
+                                ]
 
-                        <div class="form-group">
-                            <span class="help-block">If you answered No you can skip this part</span>
-                        </div>
+                                fitnessHTML = {"high":'label-danger',"moderate":'label-warning',"low":'label-success'}
 
-                        <div class="form-group">
-                            <label for="make">Car make:</label>
-                            <input type="text" name="make" size="25" value="" class="form-control">
-                        </div>
+                                //Replace projects with the html
+                                for (i = 0; i < projects.length; i++) { 
+                                    for (j = 0; j < Object.keys(fitnessHTML).length; j++) { 
+                                        fitness = Object.keys(fitnessHTML)[j]
+                                        re = new RegExp(fitness,'gi');
+                                        projects[i].Fitness_Level = projects[i].Fitness_Level.replace(re,'<span class="label '+fitnessHTML[fitness]+'">'+fitness+'</span>');
+                                    }
+                                }
 
-                        <div class="form-group">
-                            <label for="mode">Car model:</label>
-                            <input type="text" name="mode" size="25" value="" class="form-control">
-                        </div>
+                                for (i = 0; i < projects.length; i++) { 
+                                    html = '<a href="#" ><div class="panel panel-default projectBox"><div class="panel-heading"><h3 class="panel-title">'+projects[i]["Name"]+'</h3></div>'+
+                                    '<div class = "panel-body">'+
+                                    projects[i]["Description"]+
+                                    '<br><br><b>Difficulty: '+projects[i]["Fitness_Level"]+'</span></b></div></div></a>'
 
-                        <div class="form-group">
-                            <label for="colour">Car colour:</label>
-                            <input type="text" name="colour" size="25" value="" class="form-control">
-                        </div>
+                                    $("#projectSection").append(html);
+                                }
+                            });
+</script>
 
-                        <div class="form-group">
-                            <label for="reg">Car reg:</label>
-                            <input type="text" name="reg" size="25" value="" class="form-control">
-                        </div>
+</fieldset>
 
-                    </fieldset>
-                    
-                    <br>
-                    
-                    <fieldset>
+<br>
 
-                        <legend>Emergency contact (1)</legend>
+<fieldset>
 
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" name="name" size="42" value="" class="form-control">
-                        </div>
+    <legend>Transport</legend>
 
-                        <div class="form-group">
-                            <label for="relationship">Relationship:</label>
-                            <input type="text" name="relationship" size="25" value="" class="form-control">
-                        </div>
+    <div class="form-group">
+        <label for="hasTransport">Do you have transport?</label>
+        <br>
+        <label class="radio-inline"><input type="radio" name="hasTransport" id="true" value="true">Yes</label>
+        <label class="radio-inline"><input type="radio" name="hasTransport" id="false" value="false">No</label>
+    </div>
 
-                        <div class="form-group">
-                            <label for="address">Address:</label>
-                            <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
-                        </div>
+    <div class="form-group">
+        <span class="help-block">If you answered No you can skip this part</span>
+    </div>
 
-                        <div class="form-group">
-                            <label for="contactDetails">Contact Details:</label>
-                            <input type="text" name="contactDetails" size="25" value="" class="form-control">
-                        </div>
+    <div class="form-group">
+        <label for="make">Car make:</label>
+        <input type="text" name="make" size="25" value="" class="form-control">
+    </div>
 
-                        <div class="form-group">
-                            <label for="telHome">Home tel:</label>
-                            <input type="tel" name="telHome" size="25" value="" class="form-control">
-                        </div>
+    <div class="form-group">
+        <label for="mode">Car model:</label>
+        <input type="text" name="mode" size="25" value="" class="form-control">
+    </div>
 
-                        <div class="form-group">
-                            <label for="telMob">Mobile:</label>
-                            <input type="tel" name="telMob" size="25" value="" class="form-control">
-                        </div>
+    <div class="form-group">
+        <label for="colour">Car colour:</label>
+        <input type="text" name="colour" size="25" value="" class="form-control">
+    </div>
 
-                        <div class="form-group">
-                            <label for="telOther">Other tel:</label>
-                            <input type="tel" name="telOther" size="25" value="" class="form-control">
-                        </div>
-                        
-                    </fieldset>
-                    
-                    <br>
-                    
-                    <fieldset>
+    <div class="form-group">
+        <label for="reg">Car reg:</label>
+        <input type="text" name="reg" size="25" value="" class="form-control">
+    </div>
 
-                        <legend>Emergency contact (2)</legend>
+</fieldset>
 
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" name="name" size="42" value="" class="form-control">
-                        </div>
+<br>
 
-                        <div class="form-group">
-                            <label for="relationship">Relationship:</label>
-                            <input type="text" name="relationship" size="25" value="" class="form-control">
-                        </div>
+<fieldset>
 
-                        <div class="form-group">
-                            <label for="address">Address:</label>
-                            <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
-                        </div>
+    <legend>Emergency contact (1)</legend>
 
-                        <div class="form-group">
-                            <label for="contactDetails">Contact Details:</label>
-                            <input type="text" name="contactDetails" size="25" value="" class="form-control">
-                        </div>
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" name="name" size="42" value="" class="form-control">
+    </div>
 
-                        <div class="form-group">
-                            <label for="telHome">Home tel:</label>
-                            <input type="tel" name="telHome" size="25" value="" class="form-control">
-                        </div>
+    <div class="form-group">
+        <label for="relationship">Relationship:</label>
+        <input type="text" name="relationship" size="25" value="" class="form-control">
+    </div>
 
-                        <div class="form-group">
-                            <label for="telMob">Mobile:</label>
-                            <input type="tel" name="telMob" size="25" value="" class="form-control">
-                        </div>
+    <div class="form-group">
+        <label for="address">Address:</label>
+        <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
+    </div>
 
-                        <div class="form-group">
-                            <label for="telOther">Other tel:</label>
-                            <input type="tel" name="telOther" size="25" value="" class="form-control">
-                        </div>
-                        
-                    </fieldset>
-                    
-                    <br>
-                    
-                    <fieldset>
+    <div class="form-group">
+        <label for="contactDetails">Contact Details:</label>
+        <input type="text" name="contactDetails" size="25" value="" class="form-control">
+    </div>
 
-                        <legend>Other Information</legend>
+    <div class="form-group">
+        <label for="telHome">Home tel:</label>
+        <input type="tel" name="telHome" size="25" value="" class="form-control">
+    </div>
 
-                        <div class="form-group">
-                            <label for="heardFrom">Where did you hear about volunteering for Wear Rivers Trust?</label>
-                            <select name="heardFrom" class="form-control">
-                                <option value="website">Website</option>
-                                <option value="local newspaper">Local Newspaper</option>
-                                <option value="volunteer centre">Volunteer Centre</option>
-                                <option value="wildlife volunteer">Wildlife Volunteer</option>
-                                <option value="television">Television</option>
-                                <option value="college careers service">College Careers Service</option>
-                                <option value="friend">Friend</option>
-                            </select>
-                        </div>
+    <div class="form-group">
+        <label for="telMob">Mobile:</label>
+        <input type="tel" name="telMob" size="25" value="" class="form-control">
+    </div>
 
-                        <div class="form-group">
-                            <label for="interestedInMore">Would you like to hear about other volunteering opportunities?</label>
-                            <br>
-                            <label class="radio-inline"><input type="radio" name="interestedInMore" id="true" value="true">Yes</label>
-                            <label class="radio-inline"><input type="radio" name="interestedInMore" id="false" value="false">No</label>
-                        </div>
+    <div class="form-group">
+        <label for="telOther">Other tel:</label>
+        <input type="tel" name="telOther" size="25" value="" class="form-control">
+    </div>
 
-                        <div class="form-group">
-                            <label for="photoConsent">Do you agree for any photographs to be published on our volunteer website and interpretation?</label>
-                            <br>
-                            <label class="radio-inline"><input type="radio" name="photoConsent" id="true" value="true">Yes</label>
-                            <label class="radio-inline"><input type="radio" name="photoConsent" id="false" value="false">No</label>
-                        </div>
+</fieldset>
 
-                    </fieldset>
-                    
-                    <br>
-                    
-                    <div class="form-group">
-                        <input type="submit" value="Submit" class="btn btn-primary">
-                    </div>
+<br>
 
-                </form>
+<fieldset>
+
+    <legend>Emergency contact (2)</legend>
+
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" name="name" size="42" value="" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="relationship">Relationship:</label>
+        <input type="text" name="relationship" size="25" value="" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="address">Address:</label>
+        <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="contactDetails">Contact Details:</label>
+        <input type="text" name="contactDetails" size="25" value="" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="telHome">Home tel:</label>
+        <input type="tel" name="telHome" size="25" value="" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="telMob">Mobile:</label>
+        <input type="tel" name="telMob" size="25" value="" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="telOther">Other tel:</label>
+        <input type="tel" name="telOther" size="25" value="" class="form-control">
+    </div>
+
+</fieldset>
+
+<br>
+
+<fieldset>
+
+    <legend>Other Information</legend>
+
+    <div class="form-group">
+        <label for="heardFrom">Where did you hear about volunteering for Wear Rivers Trust?</label>
+        <select name="heardFrom" class="form-control">
+            <option value="website">Website</option>
+            <option value="local newspaper">Local Newspaper</option>
+            <option value="volunteer centre">Volunteer Centre</option>
+            <option value="wildlife volunteer">Wildlife Volunteer</option>
+            <option value="television">Television</option>
+            <option value="college careers service">College Careers Service</option>
+            <option value="friend">Friend</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="interestedInMore">Would you like to hear about other volunteering opportunities?</label>
+        <br>
+        <label class="radio-inline"><input type="radio" name="interestedInMore" id="true" value="true">Yes</label>
+        <label class="radio-inline"><input type="radio" name="interestedInMore" id="false" value="false">No</label>
+    </div>
+
+    <div class="form-group">
+        <label for="photoConsent">Do you agree for any photographs to be published on our volunteer website and interpretation?</label>
+        <br>
+        <label class="radio-inline"><input type="radio" name="photoConsent" id="true" value="true">Yes</label>
+        <label class="radio-inline"><input type="radio" name="photoConsent" id="false" value="false">No</label>
+    </div>
+
+</fieldset>
+
+<br>
+
+<fieldset>
+
+    <legend>Health and Safety</legend>
+
+    <div class="form-group">
+        <div class="col-xs-6 col-xs-offset-3">        
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#termsModal">Health and Safety information</button>
+        </div>
+        <label class="checkbox-inline" ><input type="checkbox" disabled name="photoConsent" id="true" value="true">I have read and understood the above Health and Safety information</label>
+    </div>
+
+</fieldset>
+
+<br>
+
+<div class="form-group">
+    <input type="submit" value="Submit" class="btn btn-primary">
+</div>
+
+</form>
+</div>
+</div>
+</div>
+
+
+
+<!-- Terms and conditions modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="Terms and conditions" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Health and Safety Information</h3>
+            </div>
+
+            <div class="modal-body">
+                <p>(a) The Trust takes health and safety extremely seriously and will take all reasonably practicable steps to ensure your health and safety and welfare while undertaking voluntary work on the Trust’s behalf. If you have or receive any health and safety concerns during your volunteer work, unless you can resolve them there and then, you must refer them for resolution as soon as practicable to the Project Manager or a senior Trust representative.</p>
+
+                <p>(b) The Trust works on the precautionary principle, based on a risk assessment dependent upon the task to be undertaken and on the frequency and severity of foreseeable accidents. If you have reasonable cause to believe that either you or others are exposed to a health and safety risk you should not start the activity or, if circumstances later change (e.g. river levels increase), stop it forthwith and re-assess the situation. The activity must not proceed until reasonable safety measures have been implemented and/or you are completely satisfied that it is reasonably safe to do so. It is your legal duty to take care of your own health and safety, that of your colleagues and others working near you.</p>
+
+                <p>(c) If you suffer an injury during the course of your volunteer work with the Trust, you must report it to the Trust’s Registered Office so that it can be recorded in the Accident Book. Volunteers are covered by the Trust’s Insurances</p>
+
+                <p>(d) The Trust’s health and safety policy, guidelines and organisational chart are set out in its Staff Handbook. Given the varied and higher risk associated with fieldwork, the Trust’s health and safety guidelines have been given to the Project Manager for use in assessing the risk. In conjunction with the Project Manager you should make yourself aware of the content of the guidelines particularly as relates to the activity planned and ensure that any other volunteers are likewise aware of them.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="agreeButton" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 
 
-    <script>
-
-        SCRIPT_URL = ""
-
-        //Do AJAX request to get project data
-        $.getJSON(SCRIPT_URL+'/api/projectUnauth',function(projects){
-            /*projects = [{"Name":"Electro Fishing","Description":"Electrofishing uses electricity to stun fish before they are caught. Electrofishing is a common scientific survey method used to sample fish populations to determine abundance, density, and species composition. Electro fishing is sessional and occurs during July –September and we generally ask volunteers to attend for a full day.","Fitness_Level":"moderate"},
-            {"Name":"Riverfly Monitoring","Description":"Riverflies, along with other freshwater invertebrates, are at the heart of the freshwater ecosystem and are a vital link in the aquatic food chain. Riverfly populations are affected by many factors, predominately water quality, habitat diversity, water level and flow rate. We monitor Riverfly as their numbers are indictors of water quality and can alert authorities to incidents of pollution or other issues. We ask volunteers to carry out a monthly sample which can takes an estimate 1 hour of their time.","Fitness_Level":"low-moderate"}
-            ]*/
-
-            fitnessHTML = {"high":'label-danger',"moderate":'label-warning',"low":'label-success'}
-
-            //Replace projects with the html
-            for (i = 0; i < projects.length; i++) { 
-                for (j = 0; j < Object.keys(fitnessHTML).length; j++) { 
-                    fitness = Object.keys(fitnessHTML)[j]
-                    re = new RegExp(fitness,'gi');
-                    projects[i].Fitness_Level = projects[i].Fitness_Level.replace(re,'<span class="label '+fitnessHTML[fitness]+'">'+fitness+'</span>');
-                }
-            }
-
-            for (i = 0; i < projects.length; i++) { 
-                html = '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">'+projects[i]["Name"]+'</h3></div>'+
-                '<div class = "panel-body">'+
-                projects[i]["Description"]+
-                '<br><br><b>Difficulty: '+projects[i]["Fitness_Level"]+'</span></b></div></div>'
-
-                $("#projectSection").append(html);
-            }
-        });
-</script>
 
 
 <style>
@@ -358,16 +406,25 @@
             background-color: #f5f5f5;
         }
 
-    </style>
-    
-    <footer class="footer">
-        <div class="container">
-            <div class="text-center">
-                <br>
-                <strong class="text-muted">Wear Rivers Trust</strong>
-            </div>
+        a {
+          color: black !important;
+          text-decoration: none !important; /* no underline */
+      }
+
+      .projectBox:hover {
+        box-shadow: 1px 1px 5px grey;
+    }
+
+</style>
+
+<footer class="footer">
+    <div class="container">
+        <div class="text-center">
+            <br>
+            <strong class="text-muted">Wear Rivers Trust</strong>
         </div>
-    </footer>
-    
+    </div>
+</footer>
+
 </body>
 </html>
