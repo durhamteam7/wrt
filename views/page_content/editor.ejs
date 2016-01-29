@@ -32,7 +32,7 @@ $('#summernote').summernote({
 
   placeholder: 'Type message body...',
   hint: {
-    words: ['{{fName}}', 'lname'],
+    words: ['{{First_Name}}', 'Last_Name'],
     match: /\b(\w{1,})$/,
     search: function (keyword, callback) {
       callback($.grep(this.words, function (item) {
@@ -52,7 +52,7 @@ $('#summernote').on('summernote.change', function(we, contents, $editable) {
 $(".note-mybutton").children().addClass("dropdown-toggle").attr("data-toggle","dropdown")
 
 //Define list of fields
-var fields = [{"desc":'First name',"val":"fName"},{"desc":'Last Name(s)',"val":"lName"}]
+var fields = [{"desc":'First name',"val":"First_Name"},{"desc":'Last Name(s)',"val":"Last_Name"}]
 
 fieldString = ""
 $.each(fields, function (idx, field) {

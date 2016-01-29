@@ -38,7 +38,7 @@ angular.module('sortApp', ["checklist-model"])
     },
     updateVolunteers: function($params) {
       $params._method = 'patch';
-      console.log("update method",$params )
+      console.log("update method", $params)
       return $http.post('/api/volunteer/' + $params._id, $params).success(function() {
         delete $params._method;
       });
@@ -62,7 +62,7 @@ angular.module('sortApp', ["checklist-model"])
 // Controller
 .controller('mainController', ['$scope', 'ajax', function($scope, serverComm) {
 
-  $scope.sortType     = 'fName'; // set the default sort type
+  $scope.sortType     = 'First_Name'; // set the default sort type
   $scope.sortReverse  = false;   // set the default sort order
   $scope.searchTerm   = '';      // set the default search/filter term
   $scope.modelShow    = false;
@@ -74,23 +74,8 @@ angular.module('sortApp', ["checklist-model"])
   $scope.email = { "subject": "", "body": "", "select": $scope.select }
   $scope.emailPreview = { "subject": "", "body": "" }
 
-  $scope.allTableHeadings = [{ key: "title", title: "Title" },
-                             { key: "fName", title: "First Name(s)" },
-                             { key: "lName", title: "Last Name" },
-                             { key: "email", title: "Email" },
-                             { key: "telHome", title: "Telephone" },
-                             { key: "telMob", title: "Mobile" },
-                             { key: "telOther", title: "Other Telephone" },
-                             { key: "commPref", title: "Communication Preference" }];
-
-  $scope.tableHeadings = [{ key: "fName", title: "First Name(s)" },
-                          { key: "lName", title: "Last Name" },
-                          { key: "email", title: "Email" },
-                          { key: "telHome", title: "Telephone" }];
-                          
-  $scope.isIn = function(value, array) {
-      return jQuery.inArray(value, array)
-  }
+  $scope.allTableHeadings = ["Title", "First_Name", "Last_Name", "Email", "Telephone_Home", "Telephone_Mobile", "Telephone_Other", "Address", "Volunteering_Type", "Has_Transport", "Communication_Preference"];
+  $scope.tableHeadings = ["First_Name", "Last_Name", "Email", "Telephone_Home"];
 
   // Pagination variables
   $scope.currentPage = 0;
@@ -115,6 +100,24 @@ angular.module('sortApp', ["checklist-model"])
   $scope.isActive = function(id) {
     return id == $scope.currentPage ? 'active' : '';
   }
+                          
+  $scope.isIn = function(value, array) {
+      return jQuery.inArray(value, array)
+  }
+  
+  $scope.sortBy = function(attribute) {
+	  $scope.sortType = attribute
+  }
+  $scope.reverseSort = function() {
+	  $scope.sortReverse = !$scope.sortReverse
+  }
+  $scope.isSortType = function(attribute) {
+	  if ($scope.sortType == attribute) {
+		  return true
+	  } else {
+		  return false
+	  }
+  }
 
   //Main data modification - Gets all approved volunteers
   $scope.getApproved = function(callback) {
@@ -129,7 +132,7 @@ angular.module('sortApp', ["checklist-model"])
         
         $scope.mode = "normal";
       }
-      if (typeof callback !== "undefined"){
+      if (typeof callback !== "undefined") {
         callback();
       }
        $("#loader").fadeOut("slow");
@@ -147,7 +150,7 @@ angular.module('sortApp', ["checklist-model"])
         
         $scope.mode = "approving";
       }
-      if (typeof callback !== "undefined"){
+      if (typeof callback !== "undefined") {
         callback();
       }
     });
@@ -156,7 +159,6 @@ angular.module('sortApp', ["checklist-model"])
   $scope.setNumberOfUnapprovedVolunteers = function() {
     serverComm.getUnapprovedVolunteers().success(function(data) {
         $scope.numberOfUnapprovedVolunteers = data.length;
-        console.log(data.length);
     });  
   }
 
@@ -168,21 +170,21 @@ angular.module('sortApp', ["checklist-model"])
       }
   }
 
-  $scope.delete = function(id,index) {
+  $scope.delete = function(id, index) {
     serverComm.deleteVolunteers(id).success(function(data) {
         //Remove record from $scope.volunteers
         $scope.volunteers.splice(getIndexFromId(id), 1);
       }); 
   }
 
-  $scope.approve = function(id,index) {
+  $scope.approve = function(id, index) {
     serverComm.approveVolunteers(id).success(function(data) {
         //Remove record from $scope.volunteers
         $scope.volunteers.splice(getIndexFromId(id), 1);
       }); 
   }
 
-  $scope.unapprove = function(id,index) {
+  $scope.unapprove = function(id, index) {
     serverComm.unapproveVolunteers(id).success(function(data) {
         //Remove record from $scope.volunteers
         //$scope.volunteers.splice(getIndexFromId(id), 1);
@@ -200,8 +202,11 @@ angular.module('sortApp', ["checklist-model"])
 
       });
   }
-
-
+  
+  $scope.readable = function(string) {
+      return string.replace("_", " ")
+  }
+  
   function getIndexFromId(id) {
     for (i = 0; i < $scope.volunteers.length; i++) { 
       if ($scope.volunteers[i]._id == id) {
@@ -233,7 +238,6 @@ angular.module('sortApp', ["checklist-model"])
 
   // Logic for check-all checkbox
   $scope.checkAll = function () {
-      console.log("tick!");
       console.log($scope.selectedAll);
     if ($scope.selectedAll) {
       $scope.selectedAll = true;

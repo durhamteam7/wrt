@@ -4,16 +4,16 @@ mongoose = require ('mongoose')
 Schema = mongoose.Schema
 projectCore =
 
-	name:
+	Name:
 		type:String,
 		default:'Default name',
 		required:true,
-	description:
+	Description:
 		type: String,
 		required:true,
-	fitnessLevel:
+	Fitness_Level:
 		type: String,
-	requiresTraining:
+	Requires_Training:
 		type: Boolean
 
 project = new Schema projectCore,validateBeforeSave:false #TEMP DISABLED VALIDATION
