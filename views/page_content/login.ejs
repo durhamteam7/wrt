@@ -1,7 +1,27 @@
 
+<script>
+//Script to make nice fadout effect
+
+
+$(function() {
+$('#page').hide();
+  $('#page').fadeIn();
+    $("#log").click(function(event){
+        event.preventDefault();
+        $('#page').animate({opacity:0},500, function(){
+        $('form').submit();
+        });
+    });
+    });
+
+</script>
+
+
 <!-- All the files that are required -->
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
+
+<div id="page">
 <section id="login">
     <div class="container">
       <div class="row">
@@ -23,7 +43,7 @@
                             <span class="character-checkbox" onclick="showPassword()"></span>
                             <span class="label">Show password</span>
                         </div>
-                        <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block btn-primary" value="Log in">
+                        <input id="log" type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block btn-primary" value="Log in">
                     </form>
                     <hr>
               </div>
@@ -36,11 +56,13 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <p>© Team 7 - 2016</p>
+                <p>©Team 7- 2016</p>
             </div>
         </div>
     </div>
 </footer>
+
+</div>
 
 
 <!-- <form action='/loginauth' method='POST'>
