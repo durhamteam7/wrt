@@ -188,15 +188,6 @@ angular.module('sortApp', ["checklist-model"])
       });
   }
 
-  $scope.change = function(id) {  
-    //
-    volunteer = $scope.volunteers[getIndexFromId(id)];
-    serverComm.updateVolunteers(volunteer).success(function(data) {
-        //Add record to $scope.volunteers
-      
-      });
-  }
-
 
   function getIndexFromId(id) {
     for (i = 0; i < $scope.volunteers.length; i++) { 
@@ -210,12 +201,8 @@ angular.module('sortApp', ["checklist-model"])
     return $scope.volunteers[index].id
   }
 
-  $scope.submitChange = function(id,index) {
-    console.log("change");
-
-    serverComm.updateVolunteers(id).success(function(data) {
-
-    });
+  $scope.submitChange = function(volunteer) {
+    serverComm.updateVolunteers(volunteer).success();
   }
 
   $scope.sendEmail = function(id,index) {
