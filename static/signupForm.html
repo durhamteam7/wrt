@@ -1,10 +1,10 @@
 <html>
 <head>
-<title>Signup | Wear Rivers Trust</title>
-<link rel="stylesheet" href="http://www.wear-rivers-trust.org.uk/css/main.css" type="text/css" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css">
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <title>Signup | Wear Rivers Trust</title>
+    <link rel="stylesheet" href="http://www.wear-rivers-trust.org.uk/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -19,9 +19,9 @@
         </div>
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
-                
+
                 <form name="SignupForm" action="/api/volunteerUnauth" method="POST" class="form">
-                    
+
                     <fieldset>
                         <legend>Personal Information</legend>
 
@@ -123,10 +123,20 @@
                     </fieldset>
                     
                     <br>
+
+                    <fieldset>
+
+                        <legend>Project Selection</legend>
+
+                        <div id="projectSection"></div>
+
+                    </fieldset>
+
+                    <br>
                     
                     <fieldset>
-                        
-                    <legend>Transport</legend>
+
+                        <legend>Transport</legend>
                         
                         <div class="form-group">
                             <label for="hasTransport">Do you have transport?</label>
@@ -158,7 +168,7 @@
                             <label for="reg">Car reg:</label>
                             <input type="text" name="reg" size="25" value="" class="form-control">
                         </div>
-                    
+
                     </fieldset>
                     
                     <br>
@@ -250,7 +260,7 @@
                     <br>
                     
                     <fieldset>
-                        
+
                         <legend>Other Information</legend>
 
                         <div class="form-group">
@@ -279,7 +289,7 @@
                             <label class="radio-inline"><input type="radio" name="photoConsent" id="true" value="true">Yes</label>
                             <label class="radio-inline"><input type="radio" name="photoConsent" id="false" value="false">No</label>
                         </div>
-                    
+
                     </fieldset>
                     
                     <br>
@@ -292,8 +302,42 @@
             </div>
         </div>
     </div>
-    
-    <style>
+
+
+    <script>
+
+        SCRIPT_URL = ""
+
+        //Do AJAX request to get project data
+        $.getJSON(SCRIPT_URL+'/api/projectUnauth',function(projects){
+            /*projects = [{"Name":"Electro Fishing","Description":"Electrofishing uses electricity to stun fish before they are caught. Electrofishing is a common scientific survey method used to sample fish populations to determine abundance, density, and species composition. Electro fishing is sessional and occurs during July –September and we generally ask volunteers to attend for a full day.","Fitness_Level":"moderate"},
+            {"Name":"Riverfly Monitoring","Description":"Riverflies, along with other freshwater invertebrates, are at the heart of the freshwater ecosystem and are a vital link in the aquatic food chain. Riverfly populations are affected by many factors, predominately water quality, habitat diversity, water level and flow rate. We monitor Riverfly as their numbers are indictors of water quality and can alert authorities to incidents of pollution or other issues. We ask volunteers to carry out a monthly sample which can takes an estimate 1 hour of their time.","Fitness_Level":"low-moderate"}
+            ]*/
+
+            fitnessHTML = {"high":'label-danger',"moderate":'label-warning',"low":'label-success'}
+
+            //Replace projects with the html
+            for (i = 0; i < projects.length; i++) { 
+                for (j = 0; j < Object.keys(fitnessHTML).length; j++) { 
+                    fitness = Object.keys(fitnessHTML)[j]
+                    re = new RegExp(fitness,'gi');
+                    projects[i].Fitness_Level = projects[i].Fitness_Level.replace(re,'<span class="label '+fitnessHTML[fitness]+'">'+fitness+'</span>');
+                }
+            }
+
+            for (i = 0; i < projects.length; i++) { 
+                html = '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">'+projects[i]["Name"]+'</h3></div>'+
+                '<div class = "panel-body">'+
+                projects[i]["Description"]+
+                '<br><br><b>Difficulty: '+projects[i]["Fitness_Level"]+'</span></b></div></div>'
+
+                $("#projectSection").append(html);
+            }
+        });
+</script>
+
+
+<style>
         /* Sticky footer styles
         -------------------------------------------------- */
         html {
