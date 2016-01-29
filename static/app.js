@@ -74,10 +74,23 @@ angular.module('sortApp', ["checklist-model"])
   $scope.email = { "subject": "", "body": "", "select": $scope.select }
   $scope.emailPreview = { "subject": "", "body": "" }
 
+  $scope.allTableHeadings = [{ key: "title", title: "Title" },
+                             { key: "fName", title: "First Name(s)" },
+                             { key: "lName", title: "Last Name" },
+                             { key: "email", title: "Email" },
+                             { key: "telHome", title: "Telephone" },
+                             { key: "telMob", title: "Mobile" },
+                             { key: "telOther", title: "Other Telephone" },
+                             { key: "commPref", title: "Communication Preference" }];
+
   $scope.tableHeadings = [{ key: "fName", title: "First Name(s)" },
                           { key: "lName", title: "Last Name" },
                           { key: "email", title: "Email" },
                           { key: "telHome", title: "Telephone" }];
+                          
+  $scope.isIn = function(value, array) {
+      return jQuery.inArray(value, array)
+  }
 
   // Pagination variables
   $scope.currentPage = 0;

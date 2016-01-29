@@ -20,10 +20,7 @@
                             <li ><a href="#other">Other Info</a></li>
                         </ul>
                         <div id="my-tab-content" class="tab-content">
-                            <div class="tab-pane" id="home">
-
-
-                            </div>
+                            
                             <div class="tab-pane active" id="personalInfo">
                                 <div class="form-group">
                                     <div class="form-group">
@@ -121,7 +118,7 @@
                                         <span class="help-block">(if more than 10 years ago please consult your GP)</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div><!--tab-pane-->
                             <div class="tab-pane" id="transport">
                                 <div class="form-group">
 
@@ -156,129 +153,127 @@
                                         <input type="text" name="reg" size="25" value="" class="form-control" ng-disabled="v.hasTransport=='false'">
                                     </div>
 
-                                </fieldset>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="emergency1">
-                            <div class="form-group">
-
-                                <div class="form-group">
-                                    <label for="name">Name:</label>
-                                    <input type="text" name="name" size="42" value="" class="form-control">
                                 </div>
-
+                            </div><!--tab-pane-->
+                            <div class="tab-pane" id="emergency1">
                                 <div class="form-group">
-                                    <label for="relationship">Relationship:</label>
-                                    <input type="text" name="relationship" size="25" value="" class="form-control">
-                                </div>
 
+                                    <div class="form-group">
+                                        <label for="name">Name:</label>
+                                        <input type="text" name="name" size="42" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="relationship">Relationship:</label>
+                                        <input type="text" name="relationship" size="25" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="address">Address:</label>
+                                        <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="telHome">Home tel:</label>
+                                        <input type="tel" name="telHome" size="25" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="telMob">Mobile:</label>
+                                        <input type="tel" name="telMob" size="25" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="telOther">Other tel:</label>
+                                        <input type="tel" name="telOther" size="25" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="contactDetails">Email:</label>
+                                        <input type="text" name="Em1email" size="25" value="" class="form-control">
+                                    </div>
+
+                                </div>
+                            </div><!--tab-pane-->
+                            <div class="tab-pane" id="emergency2">
                                 <div class="form-group">
-                                    <label for="address">Address:</label>
-                                    <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
+
+                                    <div class="form-group">
+                                        <label for="name">Name:</label>
+                                        <input type="text" name="name" size="42" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="relationship">Relationship:</label>
+                                        <input type="text" name="relationship" size="25" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="address">Address:</label>
+                                        <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="telHome">Home tel:</label>
+                                        <input type="tel" name="telHome" size="25" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="telMob">Mobile:</label>
+                                        <input type="tel" name="telMob" size="25" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="telOther">Other tel:</label>
+                                        <input type="tel" name="telOther" size="25" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="contactDetails">Email:</label>
+                                        <input type="text" name="Em2email" size="25" value="" class="form-control">
+                                    </div>
                                 </div>
-
-
+                            </div><!--tab-pane-->
+                            <div class="tab-pane" id="other">
                                 <div class="form-group">
-                                    <label for="telHome">Home tel:</label>
-                                    <input type="tel" name="telHome" size="25" value="" class="form-control">
+
+                                    <div class="form-group">
+                                        <label for="heardFrom">Where did you hear about volunteering for Wear Rivers Trust?</label>
+                                        <select name="heardFrom" class="form-control">
+                                            <option value="website">Website</option>
+                                            <option value="local newspaper">Local Newspaper</option>
+                                            <option value="volunteer centre">Volunteer Centre</option>
+                                            <option value="wildlife volunteer">Wildlife Volunteer</option>
+                                            <option value="television">Television</option>
+                                            <option value="college careers service">College Careers Service</option>
+                                            <option value="friend">Friend</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="interestedInMore">Would you like to hear about other volunteering opportunities?</label>
+                                        <br>
+                                        <label class="radio-inline"><input type="radio" name="interestedInMore" id="true" value="true">Yes</label>
+                                        <label class="radio-inline"><input type="radio" name="interestedInMore" id="false" value="false">No</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="photoConsent">Do you agree for any photographs to be published on our volunteer website and interpretation?</label>
+                                        <br>
+                                        <label class="radio-inline"><input type="radio" name="photoConsent" id="true" value="true">Yes</label>
+                                        <label class="radio-inline"><input type="radio" name="photoConsent" id="false" value="false">No</label>
+                                    </div>
+
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="telMob">Mobile:</label>
-                                    <input type="tel" name="telMob" size="25" value="" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="telOther">Other tel:</label>
-                                    <input type="tel" name="telOther" size="25" value="" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="contactDetails">Email:</label>
-                                    <input type="text" name="Em1email" size="25" value="" class="form-control">
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="emergency2">
-                            <div class="form-group">
-
-                                <div class="form-group">
-                                    <label for="name">Name:</label>
-                                    <input type="text" name="name" size="42" value="" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="relationship">Relationship:</label>
-                                    <input type="text" name="relationship" size="25" value="" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="address">Address:</label>
-                                    <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="telHome">Home tel:</label>
-                                    <input type="tel" name="telHome" size="25" value="" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="telMob">Mobile:</label>
-                                    <input type="tel" name="telMob" size="25" value="" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="telOther">Other tel:</label>
-                                    <input type="tel" name="telOther" size="25" value="" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="contactDetails">Email:</label>
-                                    <input type="text" name="Em2email" size="25" value="" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="other">
-                            <div class="form-group">
-
-                                <div class="form-group">
-                                    <label for="heardFrom">Where did you hear about volunteering for Wear Rivers Trust?</label>
-                                    <select name="heardFrom" class="form-control">
-                                        <option value="website">Website</option>
-                                        <option value="local newspaper">Local Newspaper</option>
-                                        <option value="volunteer centre">Volunteer Centre</option>
-                                        <option value="wildlife volunteer">Wildlife Volunteer</option>
-                                        <option value="television">Television</option>
-                                        <option value="college careers service">College Careers Service</option>
-                                        <option value="friend">Friend</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="interestedInMore">Would you like to hear about other volunteering opportunities?</label>
-                                    <br>
-                                    <label class="radio-inline"><input type="radio" name="interestedInMore" id="true" value="true">Yes</label>
-                                    <label class="radio-inline"><input type="radio" name="interestedInMore" id="false" value="false">No</label>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="photoConsent">Do you agree for any photographs to be published on our volunteer website and interpretation?</label>
-                                    <br>
-                                    <label class="radio-inline"><input type="radio" name="photoConsent" id="true" value="true">Yes</label>
-                                    <label class="radio-inline"><input type="radio" name="photoConsent" id="false" value="false">No</label>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+                            </div><!--tab-pane-->
+                            
+                        </div><!--my-tab-content-->
+                    </div><!--divDialogElements-->
+                </div><!--modal-body-->
+            </div><!--modal-content-->
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                <button class="btn btn-primary" data-dismiss="modal" ng-click="submitChange(v)">Save</button>
+                <button class="btn btn-primary" data-dismiss="modal" ng-click="change()">Close</button>
             </div>
-        </div>
-    </div>
-</div>
+        </div><!--modal-dialog-->
+    </div><!--Full Modal-->
