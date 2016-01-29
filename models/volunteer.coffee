@@ -8,126 +8,126 @@ Schema = mongoose.Schema
 ### Main Schema ###
 volunteerCore =
 
-	title: #dropdown
+	Title: #dropdown
 		type: String,
 		required: true,
-	fName:
+	First_Name:
 		type:String,
 		required: true,
-	lName:
+	Last_Name:
 		type:String,
 		required: true,
-	address:
+	Address:
 		type: String,
 		required: true,
-	telHome:
+	Telephone_Home:
 		type: String,
 		required: true,
 		validate: /^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/,
-	telMob:
+	Telephone_Mobile:
 		type: String,
 		required: true,
 		validate: /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/,
-	telOther:
+	Telephone_Other:
 		type: String,
-	email:
+	Email:
 		type: String,
 		required: true,
 		validate: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
-	dob:
+	Date_of_Birth:
 		type: Date,
 		required: true,
 
 
-	volunteeringType: #dropdown
+	Volunteering_Type: #dropdown
 		type: String,
 		required: true,
-	preferredArea: #dropdown
+	Preferred_Area: #dropdown
 		type: String,
 		required: true,
-	availability: #dropdown
+	Availability: #dropdown
 		type: [Number],
 		required: true,
-	trained: #dropdown
+	Trained: #dropdown
 		type: Boolean,
 		required: true,
-	physicalFitnessLevel:
+	Physical_Fitness_Level:
 		type: String,
 		required: true,
 
-	experience: #dropdown
+	Experience: #dropdown
 		type: String,
 		required: true,
-	commPref: #dropdown
+	Communication_Preference: #dropdown
 		type: String,
 		required: true,
-	photoConsent: #dropdown
+	Photographic_Consent: #dropdown
 		type: Boolean,
 		required: true,
-	lastTetnus:
+	Last_Tetanus:
 		type: Date,
 		required: true,
-	medCond:
+	Medical_Condition:
 		type: String,
 		required: true,
-	heardFrom: #dropdown
+	Heard_From: #dropdown
 		type: String,
-	interestedInMore:
+	Interested_In_More:
 		type: Boolean,
 		required: true,
 
 
-	hasTransport:
+	Has_Transport:
 		type: Boolean,
 		required: true,
-	car:
-		reg:
+	Car:
+		Registration_Number:
 			type: String,
 			validate: /^([A-Z]{3}\s?(\d{3}|\d{2}|d{1})\s?[A-Z])|([A-Z]\s?(\d{3}|\d{2}|\d{1})\s?[A-Z]{3})|(([A-HK-PRSVWY][A-HJ-PR-Y])\s?([0][2-9]|[1-9][0-9])\s?[A-HJ-PR-Z]{3})$/,
-		make: String,
-		model: String,
-		color: String,
+		Make: String,
+		Model: String,
+		Colour: String,
 
 #####emergency contact information - make as array
-	emergencyContacts: [{
-		name:
+	Emergency_Contacts: [{
+		Name:
 			type: String,
 			required: true,
-		relationship:
+		Relationship:
 			type:String,
 			required: true,
-		address:
+		Address:
 			type: String,
 			required: true,
-		telHome:
+		Telephone_Home:
 			type: String,
 			required: true,
 			validate: /^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/,
-		telMob:
+		Telephone_Mobile:
 			type: String,
 			required: true,
 			validate: /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/,
-		telOther:
+		Telephone_Other:
 			type: String,
-		email:
+		Email:
 			type: String,
 			required: true,
 		}]
 
 
-	readHealthAndSafety: #make them open it before they agree
+	Read_Health_and_Safety: #make them open it before they agree
 		type: Boolean,
 		required:true,
 
 
-	approved: #volunteers need to be approved, admin added volunteers are by default true
+	Approved: #volunteers need to be approved, admin added volunteers are by default true
 		type: Boolean,
 		required: true,
 		default: false,
 
 
 	#stores an array of all the projects
-	projects: [{type:Schema.Types.ObjectId,ref:'Project'}]
+	Projects: [{type:Schema.Types.ObjectId,ref:'Project'}]
 
 Volunteer = new Schema volunteerCore,validateBeforeSave:false #TEMP DISABLED VALIDATION
 

@@ -11,6 +11,18 @@
           margin-top: 25px;
           margin-bottom: 10px;
       }
+	  
+	  /* Custom half-column */
+	  .col-xs-point5 {
+		  position: relative;
+		  min-height: 1px;
+		  padding-right: 15px;
+		  padding-left: 15px;
+	  }
+	  .col-xs-point5 { float: left; }	
+	  .col-xs-point5 {  width: 4.16666667%; }
+
+
       @media screen and (min-width: 768px) {
           .modal-dialog {
               width: 700px; /* New width for default modal */
@@ -22,8 +34,8 @@
       @media screen and (min-width: 992px) {
           .modal-lg {
               width: 950px; /* New width for large modal */
-      }
-  }
+      	  }
+  	  }
 </style>
 
 <div id="loader">
@@ -34,15 +46,16 @@
 </div>
 
 <div class="container" ng-app="sortApp" ng-controller="mainController">
-    <div class="row">
-        <div class="col-xs-6">
-
+	<div class="row">
+		<div class="col-xs-12">
             <div class="alert alert-info ng-hide" ng-class="mode == 'normal' ? 'alert-info' : 'alert-success'" ng-show="numberOfUnapprovedVolunteers > 0" role="alert">
                 <a href="#" class="alert-link" ng-click="mode == 'normal' ? getUnapproved() : getApproved()">{{ mode == "normal" ? getNumberOfUnapprovedVolunteers() + " new registrations to approve" : "Back to volunteer table"}} </a>
             </div>
-            
+		</div>
+	</div>
+    <div class="row">
+        <div class="col-xs-6">
             <h1>Manage Volunteers</h1>
-            
         </div>
         <div class="col-xs-6">
             <div class="btn-group pull-right margin-top">
@@ -53,7 +66,7 @@
                 <a href="/logout" class="btn btn-default">
                     <span class="glyphicon glyphicon-log-out"></span>
                     Log Out
-                </a><!-- Opens a modal (yay modals!) to change settings such as table headings shown. -->
+                </a>
             </div>
         </div>
     </div>
@@ -94,74 +107,35 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="col-xs-1">
+                        <th class="col-xs-point5">
                             <select-all-checkbox checkboxes="filteredList" all-selected="allSelectedWtVolunteers" all-clear="noSelectedWtVolunteers" multiple="multipleWtVolunteers" ids="selectedWVolunteersIds"></select-all-checkbox>
-                            <!--<input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" />-->
                         </th>
                         <th ng-repeat="th in tableHeadings">
-                            <a href="#" ng-click="sortType = '{{ th.key }}'; sortReverse = !sortReverse">
-                                {{ th.title }}
-                                <span ng-show="sortType == '{{ th.key }}' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == '{{ th.key }}' && sortReverse" class="fa fa-caret-up"></span>
+                            <a href="#" ng-click="sortBy(th); reverseSort()">
+                                {{ readable(th) }}
+                                <span ng-show="isSortType(th) && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="isSortType(th) && sortReverse" class="fa fa-caret-up"></span>
                             </a>
                         </th>
-                        <!--
-                        <th>
-                            <a href="#" ng-click="sortType = 'fName'; sortReverse = !sortReverse">
-                                First Name(s)
-                                <span ng-show="sortType == 'fName' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'fName' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                        <th>
-                            <a href="#" ng-click="sortType = 'lName'; sortReverse = !sortReverse">
-                                Last Name 
-                                <span ng-show="sortType == 'lName' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'lName' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                        <th>
-                            <a href="#" ng-click="sortType = 'email'; sortReverse = !sortReverse">
-                                Email
-                                <span ng-show="sortType == 'email' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'email' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                        <th>
-                            <a href="#" ng-click="sortType = 'telHome'; sortReverse = !sortReverse">
-                                Telephone
-                                <span ng-show="sortType == 'telHome' && !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'telHome' && sortReverse" class="fa fa-caret-up"></span>
-                            </a>
-                        </th>
-                        -->
-                        <th class="col-xs-2">
+                        <th class="col-xs-1">
                             Operations
                         </th>
                     </tr>
                 </thead>
                 <tbody id="volunteer-table">
-                    <tr ng-repeat="v in filteredList | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:sortType:sortReverse | filter:searchTerm">
-                        <td class="col-xs-1"><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
-                        <td ng-repeat="th in tableHeadings">{{ v[th.key] }}</td>
-                        <td class="col-xs-2">
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" class="btn btn-xs btn-block btn-primary">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                    </a>
-                                </div>
-                                <div class="col-xs-4">
-                                    <a id="{{v._id}}bin" href="" onclick="return false;" ng-click="delete(v._id,$index)" class="btn btn-xs btn-block btn-danger">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </a>
-                                </div>
-                                <div class="col-xs-4">
-                                    <a id="{{v._id}}approve" href="" onclick="return false;" ng-click="approve(v._id,$index)" ng-hide="mode == 'normal'" class="btn btn-xs btn-block btn-success">
-                                        <span class="glyphicon glyphicon-ok"></span>
-                                    </a>
-                                </div>
-                            </div>
+                    <tr ng-repeat="v in filteredList | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:sortType:sortReverse | filter:searchTerm" ng-click="v.isSelected = !v.isSelected">
+                        <td class="col-xs-point5"><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
+                        <td ng-repeat="th in tableHeadings">{{ v[th] }}</td>
+                        <td class="col-xs-1">
+							<a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" class="btn btn-xs btn-primary">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</a>
+							<a id="{{v._id}}bin" href="" onclick="return false;" ng-click="delete(v._id,$index)" class="btn btn-xs btn-danger">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>
+							<a id="{{v._id}}approve" href="" onclick="return false;" ng-click="approve(v._id,$index)" ng-hide="mode == 'normal'" class="btn btn-xs btn-block btn-success">
+								<span class="glyphicon glyphicon-ok"></span>
+							</a>
                         </td>
                     </tr>
                 </tbody>

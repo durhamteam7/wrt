@@ -6,7 +6,7 @@ bcrypt   = require 'bcrypt-nodejs'
 userCore =
 	username: String,
 	email: String,
-	hash: String,
+	hash: String
 
 User = new Schema userCore
 

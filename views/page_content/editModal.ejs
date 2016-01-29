@@ -6,10 +6,9 @@
             <div class="modal-content">          
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Edit {{v.title}} {{v.fName}} {{v.lName}}</h4>
+                    <h4 class="modal-title">Edit {{v.Title}} {{v.First_Name}} {{v.Last_Name}}</h4>
                 </div>
                 <div class="modal-body">
-
 
                     <div class="divDialogElements">
                         <ul class="nav nav-tabs" data-tabs="tabs">
@@ -24,8 +23,8 @@
                             <div class="tab-pane active" id="personalInfo">
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label for="title">Title:</label>
-                                        <select name="title" class="form-control" ng-model="v.title">
+                                        <label for="Title">Title:</label>
+                                        <select name="Title" class="form-control" ng-model="v.Title">
                                             <option value="Mr">Mr</option>
                                             <option value="Mrs">Mrs</option>
                                             <option value="Miss">Miss</option>
@@ -35,58 +34,56 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label for="fname">First Name:</label>
-                                        <input type="text" name="fName" size="25" value="" class="form-control" ng-model="v.fName">
+                                        <label for="First_Name">First Name:</label>
+                                        <input type="text" name="First_Name" size="25" value="" class="form-control" ng-model="v.First_Name">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="lName">Surname:</label>
-                                        <input type="text" name="lName" size="25" value="" class="form-control" ng-model="v.lName">
+                                        <label for="Last_Name">Surname:</label>
+                                        <input type="text" name="Last_Name" size="25" value="" class="form-control" ng-model="v.Last_Name">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="dob">Date of Birth:</label>
-                                        <input type="date" name="dob" size="25" value="" class="form-control" ng-model="v.dob">
+                                        <label for="Date_of_Birth">Date of Birth:</label>
+                                        <input type="date" name="Date_of_Birth" size="25" value="" class="form-control" ng-model="v.Date_of_Birth">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="address">Address:</label>
-                                        <textarea name="address" rows="6" cols="40" class="form-control" ng-model="v.address"></textarea>
+                                        <label for="Address">Address:</label>
+                                        <textarea name="Address" rows="6" cols="40" class="form-control" ng-model="v.Address"></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="telHome">Home tel:</label>
-                                        <input type="tel" name="telHome" size="25" value="" class="form-control" ng-model="v.telHome">
+                                        <label for="Telephone_Home">Home tel:</label>
+                                        <input type="tel" name="Telephone_Home" size="25" value="" class="form-control" ng-model="v.Telephone_Home">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="telMob">Mobile:</label>
-                                        <input type="tel" name="telMob" size="25" value="" class="form-control" ng-model="v.telMob">
+                                        <label for="Telephone_Mobile">Mobile:</label>
+                                        <input type="tel" name="Telephone_Mobile" size="25" value="" class="form-control" ng-model="v.Telephone_Mobile">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="telOther">Other tel:</label>
-                                        <input type="tel" name="telOther" size="25" value="" class="form-control" ng-model="v.telOther">
+                                        <label for="Telephone_Other">Other tel:</label>
+                                        <input type="tel" name="Telephone_Other" size="25" value="" class="form-control" ng-model="v.Telephone_Other">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="email">Email:</label>
-                                        <input type="email" name="email" size="25" value="" class="form-control" ng-model="v.email">
+                                        <label for="Email">Email:</label>
+                                        <input type="email" name="Email" size="25" value="" class="form-control" ng-model="v.Email">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="commPref">Preferred method of contact:</label>
-                                        <select name="commPref" class="form-control" ng-model="v.commPref">
-                                            <option value="telHome">Home tel</option>
-                                            <option value="telMob">Mobile</option>
-                                            <option value="telOther">Other tel</option>
-                                            <option value="email">Email</option>
+                                        <label for="Communication_Preference">Preferred method of contact:</label>
+                                        <select name="Communication_Preference" class="form-control" ng-model="v.Communication_Preference">
+                                            <option value="Letter">Letter</option>
+                                            <option value="Email">Email</option>
                                         </select>
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label for="volunteeringType">In what capacity would you like to volunteer?</label>
-                                        <select name="volunteeringType" class="form-control" ng-model="v.volunteeringType">
+                                        <label for="Volunteering_Type">In what capacity would you like to volunteer?</label>
+                                        <select name="Volunteering_Type" class="form-control" ng-model="v.Volunteering_Type">
                                             <option value="support at events">Support at Events</option>
                                             <option value="field work">Field Work</option>
                                             <option value="monitoring/testing">Monitoring/Testing</option>
@@ -94,8 +91,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="availability">What days are you available to volunteer?</label>
-                                        <select name="availability" class="form-control" ng-model="v.availability">
+                                        <label for="Availability">What days are you available to volunteer?</label>
+                                        <select name="Availability" class="form-control" ng-model="v.Availability">
                                             <option value="weekdays">Weekdays</option>
                                             <option value="weekends">Weekends</option>
                                             <option value="both">Both</option>
@@ -103,18 +100,18 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="experience">Please list any relavant experience you may have:</label>
-                                        <textarea name="experience" rows="6" cols="120" placeholder="" class="form-control" ng-model="v.experience"></textarea>
+                                        <label for="Experience">Please list any relavant experience you may have:</label>
+                                        <textarea name="Experience" rows="6" cols="120" placeholder="" class="form-control" ng-model="v.Experience"></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="medCond">Do you have any medical conditions/allergies that we should be aware about?</label>
-                                        <textarea name="medCond" rows="6" cols="120" placeholder="" class="form-control" ng-model="v.medCond"></textarea>
+                                        <label for="Medical_Condition">Do you have any medical conditions/allergies that we should be aware about?</label>
+                                        <textarea name="Medical_Condition" rows="6" cols="120" placeholder="" class="form-control" ng-model="v.Medical_Condition"></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="lastTetnus">If relevant, what date was you last Tetanus?</label>
-                                        <input type="date" name="lastTetnus" size="25" value="" class="form-control" ng-model="v.lastTetnus">
+                                        <label for="Last_Tetanus">If relevant, what date was you last Tetanus?</label>
+                                        <input type="date" name="Last_Tetanus" size="25" value="" class="form-control" ng-model="v.Last_Tetanus">
                                         <span class="help-block">(if more than 10 years ago please consult your GP)</span>
                                     </div>
                                 </div>
@@ -123,10 +120,10 @@
                                 <div class="form-group">
 
                                     <div class="form-group">
-                                        <label for="hasTransport">Do you have transport?</label>
+                                        <label for="Has_Transport">Do you have transport?</label>
                                         <br>
-                                        <label class="radio-inline"><input type="radio" name="hasTransport" id="true" value="true" ng-model="v.hasTransport">Yes</label>
-                                        <label class="radio-inline"><input type="radio" name="hasTransport" id="false" value="false" ng-model="v.hasTransport">No</label>
+                                        <label class="radio-inline"><input type="radio" name="Has_Transport" id="true" value="true" ng-model="v.Has_Transport">Yes</label>
+                                        <label class="radio-inline"><input type="radio" name="Has_Transport" id="false" value="false" ng-model="v.Has_Transport">No</label>
                                     </div>
 
                                     <div class="form-group">
@@ -134,23 +131,23 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="make">Car make:</label>
-                                        <input type="text" name="make" size="25" value="" class="form-control" ng-disabled="v.hasTransport=='false'">
+                                        <label for="Make">Car make:</label>
+                                        <input type="text" name="Make" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="mode">Car model:</label>
-                                        <input type="text" name="mode" size="25" value="" class="form-control" ng-disabled="v.hasTransport=='false'">
+                                        <label for="Mode">Car model:</label>
+                                        <input type="text" name="Mode" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="colour">Car colour:</label>
-                                        <input type="text" name="colour" size="25" value="" class="form-control" ng-disabled="v.hasTransport=='false'">
+                                        <label for="Colour">Car colour:</label>
+                                        <input type="text" name="Colour" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="reg">Car reg:</label>
-                                        <input type="text" name="reg" size="25" value="" class="form-control" ng-disabled="v.hasTransport=='false'">
+                                        <label for="Registration_Number">Car reg:</label>
+                                        <input type="text" name="Registration_Number" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'">
                                     </div>
 
                                 </div>
@@ -159,34 +156,33 @@
                                 <div class="form-group">
 
                                     <div class="form-group">
-                                        <label for="name">Name:</label>
-                                        <input type="text" name="name" size="42" value="" class="form-control">
+                                        <label for="Name">Name:</label>
+                                        <input type="text" name="Name" size="42" value="" class="form-control">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="relationship">Relationship:</label>
-                                        <input type="text" name="relationship" size="25" value="" class="form-control">
+                                        <label for="Relationship">Relationship:</label>
+                                        <input type="text" name="Relationship" size="25" value="" class="form-control">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="address">Address:</label>
-                                        <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="telHome">Home tel:</label>
-                                        <input type="tel" name="telHome" size="25" value="" class="form-control">
+                                        <label for="Address">Address:</label>
+                                        <textarea name="Address" rows="6" cols="40" class="form-control"></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="telMob">Mobile:</label>
-                                        <input type="tel" name="telMob" size="25" value="" class="form-control">
+                                        <label for="Telephone_Home">Home tel:</label>
+                                        <input type="tel" name="Telephone_Home" size="25" value="" class="form-control">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="telOther">Other tel:</label>
-                                        <input type="tel" name="telOther" size="25" value="" class="form-control">
+                                        <label for="Telephone_Mobile">Mobile:</label>
+                                        <input type="tel" name="Telephone_Mobile" size="25" value="" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="Telephone_Other">Other tel:</label>
+                                        <input type="tel" name="Telephone_Other" size="25" value="" class="form-control">
                                     </div>
 
                                     <div class="form-group">
@@ -200,33 +196,33 @@
                                 <div class="form-group">
 
                                     <div class="form-group">
-                                        <label for="name">Name:</label>
-                                        <input type="text" name="name" size="42" value="" class="form-control">
+                                        <label for="Name">Name:</label>
+                                        <input type="text" name="Name" size="42" value="" class="form-control">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="relationship">Relationship:</label>
-                                        <input type="text" name="relationship" size="25" value="" class="form-control">
+                                        <label for="Relationship">Relationship:</label>
+                                        <input type="text" name="Relationship" size="25" value="" class="form-control">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="address">Address:</label>
-                                        <textarea name="address" rows="6" cols="40" class="form-control"></textarea>
+                                        <label for="Address">Address:</label>
+                                        <textarea name="Address" rows="6" cols="40" class="form-control"></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="telHome">Home tel:</label>
-                                        <input type="tel" name="telHome" size="25" value="" class="form-control">
+                                        <label for="Telephone_Home">Home tel:</label>
+                                        <input type="tel" name="Telephone_Home" size="25" value="" class="form-control">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="telMob">Mobile:</label>
-                                        <input type="tel" name="telMob" size="25" value="" class="form-control">
+                                        <label for="Telephone_Mobile">Mobile:</label>
+                                        <input type="tel" name="Telephone_Mobile" size="25" value="" class="form-control">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="telOther">Other tel:</label>
-                                        <input type="tel" name="telOther" size="25" value="" class="form-control">
+                                        <label for="Telephone_Other">Other tel:</label>
+                                        <input type="tel" name="Telephone_Other" size="25" value="" class="form-control">
                                     </div>
 
                                     <div class="form-group">
@@ -239,8 +235,8 @@
                                 <div class="form-group">
 
                                     <div class="form-group">
-                                        <label for="heardFrom">Where did you hear about volunteering for Wear Rivers Trust?</label>
-                                        <select name="heardFrom" class="form-control">
+                                        <label for="Heard_From">Where did you hear about volunteering for Wear Rivers Trust?</label>
+                                        <select name="Heard_From" class="form-control" ng-model="Heard_From">
                                             <option value="website">Website</option>
                                             <option value="local newspaper">Local Newspaper</option>
                                             <option value="volunteer centre">Volunteer Centre</option>
@@ -252,17 +248,17 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="interestedInMore">Would you like to hear about other volunteering opportunities?</label>
+                                        <label for="Interested_In_More">Would you like to hear about other volunteering opportunities?</label>
                                         <br>
-                                        <label class="radio-inline"><input type="radio" name="interestedInMore" id="true" value="true">Yes</label>
-                                        <label class="radio-inline"><input type="radio" name="interestedInMore" id="false" value="false">No</label>
+                                        <label class="radio-inline"><input type="radio" name="Interested_In_More" id="true" value="true">Yes</label>
+                                        <label class="radio-inline"><input type="radio" name="Interested_In_More" id="false" value="false">No</label>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="photoConsent">Do you agree for any photographs to be published on our volunteer website and interpretation?</label>
+                                        <label for="Photographic_Consent">Do you agree for any photographs to be published on our volunteer website and interpretation?</label>
                                         <br>
-                                        <label class="radio-inline"><input type="radio" name="photoConsent" id="true" value="true">Yes</label>
-                                        <label class="radio-inline"><input type="radio" name="photoConsent" id="false" value="false">No</label>
+                                        <label class="radio-inline"><input type="radio" name="Photographic_Consent" id="true" value="true">Yes</label>
+                                        <label class="radio-inline"><input type="radio" name="Photographic_Consent" id="false" value="false">No</label>
                                     </div>
 
                                 </div>
@@ -271,9 +267,9 @@
                         </div><!--my-tab-content-->
                     </div><!--divDialogElements-->
                 </div><!--modal-body-->
-            </div><!--modal-content-->
             <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal" ng-click="change()">Close</button>
-            </div>
-        </div><!--modal-dialog-->
-    </div><!--Full Modal-->
+                <button class="btn btn-primary" data-dismiss="modal" ng-click="submitChange(v)">Close</button>
+            </div><!--modal-footer-->
+        </div><!--modal-content-->
+    </div><!--modal-dialog-->
+</div><!--Full Modal-->

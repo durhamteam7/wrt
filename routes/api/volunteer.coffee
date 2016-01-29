@@ -25,7 +25,7 @@ router.get '/', (req,res)->
 router.get '/unapproved', (req,res)->
 	try
 		Volunteer.
-		find({ approved: {$in: [null, false]} }).
+		find({ Approved: {$in: [null, false]} }).
 		exec (err, volunteer)->
 			if err
 				return console.log err
@@ -39,7 +39,7 @@ router.get '/unapproved', (req,res)->
 router.get '/approved', (req,res)->
 	try
 		Volunteer.
-		find({ approved: true }).
+		find({ Approved: true }).
 		exec (err, volunteer)->
 			if err
 				return console.log err
@@ -59,7 +59,7 @@ router.patch '/approve/:id',(req,res)->
         if err
             return console.log err
         else
-            volunteer["approved"] = true
+            volunteer["Approved"] = true
             volunteer.save (err)->
             if err
                 console.log err
@@ -76,7 +76,7 @@ router.patch '/unapprove/:id',(req,res)->
         if err
             return console.log err
         else
-            volunteer["approved"] = false
+            volunteer["Approved"] = false
             volunteer.save (err)->
             if err
                 console.log err
@@ -103,7 +103,8 @@ router.get '/:id', (req,res)->
 router.post '/approve', (req,res)->	#CREATE APPROVED VOLUNTEER
 	console.log "Making new approved volunteer"
 	volunteer = new Volunteer()
-	volunteer["approved"] = true
+	volunteer["Approved"] = true
+	console.log(volunteer)
 	volunteer.save (err)->
 		if !err
 			res.json volunteer.toJSON()
@@ -111,7 +112,8 @@ router.post '/approve', (req,res)->	#CREATE APPROVED VOLUNTEER
 router.post '/unapprove', (req,res)->	#CREATE UNAPPROVED VOLUNTEER
 	console.log "Making new unapproved volunteer"
 	volunteer = new Volunteer()
-	volunteer["approved"] = false
+	volunteer["Approved"] = false
+	console.log(volunteer)
 	volunteer.save (err)->
 		if !err
 			res.json volunteer.toJSON()

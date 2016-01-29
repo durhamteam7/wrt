@@ -28,10 +28,10 @@ router.post '/', (req,res)->
 		for volunteer in req.body.select
 			body = jsontemplate.string(req.body.body,volunteer)
 			subject = jsontemplate.string(req.body.subject,volunteer)
-			if (volunteer.commPref == "email")
+			if (volunteer.Communication_Preference == "email")
 				smtpTransport.sendMail {
 					from:"durhamteam7@gmail.com",
-					to:Volunteerunteer.email,
+					to:volunteer.Email,
 					subject:subject,
 					text:body#,
 						###attachments:[{
@@ -41,7 +41,7 @@ router.post '/', (req,res)->
 				},(err,response)->
 					if err
 						console.log err
-			else if (volunteer.commPref == "letter")
+			else if (volunteer.Communication_Preference == "letter")
 				console.log("Send a letter...")
 				
 			else
