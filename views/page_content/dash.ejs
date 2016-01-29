@@ -126,16 +126,18 @@
                     <tr ng-repeat="v in filteredList | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:sortType:sortReverse | filter:searchTerm" ng-click="v.isSelected = !v.isSelected">
                         <td class="col-xs-point5"><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
                         <td ng-repeat="th in tableHeadings">{{ v[th] }}</td>
-                        <td class="col-xs-1">
-							<a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" class="btn btn-xs btn-primary">
-								<span class="glyphicon glyphicon-pencil"></span>
-							</a>
-							<a id="{{v._id}}bin" href="" onclick="return false;" ng-click="delete(v._id,$index)" class="btn btn-xs btn-danger">
-								<span class="glyphicon glyphicon-trash"></span>
-							</a>
-							<a id="{{v._id}}approve" href="" onclick="return false;" ng-click="approve(v._id,$index)" ng-hide="mode == 'normal'" class="btn btn-xs btn-block btn-success">
-								<span class="glyphicon glyphicon-ok"></span>
-							</a>
+                        <td class="col-xs-1 text-center">
+							<div class="btn-group">
+								<a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" class="btn btn-xs btn-primary">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</a>
+								<a id="{{v._id}}bin" href="" onclick="return false;" ng-click="delete(v._id,$index)" class="btn btn-xs btn-danger">
+									<span class="glyphicon glyphicon-trash"></span>
+								</a>
+								<a id="{{v._id}}approve" href="" onclick="return false;" ng-click="approve(v._id,$index)" ng-if="mode != 'normal'" class="btn btn-xs btn-success">
+									<span class="glyphicon glyphicon-ok"></span>
+								</a>
+							</div>
                         </td>
                     </tr>
                 </tbody>
