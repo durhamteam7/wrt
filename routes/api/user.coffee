@@ -20,7 +20,9 @@ recurseUpdate = (obj,diff)->				#Loop through key value pairs, if value is an ob
 
 
 router.post '/:info?', (req,res,next)->	#CREATE
+	console.log("NEW USER")
 	deets = if req.params.info then JSON.parse(encodeURIComponent(req.params.info)) else req.body
+	deets = {}
 	delete deets._id
 	console.log deets
 	user = new User deets

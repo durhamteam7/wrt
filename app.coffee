@@ -23,10 +23,6 @@ urls = require './config/urls.coffee'
 
 mongoose.connect urls.mongoDB
 
-
-
-
-
 #Define our models
 
 require './models/host.coffee'
@@ -108,6 +104,9 @@ app.use '/',require('./routes/login.coffee')
 
 #Allows Volunteer signup form to access project data without auth
 app.use '/api/projectUnauth',require('./routes/api/projectUnauth.coffee')
+
+#Allows Volunteer signup form to create new volunteers without auth
+app.use '/api/volunteerUnauth',require('./routes/api/volunteerUnauth.coffee')
 
 #app.use '/jsonpdfgen', require('./routes/pdf/unauthquotepdf.coffee') #another un-auth route
 

@@ -6,7 +6,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.7.3/summernote.js"></script>
 
 <div id="summernote"></div>
-<input id="emailSubject" ng-model="email.body" ng-change="emailChange()" style="display:none">
+<textarea id="emailSubject" ng-model="email.body" ng-change="emailChange()" style="display:none"></textarea>
 <script>
   $(document).ready(function() {
 
@@ -44,8 +44,8 @@ $('#summernote').summernote({
 
 // summernote.change
 $('#summernote').on('summernote.change', function(we, contents, $editable) {
-  console.log(contents.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
-  $("#emailSubject").val(contents.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+  $("#emailSubject").val(contents.replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n")
+.replace(/<\/?[^>]+(>|$)/g, ""));
 });
 
 

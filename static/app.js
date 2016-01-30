@@ -5,7 +5,7 @@ function getTag(tagString){
 //console.log(getTag("body"))
 
 // app.js
-angular.module('sortApp', ["checklist-model"])
+angular.module('sortApp', ["checklist-model",'ngSanitize'])
 
 // Service
 .factory('ajax', ['$http', function($http) {
@@ -60,7 +60,7 @@ angular.module('sortApp', ["checklist-model"])
 
 
 // Controller
-.controller('mainController', ['$scope', 'ajax', function($scope, serverComm) {
+.controller('mainController', ['$scope','$window', 'ajax', function($scope,$window, serverComm) {
 
   $scope.sortType     = 'First_Name'; // set the default sort type
   $scope.sortReverse  = false;   // set the default sort order
@@ -227,13 +227,20 @@ angular.module('sortApp', ["checklist-model"])
   }
 
   $scope.sendEmail = function(id,index) {
-    serverComm.sendEmail($scope.email).success(function(data) {
+    pdfLink = serverComm.sendEmail($scope.email).success(function(data) {
+      if (data){
+        console.log(data)
+        $window.open(data, '_blank');
+      }
     });
+
   }
 
   $scope.emailChange = function() {
+    console.log($scope.email.body)
     $scope.emailPreview = {"subject":Mustache.render($scope.email.subject, $scope.select[0]),"body":Mustache.render($scope.email.body, $scope.select[0])}
-  }
+    console.log($scope.emailPreview.body)
+  } 
   
   $scope.logout = function() {
     window.location = '/logout';
