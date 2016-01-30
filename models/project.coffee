@@ -14,7 +14,8 @@ projectCore =
 	Fitness_Level:
 		type: String,
 	Requires_Training:
-		type: Boolean
+		type: Boolean,
+		default:false
 
 project = new Schema projectCore,validateBeforeSave:false #TEMP DISABLED VALIDATION
 
