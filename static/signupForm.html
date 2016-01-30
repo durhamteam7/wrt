@@ -129,19 +129,27 @@
 
 
                         <legend>Choose Projects</legend>
+                        Click to select which volunteering opportunities you are interested in:<br><br>
                         <div id="projectSection"></div>
 
                         <script>
 
                             SCRIPT_URL = ""
 
+                            function check(id){
+                                    //Switch hidden checkbox
+                                    checkBox = $("input[value="+id+"]")
+                                    checkBox.prop("checked", !checkBox.prop("checked"));
+                                    if (checkBox.prop("checked")){
+                                        $("#"+id).addClass("panel-primary")
+                                    }
+                                    else{
+                                        $("#"+id).removeClass("panel-primary")
+                                    }
+                            }
+
                             //Do AJAX request to get project data
                             $.getJSON(SCRIPT_URL+'/api/projectUnauth',function(projects){
-                                projects = [{"Name":"Electro Fishing","Description":"Electrofishing uses electricity to stun fish before they are caught. Electrofishing is a common scientific survey method used to sample fish populations to determine abundance, density, and species composition. Electro fishing is sessional and occurs during July –September and we generally ask volunteers to attend for a full day.","Fitness_Level":"moderate"},
-                                {"Name":"Riverfly Monitoring","Description":"Riverflies, along with other freshwater invertebrates, are at the heart of the freshwater ecosystem and are a vital link in the aquatic food chain. Riverfly populations are affected by many factors, predominately water quality, habitat diversity, water level and flow rate. We monitor Riverfly as their numbers are indictors of water quality and can alert authorities to incidents of pollution or other issues. We ask volunteers to carry out a monthly sample which can takes an estimate 1 hour of their time.","Fitness_Level":"low-moderate"}
-                                ]
-
-
 
                                 fitnessHTML = {"high":'label-danger',"moderate":'label-warning',"low":'label-success'}
 
@@ -154,11 +162,16 @@
                                     }
                                 }
 
-                                for (i = 0; i < projects.length; i++) { 
-                                    html = '<a href="#" ><div class="panel panel-default projectBox"><div class="panel-heading"><h3 class="panel-title">'+projects[i]["Name"]+'</h3></div>'+
+                                for (i = 0; i < projects.length; i++) {
+                                    training = ""
+                                    if (projects[i]["Requires_Training"]){
+                                        training = "<br><em>Requires Certified Training</em><br>"
+                                    } 
+                                    html = '<a href="javascript:void(0)" onclick="check(\''+projects[i]["_id"]+'\')" ><div class="panel panel-default projectBox" id="'+projects[i]["_id"]+'"><div class="panel-heading"><h3 class="panel-title">'+projects[i]["Name"]+'</h3></div>'+
                                     '<div class = "panel-body">'+
                                     projects[i]["Description"]+
-                                    '<br><br><b>Difficulty: '+projects[i]["Fitness_Level"]+'</span></b></div></div></a>'
+                                    '<br>'+training+'<br><b>Difficulty: '+projects[i]["Fitness_Level"]+'</span></b></div></div></a>'+
+                                    '<input type="checkbox" style="display:none" value="'+projects[i]["_id"]+'">'
 
                                     $("#projectSection").append(html);
                                 }
