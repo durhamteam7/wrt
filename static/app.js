@@ -100,6 +100,9 @@ angular.module('sortApp', ["checklist-model"])
   $scope.isActive = function(id) {
     return id == $scope.currentPage ? 'active' : '';
   }
+  $scope.isSelected = function(v) {
+    console.log(v.isSelected)
+  }
                           
   $scope.isIn = function(value, array) {
       return jQuery.inArray(value, array)
