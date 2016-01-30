@@ -171,7 +171,7 @@
                                     '<div class = "panel-body">'+
                                     projects[i]["Description"]+
                                     '<br>'+training+'<br><b>Difficulty: '+projects[i]["Fitness_Level"]+'</span></b></div></div></a>'+
-                                    '<input type="checkbox" style="display:none" value="'+projects[i]["_id"]+'">'
+                                    '<input type="checkbox" style="display:none" name="Projects" value="'+projects[i]["_id"]+'">'
 
                                     $("#projectSection").append(html);
                                 }
@@ -346,9 +346,9 @@
 
     <div class="form-group">
         <div class="col-xs-6 col-xs-offset-3">        
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#termsModal">Health and Safety information</button>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#termsModal" onclick="healthSafetyOpen()">View Health and Safety information</button>
         </div>
-        <label class="checkbox-inline" ><input type="checkbox" disabled name="photoConsent" id="true" value="true">I have read and understood the above Health and Safety information</label>
+        <label class="checkbox-inline" ><input type="checkbox" disabled name="healthSafety" value="false">I have read and understood the above Health and Safety information</label>
     </div>
 
 </fieldset>
@@ -364,6 +364,16 @@
         </div>
     </div>
     
+<script type="text/javascript">
+    
+function healthSafetyOpen(){
+    $("input[name='healthSafety']").prop("disabled",false)
+    $("input[name='healthSafety']").prop("checked",true)
+}
+
+</script>
+
+
    <!-- Health and safe modal -->
 <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="Terms and conditions" aria-hidden="true">
     <div class="modal-dialog">
