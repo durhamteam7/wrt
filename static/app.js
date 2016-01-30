@@ -269,15 +269,14 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     return a;
   }
   
-  //new
+  //search filter
   $scope.$watch('searchTerm', function () {
     $scope.filteredList = $scope.$eval('volunteers | filter:searchTerm');
   });
-  // end new
   
   $scope.getApproved();
 }])
-// new
+// check all checkbox directive
 .directive('selectAllCheckbox', function () {
   return {
     replace: true,
@@ -343,7 +342,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     }
   };
 })
-//end new
 
 //We already have a limitTo filter built-in to angular,
 //let's make a startFrom filter
