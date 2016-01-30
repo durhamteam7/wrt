@@ -6,6 +6,26 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <meta http-equiv="refresh" content="3; url=http://www.wear-rivers-trust.org.uk/" />
+
+<script>
+
+$(function() {
+function getQueryParams(qs) {
+    qs = qs.split('+').join(' ');
+    var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+    return params;
+}
+
+var query = getQueryParams(document.location.search);
+$("#name").html(query.name)
+});
+</script>
+
 </head>
 
 <body>
@@ -13,7 +33,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="text-center">
-                    <h1 style="border-bottom: solid 1px #E1E1E1"> Thank You!</h1>
+                    <h1 style="border-bottom: solid 1px #E1E1E1"> Thank You <span id="name"></span>!</h1>
 					<p>We will be in touch soon with details of volunteering opportunities.</p>
 					<p>If you are not redirected to our website within 5 seconds please click <a href="http://www.wear-rivers-trust.org.uk/">here</a></p>
 					
