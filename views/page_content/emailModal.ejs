@@ -10,19 +10,13 @@
                 <h4 class="modal-title">Send communication</h4>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    Communication method:
-                    <select ng-model="email.communicationType">
-                        <option value="commPref">Communication Pref</option>
-                        <option value="email">Force Email</option>
-                        <option value="letter">Force Letter</option>
-                    </select>
-                </div>
-
 
                 <div class="container">
+
                     <div class="row">
+                        <div class="col-sm-6">
                         Recipients:<br><span ng-repeat="v in selected()"><span style="text-transform: uppercase;">{{v.First_Name}} {{v.Last_Name}}</span> &lt;{{v.Email}}&gt;, </span><br>
+                        </div>
                     </div>
                     <br>
                     <div class="row">
@@ -35,18 +29,31 @@
                             
                         </div>
                         <div class="col-sm-6">
-                            <h3>Preview</h3>
                             <div class="form-group">
-                                {{emailPreview.subject}}
-                                <br><br>{{emailPreview.body}}
+                            <br>
+                                <b>{{emailPreview.subject}}</b>
+                                <br><br>
+                                <div class="col-sm-6" style="white-space: pre-wrap;">{{emailPreview.body}}</div>
                             </div>
 
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            Communication method:
+                            <select ng-model="email.communicationType" class="form-control">
+                                <option value="commPref">Communication Pref</option>
+                                <option value="Email">Force Email</option>
+                                <option value="Letter">Force Letter</option>
+                            </select>
+                        </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    Message
+                    
                     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                     <button class="btn btn-primary" ng-click="sendEmail()">Send</button>
                 </div>

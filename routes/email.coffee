@@ -22,18 +22,20 @@ router.post '/', (req,res)->
 		forEmail = []
 
 		for v in req.body.select
-			if v.Communication_Preference == "email"
+			if v.Communication_Preference == "Email"
 				forEmail.push v
-			else if volunteer.Communication_Preference == "letter"
+			else if v.Communication_Preference == "Letter"
 				forLetter.push v
 			else
 				console.log("Unknown comm pref...")
-			sendEmails(forEmail,req.body.body,req.body.subject)
-			res.send "email/genPdf/"+encodeURIComponent(JSON.stringify({"volunteers":forLetter,"body":req.body.body,"subject":req.body.subject}))
+		console.log("Email",forEmail)
+		console.log("letter",forLetter)
+		sendEmails(forEmail,req.body.body,req.body.subject)
+		res.send "email/genPdf/"+encodeURIComponent(JSON.stringify({"volunteers":forLetter,"body":req.body.body,"subject":req.body.subject}))
 
-	else if req.body.communicationType == "email"
+	else if req.body.communicationType == "Email"
 		sendEmails(req.body.select,req.body.body,req.body.subject)
-	else if req.body.communicationType == "letter"
+	else if req.body.communicationType == "Letter"
 		res.send "/email/genPdf/"+encodeURIComponent(JSON.stringify({"volunteers":req.body.select,"body":req.body.body,"subject":req.body.subject}))
 	else
 		console.log "no comm pref"

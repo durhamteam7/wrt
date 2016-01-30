@@ -5,7 +5,7 @@ function getTag(tagString){
 //console.log(getTag("body"))
 
 // app.js
-angular.module('sortApp', ["checklist-model"])
+angular.module('sortApp', ["checklist-model",'ngSanitize'])
 
 // Service
 .factory('ajax', ['$http', function($http) {
@@ -234,8 +234,10 @@ angular.module('sortApp', ["checklist-model"])
   }
 
   $scope.emailChange = function() {
+    console.log($scope.email.body)
     $scope.emailPreview = {"subject":Mustache.render($scope.email.subject, $scope.select[0]),"body":Mustache.render($scope.email.body, $scope.select[0])}
-  }
+    console.log($scope.emailPreview.body)
+  } 
   
   $scope.logout = function() {
     window.location = '/logout';
