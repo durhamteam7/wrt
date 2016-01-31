@@ -1,6 +1,7 @@
-#function to send emails
+#Sends an email to a list of volunteers
 mongoose = require 'mongoose'
 nodemailer = require 'nodemailer'
+
 Host = mongoose.model 'Host'
 jsontemplate = require 'json-templater'
 

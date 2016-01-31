@@ -1,8 +1,5 @@
 PDFDocument = require 'pdfkit'
 
-
-
-
 module.exports = (req, res, volunteerData)->
 	console.log("buildPDF")
 	res.writeHead 200, {'Content-Type': 'application/pdf'}
@@ -55,6 +52,7 @@ module.exports = (req, res, volunteerData)->
 			height: 300,
 			})
 		if volunteer != volunteerData[volunteerData.length-1]
+			#Keep adding new pages
 			doc.addPage()
 	
 	doc.end()
