@@ -3,12 +3,9 @@
 PDFDocument = require 'pdfkit'
 express = require 'express'
 router = express.Router()
-mongoose = require 'mongoose'
-nodemailer = require 'nodemailer'
-Host = mongoose.model 'Host'
+
 fs = require 'fs'
 Volunteer = mongoose.model 'Volunteer'
-jsontemplate = require 'json-templater'
 
 serverUrl = process.env.SERVERURL || 'http://localhost:3000'
 
@@ -30,44 +27,17 @@ router.post '/', (req,res)->
 				console.log("Unknown comm pref...")
 		console.log("Email",forEmail)
 		console.log("letter",forLetter)
-		sendEmails(forEmail,req.body.body,req.body.subject)
+		require("./sendEmails.coffee")(forEmail,req.body.body,req.body.subject)
 		res.send "email/genPdf/"+encodeURIComponent(JSON.stringify({"volunteers":forLetter,"body":req.body.body,"subject":req.body.subject}))
 
 	else if req.body.communicationType == "Email"
-		sendEmails(req.body.select,req.body.body,req.body.subject)
+		require("./sendEmails.coffee")(req.body.select,req.body.body,req.body.subject)
 	else if req.body.communicationType == "Letter"
 		res.send "/email/genPdf/"+encodeURIComponent(JSON.stringify({"volunteers":req.body.select,"body":req.body.body,"subject":req.body.subject}))
 	else
 		console.log "no comm pref"
 		console.log err
 				
-
-sendEmails = (volunteers,body,subject)->	
-	console.log("Sending emails...")
-	Host.
-	findOne {'service':'MailGun'}, (err,host)->
-		console.log("Connected to mail service")
-		smtpTransport = nodemailer.createTransport 'SMTP',
-			service: "Mailgun"
-			auth:
-				user:host.user,
-				pass:host.pass
-		for volunteer in volunteers
-			console.log(volunteer.Email)
-			body = jsontemplate.string(body,volunteer)
-			subject = jsontemplate.string(subject,volunteer)
-			smtpTransport.sendMail {
-				from:"durhamteam7@gmail.com",
-				to:volunteer.Email,
-				subject:subject,
-				text:body#,
-					###attachments:[{
-						filename:'filename.pdf',
-						filePath:serverUrl+'URL OF FILE'
-					}]###
-			},(err,response)->
-				if err
-					console.log err
 
 router.get '/genPdf/:obj', (req,res)->
 	console.log("genPDF route")
