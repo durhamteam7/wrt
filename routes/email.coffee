@@ -3,6 +3,7 @@
 PDFDocument = require 'pdfkit'
 express = require 'express'
 router = express.Router()
+mongoose = require 'mongoose'
 
 fs = require 'fs'
 Volunteer = mongoose.model 'Volunteer'
