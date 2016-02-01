@@ -17,8 +17,8 @@ router.get '/dash', (req, res, next) ->
 	find('First_Name').
 	exec (err,volunteers)->
 		res.render 'template',
-			content:'dash',
-			volunteer:volunteers
+			content:'dash'
+			userID: req.user._id
 			#username:req.user.username
 
 
