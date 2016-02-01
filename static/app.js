@@ -60,7 +60,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 }])
 
 
-
 // Controller
 .controller('mainController', ['$scope','$window', 'ajax', function($scope, $window, serverComm) {
   
@@ -287,7 +286,10 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   
   $scope.getUser();
   $scope.getVolunteers();
+  
 }])
+
+
 // check all checkbox directive
 .directive('selectAllCheckbox', function () {
   return {
@@ -355,6 +357,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   };
 })
 
+
 //We already have a limitTo filter built-in to angular,
 //let's make a startFrom filter
 .filter('startFrom', function() {
@@ -363,6 +366,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     return input.slice(start);
     }
 })
+
 
 .directive("contenteditable", function() {
   return {
