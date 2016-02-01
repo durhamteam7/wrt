@@ -14,12 +14,12 @@ router.get '/',(req,res,next)->
 # GET dash.
 router.get '/dash', (req, res, next) ->
 	Volunteer.
-	find('name').
+	find('First_Name').
 	exec (err,volunteers)->
 		res.render 'template',
 			content:'dash',
 			volunteer:volunteers
-			###username:req.user.username###
+			#username:req.user.username
 
 
 

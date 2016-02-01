@@ -14,22 +14,9 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
       return $http.get('/api/volunteer/').success(function() {
       });
     },
-    getApprovedVolunteers: function() {
-      return $http.get('/api/volunteer/approved').success(function() {
-      });
-    },
-    getUnapprovedVolunteers: function() {
-      return $http.get('/api/volunteer/unapproved').success(function() {
-      });
-    },
     approveVolunteers: function(id) {
       return $http.patch('/api/volunteer/approve/' + id).success(function() {
         console.log("approved")
-      });
-    },
-    unapproveVolunteers: function(id) {
-      return $http.patch('/api/volunteer/unapprove/' + id).success(function() {
-        console.log("unapproved")
       });
     },
     addVolunteer: function() {
@@ -48,6 +35,21 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
         console.log("deleted")
       });
     },
+    getUsers: function() {
+      return $http.get('/api/user').success(function() {
+      });
+    },
+    getUser: function($id) {
+      return $http.get('api/user/' + $id).success(function() {
+      });
+    },
+    updateUser: function($params) {
+      $params._method = 'patch';
+      console.log("update method", $params)
+      return $http.post('/api/user/' + $params._id, $params).success(function() {
+        delete $params._method;
+      });
+    },
     sendEmail: function($params) {
       console.log($params)
       return $http.post('/email/', $params).success(function() {
@@ -60,7 +62,9 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 
 
 // Controller
-.controller('mainController', ['$scope','$window', 'ajax', function($scope,$window, serverComm) {
+.controller('mainController', ['$scope','$window', 'ajax', function($scope, $window, serverComm) {
+  
+  $scope.user = {};
 
   $scope.sortType     = 'First_Name'; // set the default sort type
   $scope.sortReverse  = false;   // set the default sort order
@@ -68,6 +72,8 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   $scope.modelShow    = false;
   // create the list of volunteers 
   $scope.volunteers = {};
+  $scope.approvedVolunteers = {};
+  $scope.unapprovedVolunteers = {};
   $scope.mode = "normal";
 
   $scope.select = [];
@@ -75,7 +81,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   $scope.emailPreview = { "subject": "", "body": "" }
 
   $scope.allTableHeadings = ["Title", "First_Name", "Last_Name", "Email", "Telephone_Home", "Telephone_Mobile", "Telephone_Other", "Address", "Volunteering_Type", "Has_Transport", "Communication_Preference"];
-  $scope.tableHeadings = ["First_Name", "Last_Name", "Email", "Telephone_Home"];
+  $scope.tableHeadings = ["First_Name", "Last_Name", "Email", "Telephone_Home"]; // Default headings if user preference not set
 
   // Pagination variables
   $scope.currentPage = 0;
@@ -123,15 +129,21 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   }
 
   //Main data modification - Gets all approved volunteers
-  $scope.getApproved = function(callback) {
+  $scope.getVolunteers = function(callback) {
     $scope.modelShow = false
-    serverComm.getApprovedVolunteers().success(function(data) {
+    serverComm.getVolunteers().success(function(data) {
       if (typeof(data) === 'object') {
         $scope.volunteers = data;
+		$scope.approvedVolunteers = $scope.$eval('volunteers | filter: { Approved: true} ');
+		$scope.unapprovedVolunteers = $scope.$eval('volunteers | filter: { Approved: false} ');
+		
+		$scope.volunteers = $scope.approvedVolunteers;
         $scope.filteredList = $scope.volunteers; // makes search work
-        console.log("Get data", $scope.volunteers)
+        console.log("All volunteers", data);
+        console.log("Approved volunteers", $scope.volunteers);
+        console.log("Unapproved volunteers", $scope.unapprovedVolunteers);
         
-        $scope.setNumberOfUnapprovedVolunteers();
+        $scope.numberOfUnapprovedVolunteers = $scope.unapprovedVolunteers.length;
         
         $scope.mode = "normal";
       }
@@ -144,27 +156,15 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   
   // Gets all unapproved volunteers
   $scope.getUnapproved = function(callback) {
-    $scope.modelShow = false
-    serverComm.getUnapprovedVolunteers().success(function(data) {
-      if (typeof(data) === 'object') {
-        $scope.volunteers = data;
-        $scope.filteredList = $scope.volunteers; // makes search work
-        console.log("Get data", $scope.volunteers)
-        
-        $scope.mode = "approving";
-      }
-      if (typeof callback !== "undefined") {
-        callback();
-      }
-    });
+	$scope.modelShow = false
+	
+	$scope.volunteers = $scope.unapprovedVolunteers;
+	$scope.filteredList = $scope.volunteers; // makes search work
+	console.log("Get data", $scope.volunteers)
+	
+	$scope.mode = "approving";
   }
-
-  $scope.setNumberOfUnapprovedVolunteers = function() {
-    serverComm.getUnapprovedVolunteers().success(function(data) {
-        $scope.numberOfUnapprovedVolunteers = data.length;
-    });  
-  }
-
+  
   $scope.getNumberOfUnapprovedVolunteers = function() {
       if ($scope.numberOfUnapprovedVolunteers == 0) {
           return "No";
@@ -187,13 +187,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
       }); 
   }
 
-  $scope.unapprove = function(id, index) {
-    serverComm.unapproveVolunteers(id).success(function(data) {
-        //Remove record from $scope.volunteers
-        //$scope.volunteers.splice(getIndexFromId(id), 1);
-      }); 
-  }
-
   $scope.newVolunteer = function() {
     $scope.modelShow = true
     //console.log(angular.element("#yes"))
@@ -206,8 +199,31 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
       });
   }
   
+  $scope.getUsers = function() {
+	  serverComm.getUsers().success(function(data) {
+		  $scope.user = data;
+		  console.log($scope.user);
+	  });
+  }
+  
+  $scope.getUser = function() {
+	  id = "56ab726cccbaee274d2aa593"; // Need to find a way to access current user!
+	  serverComm.getUser(id).success(function(data) {
+		  $scope.user = data;
+		  console.log($scope.user);
+		  if ($scope.user.tableHeadings != "") {
+		  	  $scope.tableHeadings = JSON.parse($scope.user.tableHeadings);
+		  }
+	  });
+  }
+  
+  $scope.updateUser = function() {
+	  id = "56ab726cccbaee274d2aa593"; // Need to find a way to access current user!
+	  serverComm.updateUser({ "_id": id, "tableHeadings": JSON.stringify($scope.tableHeadings) }).success();
+  }
+  
   $scope.readable = function(string) {
-      return string.replace("_", " ")
+      return string.replace(/_/g, " ")
   }
   
   function getIndexFromId(id) {
@@ -229,23 +245,18 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   $scope.sendEmail = function(id,index) {
     pdfLink = serverComm.sendEmail($scope.email).success(function(data) {
       if (data){
-        console.log(data)
+        console.log(data);
         $window.open(data, '_blank');
       }
     });
-
   }
 
   $scope.emailChange = function() {
     console.log($scope.email.body)
     $scope.emailPreview = {"subject":Mustache.render($scope.email.subject, $scope.select[0]),"body":Mustache.render($scope.email.body, $scope.select[0])}
     console.log($scope.emailPreview.body)
-  } 
-  
-  $scope.logout = function() {
-    window.location = '/logout';
   }
-
+  
   // Logic for check-all checkbox
   $scope.checkAll = function () {
       console.log($scope.selectedAll);
@@ -274,7 +285,8 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     $scope.filteredList = $scope.$eval('volunteers | filter:searchTerm');
   });
   
-  $scope.getApproved();
+  $scope.getUser();
+  $scope.getVolunteers();
 }])
 // check all checkbox directive
 .directive('selectAllCheckbox', function () {

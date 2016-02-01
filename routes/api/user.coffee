@@ -33,27 +33,59 @@ router.post '/:info?', (req,res,next)->	#CREATE
 		res.redirect '/dash'
 
 #
-router.get '/:id?', (req,res,next)->	#READ
+router.get '/', (req,res,next)->	#READ
+	User.
+	find().
+	exec (e, user)->
+		if e
+			return console.log e
+		res.json user
+#
+router.get '/:id?', (req, res, next)->	#READ
 	if req.params&&req.params.id&&req.params.id.match /^[0-9a-fA-F]{24}$/
 		User.
 		findById(req.params.id).
-		exec (e,user)->
+		exec (e, user)->
 			if e
 				return next e
 			res.json user
 #
-router.patch '/:info?', (req,res,next)->	#UPDATE
+###
+router.patch '/:info?', (req, res, next)->	#UPDATE
+	console.log JSON.parse(encodeURIComponent(req.params.info))
 	deets = if req.params.info then JSON.parse(encodeURIComponent(req.params.info)) else req.body
 	User.
 	findById(deets.id).
-	exec (e,user)->
+	exec (e, user)->
 		if deets.password					#Send a password email to user
-			setPassword(deets,user)
-		user = recurseUpdate(user,deets)
+			setPassword(deets, user)
+		user = recurseUpdate(user, deets)
 		user.save (e)->
 			if e
 				console.log e
-		res.redirect '/dash'
+		res.json user
+###
+
+# This route does not send email for password reset!!!
+router.patch '/:id', (req, res)->
+	console.log("modifying", req.params.id)
+	User.
+	findById(req.params.id).
+	exec (err, user)->
+		if err
+			res.json err
+		else if user == null
+			res.send 404
+		else
+			console.log user
+			user = recurseUpdate(user, req.body) #see function def below
+			console.log user
+			user.save (err)->
+				if err
+					console.log err
+					res.status 500
+					return err
+				res.json {'message':'Object updated'}
 #
 ###router.delete '/:id', (req,res,next)->	#DELETE
 	if req.user.isAdmin
@@ -68,6 +100,16 @@ router.patch '/:info?', (req,res,next)->	#UPDATE
 				res.json {'go_away':"You aren't in that company!"}
 	else
 		res.json {'go_away':"You aren't admin!"}###
+#
+
+recurseUpdate = (obj,diff)->				
+	#Loop through key value pairs, if value is an object recurse else update values
+	for key, value of diff
+		if (typeof value) == 'object' && (typeof obj[key]) == 'object' #(Naively) just assumes 'object' type is key-value pairs
+			obj[key] = recurseUpdate(obj[key],value)
+		else
+			obj[key] = value
+	return obj
 #
 
 
