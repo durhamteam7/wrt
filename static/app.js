@@ -206,7 +206,8 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   }
   
   $scope.getUser = function() {
-	  id = "56ab726cccbaee274d2aa593"; // Need to find a way to access current user!
+	  // Need to find a way to access current user!
+	  id = "5662271b182b5ece74cb6e13" // <-- (production user id),  --> (dev user id) "56ab726cccbaee274d2aa593";
 	  serverComm.getUser(id).success(function(data) {
 		  $scope.user = data;
 		  console.log($scope.user);
@@ -217,7 +218,8 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   }
   
   $scope.updateUser = function() {
-	  id = "56ab726cccbaee274d2aa593"; // Need to find a way to access current user!
+	  // Need to find a way to access current user!
+	  id = "5662271b182b5ece74cb6e13" // <-- (production user id),  --> (dev user id) "56ab726cccbaee274d2aa593";
 	  serverComm.updateUser({ "_id": id, "tableHeadings": JSON.stringify($scope.tableHeadings) }).success();
   }
   
