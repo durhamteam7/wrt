@@ -29,6 +29,8 @@ require './models/host.coffee'
 require './models/user.coffee'
 require './models/volunteer.coffee'
 require './models/project.coffee'
+require './models/settings.coffee'
+require './models/message.coffee'
 User = mongoose.model 'User'
 
 #Mailin server

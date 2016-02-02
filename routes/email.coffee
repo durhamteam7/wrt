@@ -8,6 +8,7 @@ jsontemplate = require 'json-templater'
 
 fs = require 'fs'
 Volunteer = mongoose.model 'Volunteer'
+Message = mongoose.model 'Message'
 
 serverUrl = process.env.SERVERURL || 'http://localhost:3000'
 
@@ -16,6 +17,14 @@ serverUrl = process.env.SERVERURL || 'http://localhost:3000'
 router.post '/', (req,res)->
 	console.log("Sending communications")
 	console.log(req.body.communicationType)
+	#Save message in db
+	message = new Message {body:req.body.body,subject:req.body.subject,commPref:req.body.communicationType}
+	message.save (err)->
+		if err
+			console.log err
+		else
+			console.log "Saved in db"
+
 	if req.body.communicationType == "commPref"
 		forLetter = []
 		forEmail = []
