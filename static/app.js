@@ -206,10 +206,9 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   }
   
   $scope.getUser = function() {
-	  // Need to find a way to access current user!
 	  serverComm.getUser(userId).success(function(data) {
 		  $scope.user = data;
-		  console.log($scope.user);
+		  console.log("User", $scope.user);
 		  if ($scope.user.tableHeadings != "") {
 		  	  $scope.tableHeadings = JSON.parse($scope.user.tableHeadings);
 		  }
@@ -217,7 +216,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   }
   
   $scope.updateUser = function() {
-	  // Need to find a way to access current user!
 	  serverComm.updateUser({ "_id": userId, "tableHeadings": JSON.stringify($scope.tableHeadings) }).success();
   }
   

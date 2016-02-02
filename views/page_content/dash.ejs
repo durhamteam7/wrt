@@ -129,7 +129,7 @@
                     </tr>
                 </thead>
                 <tbody id="volunteer-table">
-                    <tr ng-repeat="v in filteredList | startFrom:currentPage*pageSize | limitTo:pageSize | orderBy:sortType:sortReverse | filter:searchTerm">
+                    <tr ng-repeat="v in filteredList | orderBy:sortType:sortReverse | filter:searchTerm | startFrom:currentPage*pageSize | limitTo:pageSize">
                         <td class="col-xs-point5"><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
                         <td ng-repeat="th in tableHeadings" ng-click="v.isSelected = !v.isSelected">{{ v[th] }}</td>
                         <td class="col-xs-1 text-center">
