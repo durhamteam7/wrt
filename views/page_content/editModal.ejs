@@ -12,7 +12,8 @@
 
                     <div class="divDialogElements">
                         <ul class="nav nav-tabs" data-tabs="tabs">
-                            <li class="active"><a href="#personalInfo{{v._id}}">Personal Info</a></li>
+                            <li class="active"><a href="#contactDetails{{v._id}}">Contact Details</a></li>
+                            <li><a href="#volunteering{{v._id}}">Volunteering</a></li>
                             <li><a href="#transport{{v._id}}">Transport</a></li>
                             <li><a href="#emergency1{{v._id}}">Emergency Contact (1)</a></li>
                             <li><a href="#emergency2{{v._id}}">Emergency Contact (2)</a></li>
@@ -20,70 +21,114 @@
                         </ul>
                         <div id="my-tab-content" class="tab-content">
                             
-                            <div class="tab-pane active" id="personalInfo{{v._id}}">
+                            <div class="tab-pane active" id="contactDetails{{v._id}}">
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label for="Title">Title:</label>
+                                                <select name="Title" class="form-control" ng-model="v.Title">
+                                                    <option value="Mr">Mr</option>
+                                                    <option value="Mrs">Mrs</option>
+                                                    <option value="Miss">Miss</option>
+                                                    <option value="Ms">Ms</option>
+                                                    <option value="Dr">Dr</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="First_Name">First Name:</label>
+                                                <input type="text" name="First_Name" size="25" value="" class="form-control" ng-model="v.First_Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="Last_Name">Surname:</label>
+                                                <input type="text" name="Last_Name" size="25" value="" class="form-control" ng-model="v.Last_Name">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <label for="Address">Address:</label>
+                                                <textarea name="Address" rows="6" cols="40" class="form-control" ng-model="v.Address"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label for="Date_of_Birth">Date of Birth:</label>
+                                                <input type="date" name="Date_of_Birth" size="25" value="" class="form-control" ng-model="v.Date_of_Birth">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="Email">Email:</label>
+                                                <input type="email" name="Email" size="25" value="" class="form-control" ng-model="v.Email">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="Communication_Preference">Preferred method of contact:</label>
+                                                <select name="Communication_Preference" class="form-control" ng-model="v.Communication_Preference">
+                                                    <option value="Letter">Letter</option>
+                                                    <option value="Email">Email</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label for="Telephone_Home">Home tel:</label>
+                                                <input type="tel" name="Telephone_Home" size="25" value="" class="form-control" ng-model="v.Telephone_Home">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="Telephone_Mobile">Mobile:</label>
+                                                <input type="tel" name="Telephone_Mobile" size="25" value="" class="form-control" ng-model="v.Telephone_Mobile">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="Telephone_Other">Other tel:</label>
+                                                <input type="tel" name="Telephone_Other" size="25" value="" class="form-control" ng-model="v.Telephone_Other">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                    
+                                    
+                                    
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+
+                            
+
+                            </div><!--tab-pane-->
+                            <div class="tab-pane" id="volunteering{{v._id}}">
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label for="Title">Title:</label>
-                                        <select name="Title" class="form-control" ng-model="v.Title">
-                                            <option value="Mr">Mr</option>
-                                            <option value="Mrs">Mrs</option>
-                                            <option value="Miss">Miss</option>
-                                            <option value="Ms">Ms</option>
-                                            <option value="Dr">Dr</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="First_Name">First Name:</label>
-                                        <input type="text" name="First_Name" size="25" value="" class="form-control" ng-model="v.First_Name">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Last_Name">Surname:</label>
-                                        <input type="text" name="Last_Name" size="25" value="" class="form-control" ng-model="v.Last_Name">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Date_of_Birth">Date of Birth:</label>
-                                        <input type="date" name="Date_of_Birth" size="25" value="" class="form-control" ng-model="v.Date_of_Birth">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Address">Address:</label>
-                                        <textarea name="Address" rows="6" cols="40" class="form-control" ng-model="v.Address"></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Telephone_Home">Home tel:</label>
-                                        <input type="tel" name="Telephone_Home" size="25" value="" class="form-control" ng-model="v.Telephone_Home">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Telephone_Mobile">Mobile:</label>
-                                        <input type="tel" name="Telephone_Mobile" size="25" value="" class="form-control" ng-model="v.Telephone_Mobile">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Telephone_Other">Other tel:</label>
-                                        <input type="tel" name="Telephone_Other" size="25" value="" class="form-control" ng-model="v.Telephone_Other">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Email">Email:</label>
-                                        <input type="email" name="Email" size="25" value="" class="form-control" ng-model="v.Email">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="Communication_Preference">Preferred method of contact:</label>
-                                        <select name="Communication_Preference" class="form-control" ng-model="v.Communication_Preference">
-                                            <option value="Letter">Letter</option>
-                                            <option value="Email">Email</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="form-group">
                                         <label for="Volunteering_Type">In what capacity would you like to volunteer?</label>
-                                        <select name="Volunteering_Type" class="form-control" ng-model="v.Volunteering_Type">
+                                        <select name="Volunteering_Type" class="form-control" ng-model="v.Volunteering_Contact">
                                             <option value="support at events">Support at Events</option>
                                             <option value="field work">Field Work</option>
                                             <option value="monitoring/testing">Monitoring/Testing</option>
@@ -116,9 +161,9 @@
                                     </div>
                                 </div>
                             </div><!--tab-pane-->
+
                             <div class="tab-pane" id="transport{{v._id}}">
                                 <div class="form-group">
-
                                     <div class="form-group">
                                         <label for="Has_Transport">Do you have transport?</label>
                                         <br>
