@@ -123,6 +123,31 @@
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
+                                                <label for="Projects">On which projects would you like to volunteer?</label>
+                                                <select name="Projects" class="form-control" ng-model="">
+                                                    <option value="electroFishing">Electro Fishing</option>
+                                                    <option value="riverflyMonitoring">Riverfly Monitoring</option>
+                                                    <option value="praticalHabitatWorks">Practical Habitat Works</option>
+                                                    <option value="fieldSurveying">Field Surveying</option>
+                                                    <option value="otherMonitoring">Other Monitoring</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="Geographical_Area">In what area would you like to volunteer?</label>
+                                                <select name="Geographical_Area" class="form-control" ng-model="v.Geographical_Area">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
                                                 <label for="Availability">What days are you available to volunteer?</label>
                                                 <select name="Availability" class="form-control" ng-model="v.Availability">
                                                     <option value="weekdays">Weekdays</option>
@@ -132,6 +157,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="row">
                                         <div class="col-sm-8">
                                             <div class="form-group">
@@ -182,13 +208,13 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Make">Car make:</label>
-                                                <input type="text" name="Make" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'">
+                                                <input type="text" name="Make" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'" ng-model="v.Car_Make">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Mode">Car model:</label>
-                                                <input type="text" name="Mode" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'">
+                                                <input type="text" name="Mode" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'" ng-model="v.Car_Model">
                                             </div>
                                         </div>
                                     </div>
@@ -196,13 +222,13 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Colour">Car colour:</label>
-                                                <input type="text" name="Colour" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'">
+                                                <input type="text" name="Colour" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'" ng-model="v.Car_Colour">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Registration_Number">Car reg:</label>
-                                                <input type="text" name="Registration_Number" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'">
+                                                <input type="text" name="Registration_Number" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'"ng-model="v.Car_Registration_Number">
                                             </div>
                                         </div>
                                     </div>

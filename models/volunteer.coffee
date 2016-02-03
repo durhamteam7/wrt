@@ -62,13 +62,16 @@ volunteerCore =
 	Has_Transport:
 		type: Boolean,
 		required: true,
-	Car:
-		Registration_Number:
-			type: String,
-			validate: /^([A-Z]{3}\s?(\d{3}|\d{2}|d{1})\s?[A-Z])|([A-Z]\s?(\d{3}|\d{2}|\d{1})\s?[A-Z]{3})|(([A-HK-PRSVWY][A-HJ-PR-Y])\s?([0][2-9]|[1-9][0-9])\s?[A-HJ-PR-Z]{3})$/,
-		Make: String,
-		Model: String,
-		Colour: String,
+	
+	Car_Make: 
+		type: String,
+	Car_Model: 
+		type: String,
+	Car_Colour: 
+		type: String,
+	Car_Registration_Number:
+		type: String,
+		validate: /^([A-Z]{3}\s?(\d{3}|\d{2}|d{1})\s?[A-Z])|([A-Z]\s?(\d{3}|\d{2}|\d{1})\s?[A-Z]{3})|(([A-HK-PRSVWY][A-HJ-PR-Y])\s?([0][2-9]|[1-9][0-9])\s?[A-HJ-PR-Z]{3})$/,
 
 	Experience: #dropdown
 		type: String,
