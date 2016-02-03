@@ -3,9 +3,43 @@
 <title>Signup | Wear Rivers Trust</title>
 <link rel="stylesheet" href="http://www.wear-rivers-trust.org.uk/css/main.css" type="text/css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
+
+<style>
+	
+	/* Sticky footer styles
+	-------------------------------------------------- */
+	html {
+		position: relative;
+		min-height: 100%;
+	}
+	body {
+		margin-top: 20px;
+		/* Margin bottom by footer height */
+		margin-bottom: 60px;
+	}
+	.footer {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		/* Set the fixed height of the footer here */
+		height: 60px;
+		background-color: #f5f5f5;
+	}
+
+	a {
+		color: black !important;
+		text-decoration: none !important; /* no underline */
+	}
+
+	.projectBox:hover {
+		box-shadow: 1px 1px 5px grey;
+    }
+
+</style>
 
 <body>
     <div class="container">
@@ -20,343 +54,403 @@
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
                 
-                <form name="SignupForm" action="/api/volunteerUnauth" method="POST" class="form">
-                    
-                    <fieldset>
-                        <legend>Personal Information</legend>
+                <form id="SignupForm" name="SignupForm" action="/api/volunteerUnauth" method="POST" class="form">
+				
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+									<h4 class="panel-title">
+										Choose Projects <span class="fa fa-caret-down pull-right"></span>
+									</h4>
+								</a>
+							</div>
+							<div id="collapseOne" class="panel-collapse collapse in">
+								<div class="panel-body">
+									Click to select which volunteering opportunities you are interested in:<br><br>
+									<div id="projectSection"></div>
 
-                        <div class="form-group">
-                            <label for="Title">Title:</label>
-                            <select name="Title" class="form-control">
-                                <option value="Mr">Mr</option>
-                                <option value="Mrs">Mrs</option>
-                                <option value="Miss">Miss</option>
-                                <option value="Ms">Ms</option>
-                                <option value="Dr">Dr</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="First_Name">First Name:</label>
-                            <input type="text" name="First_Name" size="25" value="" class="form-control">
-                        </div>
+									<script>
+										SCRIPT_URL = ""
 
-                        <div class="form-group">
-                            <label for="Last_Name">Surname:</label>
-                            <input type="text" name="Last_Name" size="25" value="" class="form-control">
-                        </div>
+										function check(id){
+												//Switch hidden checkbox
+												checkBox = $("input[value="+id+"]")
+												checkBox.prop("checked", !checkBox.prop("checked"));
+												if (checkBox.prop("checked")){
+													$("#"+id).addClass("panel-primary")
+												}
+												else{
+													$("#"+id).removeClass("panel-primary")
+												}
+										}
 
-                        <div class="form-group">
-                            <label for="Date_of_Birth">Date of Birth:</label>
-                            <input type="date" name="Date_of_Birth" size="25" value="" class="form-control">
-                        </div>
+										//Do AJAX request to get project data
+										$.getJSON(SCRIPT_URL + '/api/projectUnauth', function(projects) {
 
-                        <div class="form-group">
-                            <label for="Address">Address:</label>
-                            <textarea name="Address" rows="6" cols="40" class="form-control"></textarea>
-                        </div>
+											fitnessHTML = {"high":'label-danger',"moderate":'label-warning',"low":'label-success'}
 
-                        <div class="form-group">
-                            <label for="Telephone_Home">Home tel:</label>
-                            <input type="tel" name="Telephone_Home" size="25" value="" class="form-control">
-                        </div>
+											//Replace projects with the html
+											for (i = 0; i < projects.length; i++) { 
+												for (j = 0; j < Object.keys(fitnessHTML).length; j++) { 
+													fitness = Object.keys(fitnessHTML)[j]
+													re = new RegExp(fitness,'gi');
+													projects[i].Fitness_Level = projects[i].Fitness_Level.replace(re,'<span class="label '+fitnessHTML[fitness]+'">'+fitness+'</span>');
+												}
+											}
 
-                        <div class="form-group">
-                            <label for="Telephone_Other">Mobile:</label>
-                            <input type="tel" name="Telephone_Other" size="25" value="" class="form-control">
-                        </div>
+											for (i = 0; i < projects.length; i++) {
+												training = ""
+												if (projects[i]["Requires_Training"]){
+													training = "<br><em>Requires Certified Training</em><br>"
+												} 
+												html = '<a href="javascript:void(0)" onclick="check(\''+projects[i]["_id"]+'\')" ><div class="panel panel-default projectBox" id="'+projects[i]["_id"]+'"><div class="panel-heading"><h3 class="panel-title">'+projects[i]["Name"]+'</h3></div>'+
+												'<div class = "panel-body">'+
+												projects[i]["Description"]+
+												'<br>'+training+'<br><b>Difficulty: '+projects[i]["Fitness_Level"]+'</span></b></div></div></a>'+
+												'<input type="checkbox" style="display:none" name="Projects" value="'+projects[i]["_id"]+'"><br>'
 
-                        <div class="form-group">
-                            <label for="Telephone_Other">Other tel:</label>
-                            <input type="tel" name="Telephone_Other" size="25" value="" class="form-control">
-                        </div>
+												$("#projectSection").append(html);
+											}
+										});
+									</script>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+									<h4 class="panel-title">
+										Contact Details <span class="fa fa-caret-down pull-right"></span>
+									</h4>
+								</a>
+							</div>
+							<div id="collapseTwo" class="panel-collapse collapse">
+								<div class="panel-body">
 
-                        <div class="form-group">
-                            <label for="Email">Email:</label>
-                            <input type="Email" name="Email" size="25" value="" class="form-control">
-                        </div>
+									<div class="form-group">
+										<label for="Title">Title:</label>
+										<select name="Title" class="form-control">
+											<option value="Mr">Mr</option>
+											<option value="Mrs">Mrs</option>
+											<option value="Miss">Miss</option>
+											<option value="Ms">Ms</option>
+											<option value="Dr">Dr</option>
+										</select>
+									</div>
+									
+									<div class="form-group">
+										<label for="First_Name">First Name:</label>
+										<input type="text" name="First_Name" size="25" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <label for="Communication_Preference">Preferred method of contact:</label>
-                            <select name="Communication_Preference" class="form-control">
-                                <option value="Telephone_Home">Home tel</option>
-                                <option value="Telephone_Mobile">Mobile</option>
-                                <option value="Telephone_Other">Other tel</option>
-                                <option value="Email">Email</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="Volunteering_Type">In what capacity would you like to volunteer?</label>
-                            <select name="Volunteering_Type" class="form-control">
-                                <option value="support at events">Support at Events</option>
-                                <option value="field work">Field Work</option>
-                                <option value="monitoring/testing">Monitoring/Testing</option>
-                            </select>
-                        </div>
+									<div class="form-group">
+										<label for="Last_Name">Surname:</label>
+										<input type="text" name="Last_Name" size="25" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <label for="Availability">What days are you available to volunteer?</label>
-                            <select name="Availability" class="form-control">
-                                <option value="weekdays">Weekdays</option>
-                                <option value="weekends">Weekends</option>
-                                <option value="both">Both</option>
-                            </select>
-                        </div>
+									<div class="form-group">
+										<label for="Date_of_Birth">Date of Birth:</label>
+										<input type="date" name="Date_of_Birth" size="25" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <label for="Experience">Please list any relavant experience you may have:</label>
-                            <textarea name="Experience" rows="6" cols="120" placeholder="" class="form-control"></textarea>
-                        </div>
+									<div class="form-group">
+										<label for="Address">Address:</label>
+										<textarea name="Address" rows="6" cols="40" class="form-control"></textarea>
+									</div>
 
-                        <div class="form-group">
-                            <label for="Medical_Condition">Do you have any medical conditions/allergies that we should be aware about?</label>
-                            <textarea name="Medical_Condition" rows="6" cols="120" placeholder="" class="form-control"></textarea>
-                        </div>
+									<div class="form-group">
+										<label for="Telephone_Home">Home tel:</label>
+										<input type="tel" name="Telephone_Home" size="25" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <label for="Last_Tetanus">If relevant, what date was you last Tetanus?</label>
-                            <input type="date" name="Last_Tetanus" size="25" value="" class="form-control">
-                            <span class="help-block">(if more than 10 years ago please consult your GP)</span>
-                        </div>
-                        
-                    </fieldset>
-                    
-                    <br>
+									<div class="form-group">
+										<label for="Telephone_Mobile">Mobile:</label>
+										<input type="tel" name="Telephone_Mobile" size="25" value="" class="form-control">
+									</div>
 
+									<div class="form-group">
+										<label for="Telephone_Other">Other tel:</label>
+										<input type="tel" name="Telephone_Other" size="25" value="" class="form-control">
+									</div>
 
-                                    <fieldset>
+									<div class="form-group">
+										<label for="Email">Email:</label>
+										<input type="Email" name="Email" size="25" value="" class="form-control">
+									</div>
 
+									<div class="form-group">
+										<label for="Communication_Preference">Preferred method of contact:</label>
+										<select name="Communication_Preference" class="form-control">
+											<option value="Letter">Letter</option>
+											<option value="Email">Email</option>
+											<option value="Telephone">Telephone</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+									<h4 class="panel-title">
+										Volunteering <span class="fa fa-caret-down pull-right"></span>
+									</h4>
+								</a>
+							</div>
+							<div id="collapseThree" class="panel-collapse collapse">
+								<div class="panel-body">
+						
+									
+									<div class="form-group">
+										<label for="Volunteering_Capacity">In what capacity would you like to volunteer?</label>
+										<select name="Volunteering_Capacity" class="form-control">
+											<option value="Support at Events">Support at Events</option>
+											<option value="Field Work">Field Work</option>
+											<option value="Monitoring/Testing">Monitoring/Testing</option>
+										</select>
+									</div>
+									
+									<div class="form-group">
+										<label for="Geographical_Area">In what area would you like to volunteer?</label>
+										<select name="Geographical_Area" class="form-control">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+										</select>
+									</div>
 
-                        <legend>Choose Projects</legend>
-                        Click to select which volunteering opportunities you are interested in:<br><br>
-                        <div id="projectSection"></div>
+									<div class="form-group">
+										<label for="Availability">What days are you available to volunteer?</label>
+										<select name="Availability" class="form-control">
+											<option value="Weekdays">Weekdays</option>
+											<option value="Weekends">Weekends</option>
+											<option value="Both">Both</option>
+										</select>
+									</div>
 
-                        <script>
+									<div class="form-group">
+										<label for="Experience">Please list any relavant experience you may have:</label>
+										<textarea name="Experience" rows="6" cols="120" placeholder="" class="form-control"></textarea>
+									</div>
 
-                            SCRIPT_URL = ""
+									<div class="form-group">
+										<label for="Medical_Conditions">Do you have any medical conditions/allergies that we should be aware about?</label>
+										<textarea name="Medical_Conditions" rows="6" cols="120" placeholder="" class="form-control"></textarea>
+									</div>
 
-                            function check(id){
-                                    //Switch hidden checkbox
-                                    checkBox = $("input[value="+id+"]")
-                                    checkBox.prop("checked", !checkBox.prop("checked"));
-                                    if (checkBox.prop("checked")){
-                                        $("#"+id).addClass("panel-primary")
-                                    }
-                                    else{
-                                        $("#"+id).removeClass("panel-primary")
-                                    }
-                            }
+									<div class="form-group">
+										<label for="Last_Tetanus">If relevant, what date was you last Tetanus?</label>
+										<input type="date" name="Last_Tetanus" size="25" value="" class="form-control">
+										<span class="help-block">(if more than 10 years ago please consult your GP)</span>
+									</div>
+									
+								</div>
+							</div>
+						</div>		
+									
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+									<h4 class="panel-title">
+										Transport <span class="fa fa-caret-down pull-right"></span>
+									</h4>
+								</a>
+							</div>
+							<div id="collapseFour" class="panel-collapse collapse">
+								<div class="panel-body">
+							
+									<div class="form-group">
+										<label for="Has_Transport">Do you have transport?</label>
+										<br>
+										<label class="radio-inline"><input type="radio" name="Has_Transport" id="true" value="true">Yes</label>
+										<label class="radio-inline"><input type="radio" name="Has_Transport" id="false" value="false">No</label>
+									</div>
 
-                            //Do AJAX request to get project data
-                            $.getJSON(SCRIPT_URL+'/api/projectUnauth',function(projects){
+									<div class="form-group">
+										<span class="help-block">If you answered No you can skip this part</span>
+									</div>
 
-                                fitnessHTML = {"high":'label-danger',"moderate":'label-warning',"low":'label-success'}
+									<div class="form-group">
+										<label for="Car_Make">Car Make:</label>
+										<input type="text" name="Car_Make" size="25" value="" class="form-control">
+									</div>
 
-                                //Replace projects with the html
-                                for (i = 0; i < projects.length; i++) { 
-                                    for (j = 0; j < Object.keys(fitnessHTML).length; j++) { 
-                                        fitness = Object.keys(fitnessHTML)[j]
-                                        re = new RegExp(fitness,'gi');
-                                        projects[i].Fitness_Level = projects[i].Fitness_Level.replace(re,'<span class="label '+fitnessHTML[fitness]+'">'+fitness+'</span>');
-                                    }
-                                }
+									<div class="form-group">
+										<label for="Car_Model">Car Model:</label>
+										<input type="text" name="Car_Model" size="25" value="" class="form-control">
+									</div>
 
-                                for (i = 0; i < projects.length; i++) {
-                                    training = ""
-                                    if (projects[i]["Requires_Training"]){
-                                        training = "<br><em>Requires Certified Training</em><br>"
-                                    } 
-                                    html = '<a href="javascript:void(0)" onclick="check(\''+projects[i]["_id"]+'\')" ><div class="panel panel-default projectBox" id="'+projects[i]["_id"]+'"><div class="panel-heading"><h3 class="panel-title">'+projects[i]["Name"]+'</h3></div>'+
-                                    '<div class = "panel-body">'+
-                                    projects[i]["Description"]+
-                                    '<br>'+training+'<br><b>Difficulty: '+projects[i]["Fitness_Level"]+'</span></b></div></div></a>'+
-                                    '<input type="checkbox" style="display:none" name="Projects" value="'+projects[i]["_id"]+'">'
+									<div class="form-group">
+										<label for="Car_Colour">Car Colour:</label>
+										<input type="text" name="Car_Colour" size="25" value="" class="form-control">
+									</div>
 
-                                    $("#projectSection").append(html);
-                                }
-                            });
-</script>
+									<div class="form-group">
+										<label for="Car_Registration_Number">Car Registration Number:</label>
+										<input type="text" name="Car_Registration_Number" size="25" value="" class="form-control">
+									</div>
+								
+								</div>
+							</div>
+						</div>
+					
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+									<h4 class="panel-title">
+										Emergency contact (1) <span class="fa fa-caret-down pull-right"></span>
+									</h4>
+								</a>
+							</div>
+							<div id="collapseFive" class="panel-collapse collapse">
+								<div class="panel-body">
 
-</fieldset>
+									<div class="form-group">
+										<label for="Emergency_Name_1">Name:</label>
+										<input type="text" name="Emergency_Name_1" size="42" value="" class="form-control">
+									</div>
 
-</br>
-                    
-                    <fieldset>
-                        
-                    <legend>Transport</legend>
-                        
-                        <div class="form-group">
-                            <label for="Has_Transport">Do you have transport?</label>
-                            <br>
-                            <label class="radio-inline"><input type="radio" name="Has_Transport" id="true" value="true">Yes</label>
-                            <label class="radio-inline"><input type="radio" name="Has_Transport" id="false" value="false">No</label>
-                        </div>
+									<div class="form-group">
+										<label for="Emergency_Relationship_1">Relationship:</label>
+										<input type="text" name="Emergency_Relationship_1" size="25" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <span class="help-block">If you answered No you can skip this part</span>
-                        </div>
+									<div class="form-group">
+										<label for="Emergency_Address_1">Address:</label>
+										<textarea name="Emergency_Address_1" rows="6" cols="40" class="form-control"></textarea>
+									</div>
 
-                        <div class="form-group">
-                            <label for="Make">Car make:</label>
-                            <input type="text" name="Make" size="25" value="" class="form-control">
-                        </div>
+									<div class="form-group">
+										<label for="Emergency_Telephone_Home_1">Home tel:</label>
+										<input type="tel" name="Emergency_Telephone_Home_1" size="25" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <label for="Mode">Car model:</label>
-                            <input type="text" name="Mode" size="25" value="" class="form-control">
-                        </div>
+									<div class="form-group">
+										<label for="Emergency_Telephone_Mobile_1">Mobile:</label>
+										<input type="tel" name="Emergency_Telephone_Mobile_1" size="25" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <label for="Colour">Car colour:</label>
-                            <input type="text" name="Colour" size="25" value="" class="form-control">
-                        </div>
+									<div class="form-group">
+										<label for="Emergency_Telephone_Other_1">Other tel:</label>
+										<input type="tel" name="Emergency_Telephone_Other_1" size="25" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <label for="Registration_Number">Car reg:</label>
-                            <input type="text" name="Registration_Number" size="25" value="" class="form-control">
-                        </div>
-                    
-                    </fieldset>
-                    
-                    <br>
-                    
-                    <fieldset>
+									<div class="form-group">
+										<label for="Emergency_Email_1">Email:</label>
+										<input type="text" name="Emergency_Email_1" size="25" value="" class="form-control">
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+									<h4 class="panel-title">
+										Emergency contact (2) <span class="fa fa-caret-down pull-right"></span>
+									</h4>
+								</a>
+							</div>
+							<div id="collapseSix" class="panel-collapse collapse">
+								<div class="panel-body">
 
-                        <legend>Emergency contact (1)</legend>
+									<div class="form-group">
+										<label for="Emergency_Name_1">Name:</label>
+										<input type="text" name="Emergency_Name_2" size="42" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <label for="Name">Name:</label>
-                            <input type="text" name="Name" size="42" value="" class="form-control">
-                        </div>
+									<div class="form-group">
+										<label for="Emergency_Relationship_1">Relationship:</label>
+										<input type="text" name="Emergency_Relationship_2" size="25" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <label for="Relationship">Relationship:</label>
-                            <input type="text" name="Relationship" size="25" value="" class="form-control">
-                        </div>
+									<div class="form-group">
+										<label for="Emergency_Address_2">Address:</label>
+										<textarea name="Emergency_Address_2" rows="6" cols="40" class="form-control"></textarea>
+									</div>
 
-                        <div class="form-group">
-                            <label for="Address">Address:</label>
-                            <textarea name="Address" rows="6" cols="40" class="form-control"></textarea>
-                        </div>
+									<div class="form-group">
+										<label for="Emergency_Telephone_Home_2">Home tel:</label>
+										<input type="tel" name="Emergency_Telephone_Home_2" size="25" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <label for="contactDetails">Contact Details:</label>
-                            <input type="text" name="contactDetails" size="25" value="" class="form-control">
-                        </div>
+									<div class="form-group">
+										<label for="Emergency_Telephone_Mobile_2">Mobile:</label>
+										<input type="tel" name="Emergency_Telephone_Mobile_2" size="25" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <label for="Telephone_Home">Home tel:</label>
-                            <input type="tel" name="Telephone_Home" size="25" value="" class="form-control">
-                        </div>
+									<div class="form-group">
+										<label for="Emergency_Telephone_Other_2">Other tel:</label>
+										<input type="tel" name="Emergency_Telephone_Other_2" size="25" value="" class="form-control">
+									</div>
 
-                        <div class="form-group">
-                            <label for="Telephone_Mobile">Mobile:</label>
-                            <input type="tel" name="Telephone_Mobile" size="25" value="" class="form-control">
-                        </div>
+									<div class="form-group">
+										<label for="Emergency_Email_2">Email:</label>
+										<input type="text" name="Emergency_Email_2" size="25" value="" class="form-control">
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
+									<h4 class="panel-title">
+										Other Information <span class="fa fa-caret-down pull-right"></span>
+									</h4>
+								</a>
+							</div>
+							<div id="collapseSeven" class="panel-collapse collapse">
+								<div class="panel-body">
+									
+									<div class="form-group">
+										<label for="Heard_From">Where did you hear about volunteering for Wear Rivers Trust?</label>
+										<select name="Heard_From" class="form-control">
+											<option value="Website">Website</option>
+											<option value="Local Newspaper">Local Newspaper</option>
+											<option value="Volunteer Centre">Volunteer Centre</option>
+											<option value="Wildlife Volunteer">Wildlife Volunteer</option>
+											<option value="Television">Television</option>
+											<option value="College Careers Service">College Careers Service</option>
+											<option value="Friend">Friend</option>
+										</select>
+									</div>
 
-                        <div class="form-group">
-                            <label for="Telephone_Other">Other tel:</label>
-                            <input type="tel" name="Telephone_Other" size="25" value="" class="form-control">
-                        </div>
-                        
-                    </fieldset>
-                    
-                    <br>
-                    
-                    <fieldset>
+									<div class="form-group">
+										<label for="Interested_In_More">Would you like to hear about other volunteering opportunities?</label>
+										<br>
+										<label class="radio-inline"><input type="radio" name="Interested_In_More" id="true" value="true">Yes</label>
+										<label class="radio-inline"><input type="radio" name="Interested_In_More" id="false" value="false">No</label>
+									</div>
 
-                        <legend>Emergency contact (2)</legend>
-
-                        <div class="form-group">
-                            <label for="Name">Name:</label>
-                            <input type="text" name="Name" size="42" value="" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Relationship">Relationship:</label>
-                            <input type="text" name="Relationship" size="25" value="" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Address">Address:</label>
-                            <textarea name="Address" rows="6" cols="40" class="form-control"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="contactDetails">Contact Details:</label>
-                            <input type="text" name="contactDetails" size="25" value="" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Telephone_Home">Home tel:</label>
-                            <input type="tel" name="Telephone_Home" size="25" value="" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Telephone_Mobile">Mobile:</label>
-                            <input type="tel" name="Telephone_Mobile" size="25" value="" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Telephone_Other">Other tel:</label>
-                            <input type="tel" name="Telephone_Other" size="25" value="" class="form-control">
-                        </div>
-                        
-                    </fieldset>
-                    
-                    <br>
-                    
-                    <fieldset>
-                        
-                        <legend>Other Information</legend>
-
-                        <div class="form-group">
-                            <label for="Heard_From">Where did you hear about volunteering for Wear Rivers Trust?</label>
-                            <select name="Heard_From" class="form-control">
-                                <option value="website">Website</option>
-                                <option value="local newspaper">Local Newspaper</option>
-                                <option value="volunteer centre">Volunteer Centre</option>
-                                <option value="wildlife volunteer">Wildlife Volunteer</option>
-                                <option value="television">Television</option>
-                                <option value="college careers service">College Careers Service</option>
-                                <option value="friend">Friend</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Interested_In_More">Would you like to hear about other volunteering opportunities?</label>
-                            <br>
-                            <label class="radio-inline"><input type="radio" name="Interested_In_More" id="true" value="true">Yes</label>
-                            <label class="radio-inline"><input type="radio" name="Interested_In_More" id="false" value="false">No</label>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Photographic_Consent">Do you agree for any photographs to be published on our volunteer website and interpretation?</label>
-                            <br>
-                            <label class="radio-inline"><input type="radio" name="Photographic_Consent" id="true" value="true">Yes</label>
-                            <label class="radio-inline"><input type="radio" name="Photographic_Consent" id="false" value="false">No</label>
-                        </div>
-                    
-                    </fieldset>
-
-                    <fieldset>
-
-    <legend>Health and Safety</legend>
-
-    <div class="form-group">
-        <div class="col-xs-6 col-xs-offset-3">        
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#termsModal" onclick="healthSafetyOpen()">View Health and Safety information</button>
-        </div>
-        <label class="checkbox-inline" ><input type="checkbox" disabled name="healthSafety" value="false">I have read and understood the above Health and Safety information</label>
-    </div>
-
-</fieldset>
-                    
-                    <br>
+									<div class="form-group">
+										<label for="Photographic_Consent">Do you agree for any photographs to be published on our volunteer website and interpretation?</label>
+										<br>
+										<label class="radio-inline"><input type="radio" name="Photographic_Consent" id="true" value="true">Yes</label>
+										<label class="radio-inline"><input type="radio" name="Photographic_Consent" id="false" value="false">No</label>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#termsModal" onclick="healthSafetyOpen()">View Health and Safety information</button>
+						<br>
+						<br>
+						<label class="checkbox-inline" >
+							<input type="checkbox" disabled name="Read_Health_and_Safety" value="false">
+							I have read and understood the above Health and Safety information
+						</label>
+					</div>
                     
                     <div class="form-group">
-                        <input type="submit" value="Submit" class="btn btn-primary">
+                        <input id="submitButton" type="submit" onclick="logData()" value="Submit" class="btn btn-primary" disabled>
                     </div>
 
                 </form>
@@ -364,75 +458,43 @@
         </div>
     </div>
     
-<script type="text/javascript">
-    
-function healthSafetyOpen(){
-    $("input[name='healthSafety']").prop("disabled",false)
-    $("input[name='healthSafety']").prop("checked",true)
-}
-
-</script>
-
-
-   <!-- Health and safe modal -->
-<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="Terms and conditions" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Health and Safety Information</h3>
-            </div>
-
-            <div class="modal-body">
-                <p>(a) The Trust takes health and safety extremely seriously and will take all reasonably practicable steps to ensure your health and safety and welfare while undertaking voluntary work on the Trust’s behalf. If you have or receive any health and safety concerns during your volunteer work, unless you can resolve them there and then, you must refer them for resolution as soon as practicable to the Project Manager or a senior Trust representative.</p>
-
-                <p>(b) The Trust works on the precautionary principle, based on a risk assessment dependent upon the task to be undertaken and on the frequency and severity of foreseeable accidents. If you have reasonable cause to believe that either you or others are exposed to a health and safety risk you should not start the activity or, if circumstances later change (e.g. river levels increase), stop it forthwith and re-assess the situation. The activity must not proceed until reasonable safety measures have been implemented and/or you are completely satisfied that it is reasonably safe to do so. It is your legal duty to take care of your own health and safety, that of your colleagues and others working near you.</p>
-
-                <p>(c) If you suffer an injury during the course of your volunteer work with the Trust, you must report it to the Trust’s Registered Office so that it can be recorded in the Accident Book. Volunteers are covered by the Trust’s Insurances</p>
-
-                <p>(d) The Trust’s health and safety policy, guidelines and organisational chart are set out in its Staff Handbook. Given the varied and higher risk associated with fieldwork, the Trust’s health and safety guidelines have been given to the Project Manager for use in assessing the risk. In conjunction with the Project Manager you should make yourself aware of the content of the guidelines particularly as relates to the activity planned and ensure that any other volunteers are likewise aware of them.</p>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="agreeButton" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+	<script type="text/javascript">
+		function logData() {
+			data = $("#SignupForm").serialize();
+			console.log(data);
+		}
+		function healthSafetyOpen() {
+			$("input[name='Read_Health_and_Safety']").prop("disabled", false)
+			$("input[name='Read_Health_and_Safety']").prop("checked", true)
+			$("#submitButton").prop("disabled", false)
+		}
+	</script>
 
 
+	<!-- Health and safe modal -->
+	<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="Terms and conditions" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title">Health and Safety Information</h3>
+				</div>
 
+				<div class="modal-body">
+					<p>(a) The Trust takes health and safety extremely seriously and will take all reasonably practicable steps to ensure your health and safety and welfare while undertaking voluntary work on the Trust’s behalf. If you have or receive any health and safety concerns during your volunteer work, unless you can resolve them there and then, you must refer them for resolution as soon as practicable to the Project Manager or a senior Trust representative.</p>
 
-<style>
-        /* Sticky footer styles
-        -------------------------------------------------- */
-        html {
-            position: relative;
-            min-height: 100%;
-        }
-        body {
-            margin-top: 20px;
-            /* Margin bottom by footer height */
-            margin-bottom: 60px;
-        }
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            /* Set the fixed height of the footer here */
-            height: 60px;
-            background-color: #f5f5f5;
-        }
+					<p>(b) The Trust works on the precautionary principle, based on a risk assessment dependent upon the task to be undertaken and on the frequency and severity of foreseeable accidents. If you have reasonable cause to believe that either you or others are exposed to a health and safety risk you should not start the activity or, if circumstances later change (e.g. river levels increase), stop it forthwith and re-assess the situation. The activity must not proceed until reasonable safety measures have been implemented and/or you are completely satisfied that it is reasonably safe to do so. It is your legal duty to take care of your own health and safety, that of your colleagues and others working near you.</p>
 
-        a {
-          color: black !important;
-          text-decoration: none !important; /* no underline */
-      }
+					<p>(c) If you suffer an injury during the course of your volunteer work with the Trust, you must report it to the Trust’s Registered Office so that it can be recorded in the Accident Book. Volunteers are covered by the Trust’s Insurances</p>
 
-      .projectBox:hover {
-        box-shadow: 1px 1px 5px grey;
-    }
+					<p>(d) The Trust’s health and safety policy, guidelines and organisational chart are set out in its Staff Handbook. Given the varied and higher risk associated with fieldwork, the Trust’s health and safety guidelines have been given to the Project Manager for use in assessing the risk. In conjunction with the Project Manager you should make yourself aware of the content of the guidelines particularly as relates to the activity planned and ensure that any other volunteers are likewise aware of them.</p>
+				</div>
 
-</style>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="agreeButton" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
     
     <footer class="footer">
         <div class="container">
