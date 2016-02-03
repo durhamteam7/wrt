@@ -7,15 +7,16 @@ jsontemplate = require 'json-templater'
 
 
 module.exports = (volunteers,body,subject)->	
-	console.log("Sending emails...")
+	console.log "Sending emails..."
 	Host.
 	findOne {'service':'MailGun'}, (err,host)->
-		console.log("Connected to mail service")
 		smtpTransport = nodemailer.createTransport 'SMTP',
 			service: "Mailgun"
 			auth:
 				user:host.user,
 				pass:host.pass
+		console.log "Connected to mail service"
+
 		for volunteer in volunteers
 			console.log(volunteer.Email)
 			body = jsontemplate.string(body,volunteer)
