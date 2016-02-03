@@ -118,6 +118,8 @@
                                                     <option value="electroFishing">Electro Fishing</option>
                                                     <option value="riverflyMonitoring">Riverfly Monitoring</option>
                                                     <option value="practicalHabitatWorks">Practical Habitat Works</option>
+                                                    <option value="fieldSurveying">Field Surveying</option>
+                                                    <option value="otherMonitoring">Other Monitoring</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -214,7 +216,7 @@
                                         <div class="col-sm-8">
                                             <div class="form-group">
                                                 <label for="Name">Name:</label>
-                                                <input type="text" name="Name" size="42" value="" class="form-control">
+                                                <input type="text" name="Name" size="42" value="" class="form-control" ng-model="v.Emergency_Name_1">
                                             </div>
                                         </div>
                                     </div>
@@ -222,7 +224,7 @@
                                         <div class="col-sm-8">
                                             <div class="form-group">
                                                 <label for="Address">Address:</label>
-                                                <textarea name="Address" rows="6" cols="40" class="form-control" ng-model="v.Address"></textarea>
+                                                <textarea name="Address" rows="6" cols="40" class="form-control" ng-model="v.Emergency_Address_1"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -230,13 +232,13 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Relationship">Relationship:</label>
-                                                <input type="text" name="Relationship" size="25" value="" class="form-control">
+                                                <input type="text" name="Relationship" size="25" value="" class="form-control" ng-model="v.Emergency_Relationship_1">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Email">Email:</label>
-                                                <input type="email" name="Email" size="25" value="" class="form-control" ng-model="v.Email">
+                                                <input type="email" name="Email" size="25" value="" class="form-control" ng-model="v.Emergency_Email_1">
                                             </div>
                                         </div>
                                     </div>
@@ -245,19 +247,19 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="Telephone_Home">Home tel:</label>
-                                                <input type="tel" name="Telephone_Home" size="25" value="" class="form-control" ng-model="v.Telephone_Home">
+                                                <input type="tel" name="Telephone_Home" size="25" value="" class="form-control" ng-model="v.Emergency_Telephone_Home_1">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="Telephone_Mobile">Mobile:</label>
-                                                <input type="tel" name="Telephone_Mobile" size="25" value="" class="form-control" ng-model="v.Telephone_Mobile">
+                                                <input type="tel" name="Telephone_Mobile" size="25" value="" class="form-control" ng-model="v.Emergency_Telephone_Mobile_1">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="Telephone_Other">Other tel:</label>
-                                                <input type="tel" name="Telephone_Other" size="25" value="" class="form-control" ng-model="v.Telephone_Other">
+                                                <input type="tel" name="Telephone_Other" size="25" value="" class="form-control" ng-model="v.Emergency_Telephone_Other_1">
                                             </div>
                                         </div>
                                     </div>
@@ -269,7 +271,7 @@
                                         <div class="col-sm-8">
                                             <div class="form-group">
                                                 <label for="Name">Name:</label>
-                                                <input type="text" name="Name" size="42" value="" class="form-control">
+                                                <input type="text" name="Name" size="42" value="" class="form-control" ng-model="v.Emergency_Name_2">
                                             </div>
                                         </div>
                                     </div>
@@ -277,7 +279,7 @@
                                         <div class="col-sm-8">
                                             <div class="form-group">
                                                 <label for="Address">Address:</label>
-                                                <textarea name="Address" rows="6" cols="40" class="form-control" ng-model="v.Address"></textarea>
+                                                <textarea name="Address" rows="6" cols="40" class="form-control" ng-model="v.Emergency_Address_2"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -285,13 +287,13 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Relationship">Relationship:</label>
-                                                <input type="text" name="Relationship" size="25" value="" class="form-control">
+                                                <input type="text" name="Relationship" size="25" value="" class="form-control" ng-model="v.Emergency_Relationship_2">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Email">Email:</label>
-                                                <input type="email" name="Email" size="25" value="" class="form-control" ng-model="v.Email">
+                                                <input type="email" name="Email" size="25" value="" class="form-control" ng-model="v.Emergency_Email_2">
                                             </div>
                                         </div>
                                     </div>
@@ -300,19 +302,19 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="Telephone_Home">Home tel:</label>
-                                                <input type="tel" name="Telephone_Home" size="25" value="" class="form-control" ng-model="v.Telephone_Home">
+                                                <input type="tel" name="Telephone_Home" size="25" value="" class="form-control" ng-model="v.Emergency_Telephone_Home_2">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="Telephone_Mobile">Mobile:</label>
-                                                <input type="tel" name="Telephone_Mobile" size="25" value="" class="form-control" ng-model="v.Telephone_Mobile">
+                                                <input type="tel" name="Telephone_Mobile" size="25" value="" class="form-control" ng-model="v.Emergency_Telephone_Mobile_2">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="Telephone_Other">Other tel:</label>
-                                                <input type="tel" name="Telephone_Other" size="25" value="" class="form-control" ng-model="v.Telephone_Other">
+                                                <input type="tel" name="Telephone_Other" size="25" value="" class="form-control" ng-model="v.Emergency_Telephone_Other_2">
                                             </div>
                                         </div>
                                     </div>
