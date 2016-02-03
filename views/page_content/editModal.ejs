@@ -113,8 +113,8 @@
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label for="Volunteering_Type">In what capacity would you like to volunteer?</label>
-                                                <select name="Volunteering_Type" class="form-control" ng-model="v.Volunteering_Contact">
+                                                <label for="Volunteering_Capacity">In what capacity would you like to volunteer?</label>
+                                                <select name="Volunteering_Capacity" class="form-control" ng-model="v.Volunteering_Capacity">
                                                     <option value="Support At Events">Support at Events</option>
                                                     <option value="Field Work">Field Work</option>
                                                     <option value="Monitoring/Testing">Monitoring/Testing</option>
@@ -124,12 +124,12 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Projects">On which projects would you like to volunteer?</label>
-                                                <select name="Projects" class="form-control" ng-model="">
-                                                    <option value="Electro Fishing">Electro Fishing</option>
-                                                    <option value="Riverfly Monitoring">Riverfly Monitoring</option>
-                                                    <option value="Pratical Habitat Works">Practical Habitat Works</option>
-                                                    <option value="Field Surveying">Field Surveying</option>
-                                                    <option value="Other Monitoring">Other Monitoring</option>
+                                                <select name="Projects" class="form-control" ng-model="v.Projects">
+                                                    <option value="electroFishing">Electro Fishing</option>
+                                                    <option value="riverflyMonitoring">Riverfly Monitoring</option>
+                                                    <option value="praticalHabitatWorks">Practical Habitat Works</option>
+                                                    <option value="fieldSurveying">Field Surveying</option>
+                                                    <option value="otherMonitoring">Other Monitoring</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -192,8 +192,8 @@
                                             <div class="form-group">
                                                 <label for="Has_Transport">Do you have transport?</label>
                                                 <br>
-                                                <label class="radio-inline"><input type="radio" name="Has_Transport" id="true" ng-model="v.Has_Transport" value="true">Yes</label>
-                                                <label class="radio-inline"><input type="radio" name="Has_Transport" id="false" ng-model="v.Has_Transport" value="false">No</label>
+                                                <label class="radio-inline"><input type="radio" name="Has_Transport" id="true" ng-value="true" ng-model="v.Has_Transport">Yes</label>
+                                                <label class="radio-inline"><input type="radio" name="Has_Transport" id="false" ng-value="false" ng-model="v.Has_Transport">No</label>
                                             </div>
                                         </div>
                                     </div>
@@ -208,13 +208,13 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Car_Make">Car make:</label>
-                                                <input type="text" name="Car_Make" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'" ng-model="v.Car_Make">
+                                                <input type="text" name="Car_Make" size="25" value="" class="form-control" ng-disabled="v.Has_Transport==false" ng-model="v.Car_Make">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Car_Model">Car model:</label>
-                                                <input type="text" name="Car_Model" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'" ng-model="v.Car_Model">
+                                                <input type="text" name="Car_Model" size="25" value="" class="form-control" ng-disabled="v.Has_Transport==false" ng-model="v.Car_Model">
                                             </div>
                                         </div>
                                     </div>
@@ -222,13 +222,13 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Car_Colour">Car colour:</label>
-                                                <input type="text" name="Car_Colour" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'" ng-model="v.Car_Colour">
+                                                <input type="text" name="Car_Colour" size="25" value="" class="form-control" ng-disabled="v.Has_Transport==false" ng-model="v.Car_Colour">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Car_Registration_Number">Car reg:</label>
-                                                <input type="text" name="Car_Registration_Number" size="25" value="" class="form-control" ng-disabled="v.Has_Transport=='false'"ng-model="v.Car_Registration_Number">
+                                                <input type="text" name="Car_Registration_Number" size="25" value="" class="form-control" ng-disabled="v.Has_Transport==false"ng-model="v.Car_Registration_Number">
                                             </div>
                                         </div>
                                     </div>
@@ -350,7 +350,7 @@
                                         <div class="col-sm-8">
                                             <div class="form-group">
                                                 <label for="Heard_From">Where did you hear about volunteering for Wear Rivers Trust?</label>
-                                                <select name="Heard_From" class="form-control" ng-model="Heard_From">
+                                                <select name="Heard_From" class="form-control" ng-model="v.Heard_From">
                                                     <option value="Website">Website</option>
                                                     <option value="Local Newspaper">Local Newspaper</option>
                                                     <option value="Volunteer Centre">Volunteer Centre</option>
@@ -367,8 +367,8 @@
                                             <div class="form-group">
                                                 <label for="Interested_In_More">Would you like to hear about other volunteering opportunities?</label>
                                                 <br>
-                                                <label class="radio-inline"><input type="radio" name="Interested_In_More" id="true" ng-model="Interested_In_More" value="true">Yes</label>
-                                                <label class="radio-inline"><input type="radio" name="Interested_In_More" id="false" ng-model="Interested_In_More" value="false">No</label>
+                                                <label class="radio-inline"><input type="radio" name="Interested_In_More" id="true" ng-value="true" ng-model="v.Interested_In_More">Yes</label>
+                                                <label class="radio-inline"><input type="radio" name="Interested_In_More" id="false" ng-value="false" ng-model="v.Interested_In_More">No</label>
                                             </div>
                                         </div>
                                     </div>
@@ -377,8 +377,8 @@
                                             <div class="form-group">
                                                 <label for="Photographic_Consent">Do you agree for any photographs to be published on our volunteer website and interpretation?</label>
                                                 <br>
-                                                <label class="radio-inline"><input type="radio" name="Photographic_Consent" id="true" ng-model="Photographic_Consent" value="true">Yes</label>
-                                                <label class="radio-inline"><input type="radio" name="Photographic_Consent" id="false" ng-model="Photographic_Consent" value="false">No</label>
+                                                <label class="radio-inline"><input type="radio" name="Photographic_Consent" id="true" ng-value="true" ng-model="v.Photographic_Consent">Yes</label>
+                                                <label class="radio-inline"><input type="radio" name="Photographic_Consent" id="false" ng-value="false" ng-model="v.Photographic_Consent">No</label>
                                             </div>
                                         </div>
                                     </div>

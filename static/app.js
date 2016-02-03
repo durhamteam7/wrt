@@ -388,7 +388,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 })
 
 
-//Directive for DOM manipulation
+//Directive for DOM manipulation - showing modals
 .directive('displayModal', function() {
     
     return {
@@ -400,4 +400,24 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
         }
     };
     
+})
+
+//Directive for processing Date format
+.directive("input", function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, elem, attr, modelCtrl) {
+            if (attr['type'] === 'date'){
+                modelCtrl.$formatters.push(function(modelValue) {
+                    if (modelValue){
+                        return new Date(modelValue);
+                    }
+                    else {
+                        return null;
+                    }
+                });
+            }
+
+        }
+    };
 });

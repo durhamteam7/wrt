@@ -69,9 +69,12 @@ volunteerCore =
 	Car_Registration_Number:
 		type: String,
 		validate: /^([A-Z]{3}\s?(\d{3}|\d{2}|d{1})\s?[A-Z])|([A-Z]\s?(\d{3}|\d{2}|\d{1})\s?[A-Z]{3})|(([A-HK-PRSVWY][A-HJ-PR-Y])\s?([0][2-9]|[1-9][0-9])\s?[A-HJ-PR-Z]{3})$/,
-	Car_Make: String,
-	Car_Model: String,
-	Car_Colour: String,
+	Car_Make:
+		type: String,
+	Car_Model:
+		type: String,
+	Car_Colour:
+		type: String,
 	
 	Emergency_Name_1:
 		type: String,
@@ -99,8 +102,8 @@ volunteerCore =
 		validate: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
 	
 	Emergency_Name_2:
-			type: String,
-			required: true,
+		type: String,
+		required: true,
 	Emergency_Relationship_2:
 		type:String,
 		required: true,
@@ -134,17 +137,14 @@ volunteerCore =
 		type: Boolean,
 		required: true,
 
-
 	Read_Health_and_Safety: #make them open it before they agree
 		type: Boolean,
 		required:true,
-
 
 	Approved: #volunteers need to be approved, admin added volunteers are by default true
 		type: Boolean,
 		required: true,
 		default: false,
-
 
 	#stores an array of all the projects
 	Projects: [{type:Schema.Types.ObjectId,ref:'Project'}]
