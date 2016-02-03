@@ -2,6 +2,11 @@ function getTag(tagString){
   return $(tagString)
 }
 
+function coffeeLoaded() {
+  //Tells angular that coffee is loaded so it can start
+  initModel();
+}
+
 //console.log(getTag("body"))
 
 // app.js
@@ -25,7 +30,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     },
     updateVolunteers: function($params) {
       $params._method = 'patch';
-      console.log("update method", $params)
       return $http.post('/api/volunteer/' + $params._id, $params).success(function() {
         delete $params._method;
       });
@@ -45,7 +49,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     },
     updateUser: function($params) {
       $params._method = 'patch';
-      console.log("update method", $params)
+      //console.log("update method", $params)
       return $http.post('/api/user/' + $params._id, $params).success(function() {
         delete $params._method;
       });
@@ -64,6 +68,8 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 .controller('mainController', ['$scope','$window', 'ajax', function($scope, $window, serverComm) {
   
   $scope.user = {};
+
+  $scope.validationError = null;
 
   $scope.sortType     = 'First_Name'; // set the default sort type
   $scope.sortReverse  = false;   // set the default sort order
@@ -127,7 +133,8 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 	  }
   }
 
-  //Main data modification - Gets all approved volunteers
+  //****************Main data modification*****************************
+  //Volunteers
   $scope.getVolunteers = function(callback) {
     $scope.modelShow = false;
     serverComm.getVolunteers().success(function(data) {
@@ -153,15 +160,15 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     });
   }
   
-  // Gets all unapproved volunteers
   $scope.getUnapproved = function(callback) {
-	$scope.modelShow = false
-	
-	$scope.volunteers = $scope.unapprovedVolunteers;
-	$scope.filteredList = $scope.volunteers; // makes search work
-	console.log("Get data", $scope.volunteers)
-	
-	$scope.mode = "approving";
+    // Gets all unapproved volunteers
+  	$scope.modelShow = false
+  	
+  	$scope.volunteers = $scope.unapprovedVolunteers;
+  	$scope.filteredList = $scope.volunteers; // makes search work
+  	console.log("Get data", $scope.volunteers)
+  	
+  	$scope.mode = "approving";
   }
   
   $scope.getNumberOfUnapprovedVolunteers = function() {
@@ -188,12 +195,29 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 
   $scope.newVolunteer = function() {
     $scope.modelShow = true
-    //console.log(angular.element("#yes"))
     serverComm.addVolunteer().success(function(data) {
 	  //Add record to $scope.volunteers
 	  $scope.volunteers.push(data);
 	});
   }
+
+    function getIndexFromId(id) {
+    for (i = 0; i < $scope.volunteers.length; i++) { 
+      if ($scope.volunteers[i]._id == id) {
+        return i
+      }
+    }
+  }
+  
+  $scope.getIdFromIndex = function(index) {
+    return $scope.volunteers[index].id
+  }
+
+  $scope.submitChange = function(volunteer) {
+    serverComm.updateVolunteers(volunteer).success();
+  }
+  
+  //USER
   
   $scope.getUser = function() {
 	  serverComm.getUser(userId).success(function(data) {
@@ -213,22 +237,8 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
       return string.replace(/_/g, " ")
   }
   
-  function getIndexFromId(id) {
-    for (i = 0; i < $scope.volunteers.length; i++) { 
-      if ($scope.volunteers[i]._id == id) {
-        return i
-      }
-    }
-  }
-  
-  $scope.getIdFromIndex = function(index) {
-    return $scope.volunteers[index].id
-  }
 
-  $scope.submitChange = function(volunteer) {
-    serverComm.updateVolunteers(volunteer).success();
-  }
-
+  //Email
   $scope.sendEmail = function(id,index) {
     pdfLink = serverComm.sendEmail($scope.email).success(function(data) {
       if (data){
@@ -266,6 +276,53 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     });
     return a;
   }
+
+
+  //Validation
+  $scope.validate = function(volunteer) {
+    console.time("validate")
+    if (typeof $scope.VolunteerModel !== "undefined") {
+      //$scope.validationError = null;
+      $scope.VolunteerModel = recurseApply($scope.VolunteerModel,volunteer)
+      $scope.VolunteerModel.validate(function(err) {
+        isValid = true
+        if ($scope.VolunteerModel.errors) {
+          $scope.validationError = {};
+          $scope.validationError.errors = $scope.VolunteerModel.errors;
+
+          //Convert error JSON into array
+          var arr = Object.keys($scope.validationError.errors).map(function(k) {
+            return $scope.validationError.errors[k]
+          });
+
+          if (arr.length !== 0) {
+            isValid = false
+          }
+        }
+
+        if (isValid) {
+          $scope.validationError = null;
+        } else {
+          //console.log("Validation Failed")
+          //console.log($scope.validationError)
+          //$scope.$apply();
+          return $scope.$apply();
+        }
+        console.timeEnd("validate")
+      });
+    }
+  };
+
+  initModel = function() {
+    console.log("init model")
+    console.log(Volunteer)
+    $scope.VolunteerModel = new mongoose.Document({}, new mongoose.Schema(volunteerCore,{validateBeforeSave:false}));
+    console.log("Model init", $scope.VolunteerModel);
+    $scope.getVolunteers();
+    
+
+  };
+
   
   //search filter
   $scope.$watch('searchTerm', function () {
@@ -273,7 +330,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   });
   
   $scope.getUser();
-  $scope.getVolunteers();
   
 }])
 
@@ -411,3 +467,22 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
         }
     };
 });
+
+function recurseApply(target, data) {
+  var key, subDiff;
+  for (key in data) {
+    if (typeof target === "undefined") {
+      target = {};
+    }
+    if ((typeof data[key]) === 'object' && data[key] !== null) {
+      if (Object.keys(data[key]).length > 0) {
+        subDiff = recurseApply(target[key], data[key]);
+        target[key] = subDiff;
+      }
+    }
+    else {
+      target[key] = data[key];
+    }
+  }
+  return target;
+}

@@ -59,7 +59,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
                                     <div class="row">
                                         <div class="col-sm-2">
                                             <div class="form-group">
@@ -68,9 +67,10 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
-                                            <div class="form-group">
+                                            <div class="input-group" ng-class="{ 'has-error': validationError.errors['Email'].kind }">
                                                 <label for="Email">Email:</label>
-                                                <input type="email" name="Email" size="25" value="" class="form-control" ng-model="v.Email">
+                                                <input type="email" name="Email" size="25" value="" class="form-control" ng-model="v.Email" ng-blur="validate(v)">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="validationError.errors['Email'].kind">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">

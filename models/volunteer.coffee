@@ -1,5 +1,11 @@
 
-mongoose = require ('mongoose')
+try
+	#Server-side
+	mongoose = require ('mongoose')
+catch
+	#Clientside (requires that scripts are alread loaded in browser)
+	mongoose = window.mongoose
+
 
 Schema = mongoose.Schema
 
@@ -153,8 +159,13 @@ volunteerCore =
 		type: Boolean,
 		required: true,
 
-Volunteer = new Schema volunteerCore,validateBeforeSave:false,timestamps:true #TEMP DISABLED VALIDATION
-
-mongoose.model 'Volunteer',Volunteer
+Volunteer = new Schema volunteerCore,{validateBeforeSave:false,timestamps:true} #TEMP DISABLED VALIDATION
 
 
+try #Server-side
+	mongoose.model 'Volunteer',Volunteer
+#module.exports = CsiSite
+
+try #Expose variable to client-side
+	window.volunteerCore = volunteerCore
+	window.Volunteer = Volunteer
