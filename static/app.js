@@ -454,26 +454,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
         }
     };
     
-});
-
-
-function recurseApply(target, data) {
-  var key, subDiff;
-  for (key in data) {
-    if (typeof target === "undefined") {
-      target = {};
-    }
-    if ((typeof data[key]) === 'object' && data[key] !== null) {
-      if (Object.keys(data[key]).length > 0) {
-        subDiff = recurseApply(target[key], data[key]);
-        target[key] = subDiff;
-      }
-    } else {
-      target[key] = data[key];
-    }
-  }
-  return target;
-}
 })
 
 //Directive for processing Date format
@@ -495,3 +475,22 @@ function recurseApply(target, data) {
         }
     };
 });
+
+function recurseApply(target, data) {
+  var key, subDiff;
+  for (key in data) {
+    if (typeof target === "undefined") {
+      target = {};
+    }
+    if ((typeof data[key]) === 'object' && data[key] !== null) {
+      if (Object.keys(data[key]).length > 0) {
+        subDiff = recurseApply(target[key], data[key]);
+        target[key] = subDiff;
+      }
+    }
+    else {
+      target[key] = data[key];
+    }
+  }
+  return target;
+}
