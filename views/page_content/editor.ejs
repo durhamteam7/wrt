@@ -44,8 +44,7 @@ $('#summernote').summernote({
 
 // summernote.change
 $('#summernote').on('summernote.change', function(we, contents, $editable) {
-  $("#emailSubject").val(contents.replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n")
-.replace(/<\/?[^>]+(>|$)/g, ""));
+  $("#emailSubject").val(contents.replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, "")); //THIS LINE GIVES Error: [$compile:nodomevents]
 });
 
 
@@ -70,7 +69,7 @@ fieldString+'</li></div>')
       $.fn.val = function(){
         var result =originalVal.apply(this,arguments);
         if(arguments.length>0)
-          $(this).change();
+          $(this).change(); //AND THIS LINE GIVES Error: [$rootScope:inprog]
         return result;
       };
     })(jQuery);
