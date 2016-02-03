@@ -274,22 +274,22 @@
 
 									<div class="form-group">
 										<label for="Car_Make">Car Make:</label>
-										<input type="text" name="Make" size="25" value="" class="form-control">
+										<input type="text" name="Car_Make" size="25" value="" class="form-control">
 									</div>
 
 									<div class="form-group">
-										<label for="Car_Mode">Car Model:</label>
-										<input type="text" name="Mode" size="25" value="" class="form-control">
+										<label for="Car_Model">Car Model:</label>
+										<input type="text" name="Car_Model" size="25" value="" class="form-control">
 									</div>
 
 									<div class="form-group">
 										<label for="Car_Colour">Car Colour:</label>
-										<input type="text" name="Colour" size="25" value="" class="form-control">
+										<input type="text" name="Car_Colour" size="25" value="" class="form-control">
 									</div>
 
 									<div class="form-group">
 										<label for="Car_Registration_Number">Car Registration Number:</label>
-										<input type="text" name="Registration_Number" size="25" value="" class="form-control">
+										<input type="text" name="Car_Registration_Number" size="25" value="" class="form-control">
 									</div>
 								
 								</div>
@@ -450,7 +450,7 @@
 					</div>
                     
                     <div class="form-group">
-                        <input type="submit" onclick="logData()" value="Submit" class="btn btn-primary">
+                        <input id="submitButton" type="submit" onclick="logData()" value="Submit" class="btn btn-primary" disabled>
                     </div>
 
                 </form>
@@ -466,6 +466,7 @@
 		function healthSafetyOpen() {
 			$("input[name='Read_Health_and_Safety']").prop("disabled", false)
 			$("input[name='Read_Health_and_Safety']").prop("checked", true)
+			$("#submitButton").prop("disabled", false)
 		}
 	</script>
 
