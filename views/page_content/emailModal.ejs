@@ -15,7 +15,7 @@
 
                     <div class="row">
                         <div class="col-sm-6">
-                        Recipients:<br><span ng-repeat="v in selected()"><span style="text-transform: uppercase;">{{v.First_Name}} {{v.Last_Name}}</span> &lt;{{v.Email}}&gt;, </span><br>
+                        Recipients:<br><span ng-repeat="v in selected()"><span style="text-transform: uppercase;">{{v.First_Name}} {{v.Last_Name}}</span>,<br>
                         </div>
                     </div>
                     <br>
@@ -46,6 +46,7 @@
                                 <option value="commPref">Communication Pref</option>
                                 <option value="Email">Force Email</option>
                                 <option value="Letter">Force Letter</option>
+                                <option value="Telephone">Force Telephone</option>
                             </select>
                         </div>
                         </div>

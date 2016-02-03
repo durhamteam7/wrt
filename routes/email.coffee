@@ -36,6 +36,7 @@ router.post '/', (req,res)->
 				forLetter.push v
 			else
 				console.log("Unknown comm pref...")
+
 		console.log("Email",forEmail)
 		console.log("letter",forLetter)
 		require("./sendEmails.coffee")(forEmail,req.body.body,req.body.subject)
@@ -50,6 +51,7 @@ router.post '/', (req,res)->
 		console.log "no comm pref"
 		console.log err
 				
+
 
 router.get '/genPdf/:obj', (req,res)->
 	console.log("genPDF route")

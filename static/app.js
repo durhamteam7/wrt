@@ -84,6 +84,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   $scope.select = [];
   $scope.email = { "subject": "", "body": "", "select": $scope.select }
   $scope.emailPreview = { "subject": "", "body": "" }
+  $scope.email.communicationType = "commPref"
 
   $scope.allTableHeadings = ["Title", "First_Name", "Last_Name", "Email", "Telephone_Home", "Telephone_Mobile", "Telephone_Other", "Address", "Volunteering_Type", "Has_Transport", "Communication_Preference"];
   $scope.tableHeadings = ["First_Name", "Last_Name", "Email", "Telephone_Home"]; // Default headings if user preference not set
