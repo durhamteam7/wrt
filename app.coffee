@@ -37,6 +37,9 @@ User = mongoose.model 'User'
 
 #require './mailin/server.coffee'
 
+#Cron-job for auto renewal messages
+require './routes/renewal.coffee'
+
 
 app = express()
 

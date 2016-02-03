@@ -131,6 +131,8 @@ volunteerCore =
 		type: Boolean,
 		required: true,
 
-Volunteer = new Schema volunteerCore,validateBeforeSave:false #TEMP DISABLED VALIDATION
+Volunteer = new Schema volunteerCore,validateBeforeSave:false,timestamps:true #TEMP DISABLED VALIDATION
 
 mongoose.model 'Volunteer',Volunteer
+
+
