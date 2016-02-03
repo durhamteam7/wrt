@@ -42,10 +42,12 @@ $('#summernote').summernote({
   }
 });
 
+
+
 // summernote.change
 $('#summernote').on('summernote.change', function(we, contents, $editable) {
-  $("#emailSubject").val(contents.replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n")
-.replace(/<\/?[^>]+(>|$)/g, ""));
+	//THIS LINE PROBABLY GIVES Error: [$compile:nodomevents]
+	$("#emailSubject").val(contents.replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, ""));
 });
 
 
@@ -69,8 +71,11 @@ fieldString+'</li></div>')
       var originalVal = $.fn.val;
       $.fn.val = function(){
         var result =originalVal.apply(this,arguments);
-        if(arguments.length>0)
-          $(this).change();
+        if (arguments.length > 0) {
+		  //AND THIS LINE GIVES Error: [$rootScope:inprog]
+          //$(this).change();
+		  // commented out for now
+		}
         return result;
       };
     })(jQuery);

@@ -4,7 +4,7 @@ function getTag(tagString){
 
 function coffeeLoaded() {
   //Tells angular that coffee is loaded so it can start
-  initModel();
+  //initModel();
 }
 
 //console.log(getTag("body"))
@@ -137,7 +137,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   //****************Main data modification*****************************
   //Volunteers
   $scope.getVolunteers = function(callback) {
-    $scope.modelShow = false
+    $scope.modelShow = false;
     serverComm.getVolunteers().success(function(data) {
       if (typeof(data) === 'object') {
         $scope.volunteers = data;
@@ -182,25 +182,24 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 
   $scope.delete = function(id, index) {
     serverComm.deleteVolunteers(id).success(function(data) {
-        //Remove record from $scope.volunteers
-        $scope.volunteers.splice(getIndexFromId(id), 1);
-      }); 
+      //Remove record from $scope.volunteers
+      $scope.volunteers.splice(getIndexFromId(id), 1);
+    }); 
   }
 
   $scope.approve = function(id, index) {
     serverComm.approveVolunteers(id).success(function(data) {
-        //Remove record from $scope.volunteers
-        $scope.volunteers.splice(getIndexFromId(id), 1);
-      }); 
+      //Remove record from $scope.volunteers
+      $scope.volunteers.splice(getIndexFromId(id), 1);
+    }); 
   }
 
   $scope.newVolunteer = function() {
     $scope.modelShow = true
     serverComm.addVolunteer().success(function(data) {
-        //Add record to $scope.volunteers
-        $scope.volunteers.push(data);
-
-      });
+	  //Add record to $scope.volunteers
+	  $scope.volunteers.push(data);
+	});
   }
 
     function getIndexFromId(id) {
@@ -218,15 +217,8 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   $scope.submitChange = function(volunteer) {
     serverComm.updateVolunteers(volunteer).success();
   }
-
-  //USER
   
-  $scope.getUsers = function() {
-	  serverComm.getUsers().success(function(data) {
-		  $scope.user = data;
-		  console.log($scope.user);
-	  });
-  }
+  //USER
   
   $scope.getUser = function() {
 	  serverComm.getUser(userId).success(function(data) {
@@ -339,6 +331,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   });
   
   $scope.getUser();
+  $scope.getVolunteers();
   
 }])
 
@@ -416,11 +409,12 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 .filter('startFrom', function() {
   return function(input, start) {
     start =+ start; //parse to int
-    return input.slice(start);
+	if (start <= input.length)
+    	return input.slice(start);
     }
 })
 
-
+//Directive doing ?
 .directive("contenteditable", function() {
   return {
     restrict: "A",
@@ -441,7 +435,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     }
   };
 })
-
 
 //Directive for DOM manipulation - showing modals
 .directive('displayModal', function() {
