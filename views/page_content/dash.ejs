@@ -160,7 +160,7 @@
                         <td ng-repeat="th in tableHeadings" ng-click="v.isSelected = !v.isSelected">{{ v[th] }}</td>
                         <td class="col-xs-1 text-center">
 							<div class="btn-group">
-								<a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" class="btn btn-xs btn-primary">
+								<a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" class="btn btn-xs btn-primary" ng-click="validate(v)">
 									<span class="glyphicon glyphicon-pencil"></span>
 								</a>
 								<a id="{{v._id}}bin" href="" onclick="return false;" ng-click="delete(v._id,$index)" class="btn btn-xs btn-danger">
