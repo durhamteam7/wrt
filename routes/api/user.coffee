@@ -102,17 +102,6 @@ router.patch '/:id', (req, res)->
 		res.json {'go_away':"You aren't admin!"}###
 #
 
-recurseUpdate = (obj,diff)->				
-	#Loop through key value pairs, if value is an object recurse else update values
-	for key, value of diff
-		if (typeof value) == 'object' && (typeof obj[key]) == 'object' #(Naively) just assumes 'object' type is key-value pairs
-			obj[key] = recurseUpdate(obj[key],value)
-		else
-			obj[key] = value
-	return obj
-#
-
-
 setPassword = (deets,user)->
 	pw=''
 	for i in [0..8]
