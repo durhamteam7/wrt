@@ -4,7 +4,7 @@ function getTag(tagString){
 
 function coffeeLoaded() {
   //Tells angular that coffee is loaded so it can start
-  initModel();
+  //initModel();
 }
 
 //console.log(getTag("body"))
@@ -330,6 +330,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   });
   
   $scope.getUser();
+  $scope.getVolunteers();
   
 }])
 
