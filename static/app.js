@@ -129,7 +129,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 
   //Main data modification - Gets all approved volunteers
   $scope.getVolunteers = function(callback) {
-    $scope.modelShow = false
+    $scope.modelShow = false;
     serverComm.getVolunteers().success(function(data) {
       if (typeof(data) === 'object') {
         $scope.volunteers = data;
@@ -174,35 +174,25 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 
   $scope.delete = function(id, index) {
     serverComm.deleteVolunteers(id).success(function(data) {
-        //Remove record from $scope.volunteers
-        $scope.volunteers.splice(getIndexFromId(id), 1);
-      }); 
+      //Remove record from $scope.volunteers
+      $scope.volunteers.splice(getIndexFromId(id), 1);
+    }); 
   }
 
   $scope.approve = function(id, index) {
     serverComm.approveVolunteers(id).success(function(data) {
-        //Remove record from $scope.volunteers
-        $scope.volunteers.splice(getIndexFromId(id), 1);
-      }); 
+      //Remove record from $scope.volunteers
+      $scope.volunteers.splice(getIndexFromId(id), 1);
+    }); 
   }
 
   $scope.newVolunteer = function() {
     $scope.modelShow = true
     //console.log(angular.element("#yes"))
     serverComm.addVolunteer().success(function(data) {
-        //Add record to $scope.volunteers
-        $scope.volunteers.push(data);
-        //getTag("#editModal" + data._id).modal();
-        //console.log(getTag("#editModal" + data._id));
-
-      });
-  }
-  
-  $scope.getUsers = function() {
-	  serverComm.getUsers().success(function(data) {
-		  $scope.user = data;
-		  console.log($scope.user);
-	  });
+	  //Add record to $scope.volunteers
+	  $scope.volunteers.push(data);
+	});
   }
   
   $scope.getUser = function() {
@@ -361,11 +351,12 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 .filter('startFrom', function() {
   return function(input, start) {
     start =+ start; //parse to int
-    return input.slice(start);
+	if (start <= input.length)
+    	return input.slice(start);
     }
 })
 
-
+//Directive doing ?
 .directive("contenteditable", function() {
   return {
     restrict: "A",
@@ -386,7 +377,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     }
   };
 })
-
 
 //Directive for DOM manipulation - showing modals
 .directive('displayModal', function() {
