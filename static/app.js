@@ -551,7 +551,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
                 return false;
             };
             $scope.isChecked = function (id) {
-				console.log(id);
                 if (_.contains($scope.model, id)) {
                     return 'glyphicon glyphicon-ok pull-right';
                 }

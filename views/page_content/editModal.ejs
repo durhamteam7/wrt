@@ -2,6 +2,18 @@
 	
 	<!-- Script and styling for project select -->
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+	<script>
+		$(document).click(function(event) {
+			if(!$(event.target).closest('dropdown-multiselect').length && !$(event.target).is('dropdown-multiselect')) {
+				if($('dropdown-multiselect div').hasClass("open")) {
+					$('dropdown-multiselect div').removeClass("open");
+				}
+			}
+		});
+		$('dropdown-multiselect div').focus(function() {
+			$('dropdown-multiselect div').addClass("open");
+		});
+	</script>
 	<style>
 		.btn-text {
 			background-color: white !important;
@@ -14,6 +26,9 @@
 			padding-left: 8px;
 			padding-right: 8px;
 			box-sizing: border-box !important;
+		}
+		.dropdown-menu li {
+			cursor: pointer;
 		}
 	</style>
 
