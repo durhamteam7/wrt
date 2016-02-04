@@ -1,6 +1,4 @@
 <!-- Modal for settings -->
-
-
 <div id="settingsModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
@@ -15,24 +13,24 @@
                         <div class="form-group">
                             <label for="ths">Change Table Headings Shown</label>
                             <div class="multiselect">
-                                <label ng-repeat="th in allTableHeadings"><input type="checkbox" name="ths" ng-model="tableHeadings" checklist-model="tableHeadings" checklist-value="th" />{{readable(th)}}</label>
+                                <label ng-repeat="th in allTableHeadings">
+									<input type="checkbox" name="ths" ng-model="tableHeadings" checklist-model="tableHeadings" checklist-value="th" />
+									{{readable(th)}}
+								</label>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-                <div class="modal-footer">
-                    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" ng-click="updateUser()">Close</button>
-                </div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" ng-click="updateUser()">Close</button>
+			</div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
-    jQuery.fn.multiselect = function() {
+jQuery.fn.multiselect = function() {
     $(this).each(function() {
         var checkboxes = $(this).find("input:checkbox");
         checkboxes.each(function() {
@@ -47,11 +45,11 @@
                     checkbox.parent().addClass("multiselect-on");
                 else
                     checkbox.parent().removeClass("multiselect-on");
-            });
-        });
-    });
+			});
+		});
+	});
 };
-    $(function() {
-     $(".multiselect").multiselect();
+$(function() {
+	$(".multiselect").multiselect();
 });
 </script>
