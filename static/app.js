@@ -4,7 +4,7 @@ function getTag(tagString){
 
 function coffeeLoaded() {
   //Tells angular that coffee is loaded so it can start
-  //initModel();
+  initModel();
 }
 
 //console.log(getTag("body"))
@@ -351,8 +351,10 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     console.log("init model")
     console.log(Volunteer)
     $scope.VolunteerModel = new mongoose.Document({}, new mongoose.Schema(volunteerCore,{validateBeforeSave:false}));
+    $scope.allTableHeadings = Object.keys(volunteerCore);
     console.log("Model init", $scope.VolunteerModel);
     $scope.getVolunteers();
+    $scope.getMessages();
   };
 
   
