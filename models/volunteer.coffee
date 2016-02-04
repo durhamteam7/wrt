@@ -143,7 +143,7 @@ volunteerCore =
 		type: Boolean,
 		required: true,
 
-	Read_Health_and_Safety: #make them open it before they agree
+	Read_Health_and_Safety: #Do we even need to store this??????
 		type: Boolean,
 		required:true,
 

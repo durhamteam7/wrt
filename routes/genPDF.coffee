@@ -51,8 +51,10 @@ module.exports = (req, res, volunteerData)->
 			align: 'center',
 			height: 300,
 			})
+
 		if volunteer != volunteerData[volunteerData.length-1]
-			#Keep adding new pages
-			doc.addPage()
+ 			#Keep adding new pages
+ 			doc.addPage()
+	
 	
 	doc.end()

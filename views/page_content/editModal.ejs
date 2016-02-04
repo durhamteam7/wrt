@@ -323,30 +323,34 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
-                                            <div class="form-group">
+                                            <div class="input-group" ng-class="{ 'has-error': validationError.errors['Emergency_Email_2'].kind }">
                                                 <label for="Emergency_Email_2">Email:</label>
-                                                <input type="email" name="Emergency_Email_2" size="25" value="" class="form-control" ng-model="v.Emergency_Email_2">
+                                                <input type="email" name="Emergency_Email_2" size="25" value="" class="form-control" ng-model="v.Emergency_Email_2" ng-blur="validate(v)">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="validationError.errors['Emergency_Email_2'].kind">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-sm-2">
-                                            <div class="form-group">
+                                            <div class="input-group" ng-class="{ 'has-error': validationError.errors['Emergency_Telephone_Home_2'].kind }">
                                                 <label for="Emergency_Telephone_Home_2">Home tel:</label>
-                                                <input type="tel" name="Emergency_Telephone_Home_2" size="25" value="" class="form-control" ng-model="v.Emergency_Telephone_Home_2">
+                                                <input type="tel" name="Emergency_Telephone_Home_2" size="25" value="" class="form-control" ng-model="v.Emergency_Telephone_Home_2" ng-blur="validate(v)">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="validationError.errors['Emergency_Telephone_Home_2'].kind">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
-                                            <div class="form-group">
+                                            <div class="input-group" ng-class="{ 'has-error': validationError.errors['Emergency_Telephone_Mobile_2'].kind }">
                                                 <label for="Emergency_Telephone_Mobile_2">Mobile:</label>
-                                                <input type="tel" name="Emergency_Telephone_Mobile_2" size="25" value="" class="form-control" ng-model="v.Emergency_Telephone_Mobile_2">
+                                                <input type="tel" name="Emergency_Telephone_Mobile_2" size="25" value="" class="form-control" ng-model="v.Emergency_Telephone_Mobile_2" ng-blur="validate(v)">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="validationError.errors['Emergency_Telephone_Mobile_2'].kind">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
-                                            <div class="form-group">
+                                            <div class="input-group" ng-class="{ 'has-error': validationError.errors['Emergency_Telephone_Other_2'].kind }">
                                                 <label for="Emergency_Telephone_Other_2">Other tel:</label>
-                                                <input type="tel" name="Emergency_Telephone_Other_2" size="25" value="" class="form-control" ng-model="v.Emergency_Telephone_Other_2">
+                                                <input type="tel" name="Emergency_Telephone_Other_2" size="25" value="" class="form-control" ng-model="v.Emergency_Telephone_Other_2" ng-blur="validate(v)">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="validationError.errors['Emergency_Telephone_Other_2'].kind">
                                             </div>
                                         </div>
                                     </div>
