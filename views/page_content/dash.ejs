@@ -69,6 +69,10 @@
             display:block;
         }
 
+        .selected{
+            background-color: hsl(0, 0%, 98%);
+        }
+
       
 </style>
 
@@ -159,7 +163,7 @@
                     </tr>
                 </thead>
                 <tbody id="volunteer-table">
-                    <tr ng-repeat="v in filteredList | orderBy:sortType:sortReverse | filter:searchTerm | startFrom:currentPage*pageSize | limitTo:pageSize">
+                    <tr ng-repeat="v in filteredList | orderBy:sortType:sortReverse | filter:searchTerm | startFrom:currentPage*pageSize | limitTo:pageSize" ng-class="{selected:v.isSelected}">
                         <td class="col-xs-point5"><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
                         <td ng-repeat="th in tableHeadings" ng-click="v.isSelected = !v.isSelected">{{ v[th] }}</td>
                         <td class="col-xs-1 text-center">
