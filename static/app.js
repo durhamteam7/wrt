@@ -335,6 +335,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     $scope.VolunteerModel = new mongoose.Document({}, new mongoose.Schema(volunteerCore,{validateBeforeSave:false}));
     console.log("Model init", $scope.VolunteerModel);
     $scope.getVolunteers();
+    $scope.getMessages();
     
 
   };
