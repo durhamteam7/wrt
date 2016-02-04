@@ -1,4 +1,21 @@
     <!-- Modal for editing volunteer data -->
+	
+	<!-- Script and styling for project select -->
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+	<style>
+		.btn-text {
+			background-color: white !important;
+			background-image: none;
+			border-bottom-color: rgb(204, 204, 204) !important;
+			border-top-color: rgb(204, 204, 204) !important;
+			border-left-color: rgb(204, 204, 204) !important;
+			border-right-color: rgb(204, 204, 204) !important;
+			text-align: left !important;
+			padding-left: 8px;
+			padding-right: 8px;
+			box-sizing: border-box !important;
+		}
+	</style>
 
     <div id="editModal{{v._id}}" class="modal fade" role="dialog" ng-repeat="v in volunteers" ng-attr-data-display-modal="{{$last ? '' : undefined}}">
         <div class="modal-dialog">
@@ -126,14 +143,10 @@
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label for="Projects">On which projects would you like to volunteer?</label>
-                                                <select name="Projects" class="form-control" ng-model="v.Projects">
-                                                    <option value="electroFishing">Electro Fishing</option>
-                                                    <option value="riverflyMonitoring">Riverfly Monitoring</option>
-                                                    <option value="praticalHabitatWorks">Practical Habitat Works</option>
-                                                    <option value="fieldSurveying">Field Surveying</option>
-                                                    <option value="otherMonitoring">Other Monitoring</option>
-                                                </select>
+												
+												<label for="Projects">On which projects would you like to volunteer?</label>
+												<dropdown-multiselect pre-selected="v.Projects" model="v.Projects" options="projects"></dropdown-multiselect>
+												
                                             </div>
                                         </div>
                                     </div>
