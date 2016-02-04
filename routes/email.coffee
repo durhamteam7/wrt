@@ -37,7 +37,7 @@ router.post '/', (req,res)->
 
 		message.volunteersEmail = forEmail
 		require("./sendEmails.coffee")(forEmail,req.body.body,req.body.subject)
-		message.volunteersEmail = forLetter
+		message.volunteersLetter = forLetter
 		message.volunteersTel = forPhone
 
 	else if req.body.communicationType == "Email"
