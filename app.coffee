@@ -159,6 +159,7 @@ app.use '/api/volunteer', require('./routes/api/volunteer.coffee')
 
 app.use '/api/project', require('./routes/api/project.coffee')
 
+app.use '/api/message', require('./routes/api/message.coffee')
 
 app.use '/gridfs', require('./routes/gridfs.coffee')
 

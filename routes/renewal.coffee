@@ -16,6 +16,8 @@ Volunteer = mongoose.model 'Volunteer'
 rule = new schedule.RecurrenceRule()
 #rule.second = [0, new schedule.Range(0,59,30)]
 rule.hour = 1
+rule.minute = 0
+rule.second = 0
  
 j = schedule.scheduleJob(rule, ()->
 	console.log('Begun renewal message generation')

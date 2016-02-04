@@ -54,6 +54,10 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
         delete $params._method;
       });
     },
+    getMessages: function() {
+      return $http.get('/api/message/').success(function() {
+      });
+    },
     sendEmail: function($params) {
       console.log($params)
       return $http.post('/email/', $params).success(function() {
@@ -85,6 +89,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   $scope.email = { "subject": "", "body": "", "select": $scope.select }
   $scope.emailPreview = { "subject": "", "body": "" }
   $scope.email.communicationType = "commPref"
+  $scope.messageLog = {}
 
   $scope.allTableHeadings = ["Title", "First_Name", "Last_Name", "Email", "Telephone_Home", "Telephone_Mobile", "Telephone_Other", "Address", "Volunteering_Type", "Has_Transport", "Communication_Preference"];
   $scope.tableHeadings = ["First_Name", "Last_Name", "Email", "Telephone_Home"]; // Default headings if user preference not set
@@ -255,6 +260,15 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     console.log($scope.emailPreview.body)
   }
   
+  $scope.getMessages = function() {
+    console.log("Getting log...")
+     serverComm.getMessages().success(function(data) {
+        $scope.messageLog = data
+        console.log(data)
+     });
+  }
+
+
   // Logic for check-all checkbox
   $scope.checkAll = function () {
       console.log($scope.selectedAll);
