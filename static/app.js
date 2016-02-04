@@ -250,6 +250,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
       if (data){
         console.log(data);
         $window.open(data, '_blank');
+        $scope.getMessages()
       }
     });
   }
