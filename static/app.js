@@ -4,7 +4,7 @@ function getTag(tagString){
 
 function coffeeLoaded() {
   //Tells angular that coffee is loaded so it can start
-  //initModel();
+  initModel();
 }
 
 //console.log(getTag("body"))
