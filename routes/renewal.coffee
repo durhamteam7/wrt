@@ -28,11 +28,12 @@ j = schedule.scheduleJob(rule, ()->
 	Volunteer.find({"createdAt": {"$gte": compDate1, "$lt": compDate2}}).
 	exec (err, volunteers)->
 		if volunteers.length > 0
+			message = new Message {body:RENEWAL_BODY,subject:RENEWAL_SUBJECT,commPref:"commPref"}
 			console.log("Sending autoRenew messages...")
 			console.log(volunteers)
 			forLetter = []
 			forEmail = []
-			forTelephone = []
+			forPhone = []
 
 			for v in volunteers
 				if v.Communication_Preference == "Email"
@@ -40,17 +41,19 @@ j = schedule.scheduleJob(rule, ()->
 				else if v.Communication_Preference == "Letter"
 					forLetter.push v
 				else if v.Communication_Preference == "Telephone"
-					forTelephone.push v
+					forPhone.push v
 				else
 					console.log("Unknown comm pref...")
-			console.log("Email",forEmail)
-			console.log("letter",forLetter)
-			console.log("forTelephone",forTelephone)
-			if forEmail.length > 0
-				require("./sendEmails.coffee")(forEmail,RENEWAL_BODY,RENEWAL_SUBJECT)
-			if forLetter.length > 0
-				console.log "email/genPdf/"+encodeURIComponent(JSON.stringify({"volunteers":forLetter,"body":RENEWAL_BODY,"subject":RENEWAL_SUBJECT}))
+			message.volunteersEmail = forEmail
+			require("./sendEmails.coffee")(forEmail,RENEWAL_BODY,RENEWAL_SUBJECT)
+			message.volunteersEmail = forLetter
+			message.volunteersTel = forPhone
 
+			message.save (err)->
+				if err
+					console.log err
+				else
+					console.log "Saved in db"
 		else
 			console.log "No volunteers to renew"
 )
