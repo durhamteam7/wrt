@@ -4,7 +4,7 @@ function getTag(tagString){
 
 function coffeeLoaded() {
   //Tells angular that coffee is loaded so it can start
-  initModel();
+  //initModel();
 }
 
 //console.log(getTag("body"))
@@ -90,6 +90,8 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   $scope.emailPreview = { "subject": "", "body": "" }
   $scope.email.communicationType = "commPref"
   $scope.messageLog = {}
+
+  $scope.allTableHeadings = ["Title", "First_Name", "Last_Name", "Email", "Telephone_Home", "Telephone_Mobile", "Telephone_Other", "Address", "Volunteering_Type", "Has_Transport", "Communication_Preference"];
   $scope.tableHeadings = ["First_Name", "Last_Name", "Email", "Telephone_Home"]; // Default headings if user preference not set
 
   // Pagination variables
@@ -331,9 +333,10 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     console.log("init model")
     console.log(Volunteer)
     $scope.VolunteerModel = new mongoose.Document({}, new mongoose.Schema(volunteerCore,{validateBeforeSave:false}));
-  	$scope.allTableHeadings = $scope.VolunteerModel;
     console.log("Model init", $scope.VolunteerModel);
     $scope.getVolunteers();
+    
+
   };
 
   
