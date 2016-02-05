@@ -246,6 +246,11 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 
   //Email
   $scope.sendEmail = function(id,index) {
+    body = $scope.email.body.replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, "");
+    var re = new RegExp(String.fromCharCode(160), "g");
+    body =  body.replace(/&nbsp;/g, ' ');
+    email = $scope.email
+    email.body = body
     pdfLink = serverComm.sendEmail($scope.email).success(function(data) {
       if (data){
         console.log(data);
@@ -257,7 +262,11 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 
   $scope.emailChange = function() {
     console.log($scope.email.body)
-    $scope.emailPreview = {"subject":Mustache.render($scope.email.subject, $scope.select[0]),"body":Mustache.render($scope.email.body, $scope.select[0])}
+    body = $scope.email.body.replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, "");
+    var re = new RegExp(String.fromCharCode(160), "g");
+    body =  body.replace(/&nbsp;/g, ' ');
+    console.log(body)
+    $scope.emailPreview = {"subject":Mustache.render($scope.email.subject, $scope.select[0]),"body":Mustache.render(body, $scope.select[0])}
     console.log($scope.emailPreview.body)
   }
   

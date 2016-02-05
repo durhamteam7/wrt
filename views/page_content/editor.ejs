@@ -4,83 +4,63 @@
 <!-- include summernote css/js-->
 <link href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.7.3/summernote.css" rel="stylesheet">
 <script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.7.3/summernote.js"></script>
+<script src="carat.js"></script>
 
-<div id="summernote"></div>
-<textarea id="emailSubject" ng-model="email.body" ng-change="emailChange()" style="display:none"></textarea>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    
+    <div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Insert Field
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+    <li><a href="#" class="dropdownItem" ng-repeat="th in allTableHeadings" ng-Click="alert({{th}})" id="{{th}}">{{readable(th)}}</a></li>
+  </ul>
+</div>
+
+  </div>
+  <div class="panel-body" contenteditable="true" ng-model="email.body" ng-change="emailChange()" id="emailBody" onmouseup="updatePosition(this);" onmousedown="updatePosition(this);"
+            onkeyup="updatePosition(this);" onkeydown="updatePosition(this);">
+  </div>
+</div>
+
 <script>
-  $(document).ready(function() {
-
-   var HelloButton = function (context) {
-    var ui = $.summernote.ui;
-    var button = ui.button({
-      contents: 'Insert Field <span class="caret"></span>'
-    });
-    return button.render();   // return button as jquery object 
-}
-
-
-$('#summernote').summernote({
-  height: 100,
-
-  toolbar: [
-  ['mybutton', ['hello']]
-  ],
-
-  buttons: {
-    hello: HelloButton
-  },
-
-  placeholder: 'Type message body...',
-  hint: {
-    words: ['{{First_Name}}', 'Last_Name'],
-    match: /\b(\w{1,})$/,
-    search: function (keyword, callback) {
-      callback($.grep(this.words, function (item) {
-        return item.indexOf(keyword) === 0;
-      }));
-    }
-  }
+$(document).ready(function() {
+$(".dropdownItem").on('click', function(event) {
+    console.log(event.target.id)
+    var emBod = document.getElementById("emailBody");
+    var caretPos = globalCursorPos;
+    emBod.focus();
+    $("#emailBody").caret(caretPos)
+    var textAreaTxt = $("#emailBody").text();
+    console.log(textAreaTxt);
+    var txtToAdd = "{{"+event.target.id+"}}";
+    console.log(textAreaTxt.substring(0, caretPos) + txtToAdd + textAreaTxt.substring(caretPos))
+    $("#emailBody").text(textAreaTxt.substring(0, caretPos) + txtToAdd + textAreaTxt.substring(caretPos) );
+    //emailChange();
+});
 });
 
 
-
-// summernote.change
-$('#summernote').on('summernote.change', function(we, contents, $editable) {
-	//THIS LINE PROBABLY GIVES Error: [$compile:nodomevents]
-	$("#emailSubject").val(contents.replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, ""));
-});
-
-
-$(".note-mybutton").children().addClass("dropdown-toggle").attr("data-toggle","dropdown")
-
-//Define list of fields
-var fields = [{"desc":'First name',"val":"First_Name"},{"desc":'Last Name(s)',"val":"Last_Name"}]
-
-fieldString = ""
-$.each(fields, function (idx, field) {
-  fieldString += '<a href="#" onClick="$(\'#summernote\').summernote(\'insertText\', \'{{'+field.val+'}}\');">'+field.desc+'</a>'
-});
-
-$(".note-mybutton").append('<div class="dropdown-menu note-drop dropdown-mybutton"><li id="tagList">'+
-fieldString+'</li></div>')
-});
-
-
-//Simulates input change
-    (function($){
-      var originalVal = $.fn.val;
-      $.fn.val = function(){
-        var result =originalVal.apply(this,arguments);
-        if (arguments.length > 0) {
-		  //AND THIS LINE GIVES Error: [$rootScope:inprog]
-          //$(this).change();
-		  // commented out for now
-		}
-        return result;
-      };
-    })(jQuery);
 
 </script>
 
 
 
+
+
+<script>
+
+
+        function updatePosition(t) {
+            //globalCursorPos = getInputSelection(t);
+            //console.log("pos",globalCursorPos)
+            globalCursorPos = $("#emailBody").caret()
+        }
+        var globalCursorPos;
+
+
+</script>
