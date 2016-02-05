@@ -7,6 +7,49 @@
 <script src="carat.js"></script>
 
 
+<style>
+
+#emailBody{
+  height: 200px;
+  max-height: 200px;
+  overflow: auto;
+}
+[contenteditable][placeholder]:empty:before {
+    content: attr(placeholder);
+    color: #bababa;
+}
+
+</style>
+
+<script>
+function buttonClicked(){
+    console.log(event.target.id)
+    var emBod = document.getElementById("emailBody");
+    var caretPos = globalCursorPos;
+    var textAreaTxt = $("#emailBody").text();
+    console.log(textAreaTxt);
+    var txtToAdd = "{{"+event.target.id.substring(0, event.target.id.length - 1)+"}} ";
+    console.log(textAreaTxt.substring(0, caretPos) + txtToAdd + textAreaTxt.substring(caretPos))
+    $("#emailBody").text(textAreaTxt.substring(0, caretPos) + txtToAdd + textAreaTxt.substring(caretPos) );
+    emBod.focus();
+    $("#emailBody").caret(globalCursorPos+txtToAdd.length)
+    globalCursorPos = $("#emailBody").caret()
+    //emailChange();
+}
+
+        function updatePosition(t) {
+            //globalCursorPos = getInputSelection(t);
+            //console.log("pos",globalCursorPos)
+            globalCursorPos = $("#emailBody").caret()
+        }
+        var globalCursorPos = -1;
+
+
+</script>
+
+
+
+
 <div class="panel panel-default">
   <div class="panel-heading">
     
@@ -17,50 +60,12 @@
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 
-    <li><a href="#" class="dropdownItem" ng-repeat="th in allTableHeadings" ng-Click="alert({{th}})" id="{{th}}">{{readable(th)}}</a></li>
+    <li><a href="" class="fieldDropdownItem" ng-repeat="th in allTableHeadings" id="{{th}}*" onclick="buttonClicked()">{{readable(th)}}</a></li>
   </ul>
 </div>
 
   </div>
   <div class="panel-body" contenteditable="true" ng-model="email.body" ng-change="emailChange()" id="emailBody" onmouseup="updatePosition(this);" onmousedown="updatePosition(this);"
-            onkeyup="updatePosition(this);" onkeydown="updatePosition(this);">
+            onkeyup="updatePosition(this);" onkeydown="updatePosition(this);" placeholder="Enter message body here...">
   </div>
 </div>
-
-<script>
-$(document).ready(function() {
-$(".dropdownItem").on('click', function(event) {
-    console.log(event.target.id)
-    var emBod = document.getElementById("emailBody");
-    var caretPos = globalCursorPos;
-    emBod.focus();
-    $("#emailBody").caret(caretPos)
-    var textAreaTxt = $("#emailBody").text();
-    console.log(textAreaTxt);
-    var txtToAdd = "{{"+event.target.id+"}}";
-    console.log(textAreaTxt.substring(0, caretPos) + txtToAdd + textAreaTxt.substring(caretPos))
-    $("#emailBody").text(textAreaTxt.substring(0, caretPos) + txtToAdd + textAreaTxt.substring(caretPos) );
-    //emailChange();
-});
-});
-
-
-
-</script>
-
-
-
-
-
-<script>
-
-
-        function updatePosition(t) {
-            //globalCursorPos = getInputSelection(t);
-            //console.log("pos",globalCursorPos)
-            globalCursorPos = $("#emailBody").caret()
-        }
-        var globalCursorPos;
-
-
-</script>
