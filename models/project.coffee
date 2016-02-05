@@ -7,10 +7,8 @@ projectCore =
 	Name:
 		type:String,
 		default:'Default name',
-		required:true,
 	Description:
 		type: String,
-		required:true,
 	Fitness_Level:
 		type: String,
 	Requires_Training:
