@@ -48,14 +48,14 @@ app = express()
 passport = require('passport')
 LocalStrategy = require('passport-local').Strategy
 
-app.all '*' (req,res) ->
-	if process.env.dbURL
-		res.redirect("https://" + req.headers.host + "/" + req.path)
+
 
 app.all '*', (req, res, next) ->
 	res.header 'Access-Control-Allow-Origin', '*'
 	res.header 'Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS'
 	res.header 'Access-Control-Allow-Headers', 'Content-Type'
+	if process.env.dbURL
+		res.redirect("https://" + req.headers.host + "/" + req.path)
 	next()
 
 
