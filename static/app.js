@@ -39,6 +39,10 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
         console.log("deleted")
       });
     },
+    getProjects: function() {
+      return $http.get('/api/project').success(function() {
+      });
+    },
     getUsers: function() {
       return $http.get('/api/user').success(function() {
       });
@@ -69,7 +73,15 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 
 
 // Controller
-.controller('mainController', ['$scope','$window', 'ajax', function($scope, $window, serverComm) {
+.controller('mainController', ['$scope','$window', 'ajax', function($scope, $window, serverComm) {                     
+    $scope.roles = [
+          {"id": 1, "name": "Manager", "assignable": true},
+          {"id": 2, "name": "Developer", "assignable": true},
+          {"id": 3, "name": "Reporter", "assignable": true}
+    ];
+    
+    $scope.member = {roles: []};
+    $scope.selected_items = [];
   
   $scope.user = {};
 
@@ -223,6 +235,12 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     serverComm.updateVolunteers(volunteer).success();
   }
   
+  $scope.getProjects = function() {
+	  serverComm.getProjects().success(function(data) {
+		  $scope.projects = data;
+	  });
+  }
+  
   //USER
   
   $scope.getUser = function() {
@@ -346,8 +364,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     console.log("Model init", $scope.VolunteerModel);
     $scope.getVolunteers();
     $scope.getMessages();
-    
-
   };
 
   
@@ -358,6 +374,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   
   $scope.getUser();
   $scope.getVolunteers();
+  $scope.getProjects();
   
 }])
 
@@ -494,6 +511,62 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 
         }
     };
+})
+
+
+//Multiple Select Directive
+.directive('dropdownMultiselect', function() {
+   return {
+       restrict: 'E',
+       scope:{           
+            model: '=',
+            options: '=',
+            pre_selected: '=preSelected'
+       },
+       template: "<div class='btn-group btn-block' data-ng-class='{open: open}'>"+
+                	"<button class='form-control btn btn-text dropdown-toggle' data-ng-click='open=!open;openDropdown()'>Select Projects <span class='caret'></span></button>"+
+					"<ul class='dropdown-menu control-group list-inline' aria-labelledby='dropdownMenu'>" + 
+						"<li class='col-xs-12'><a data-ng-click='selectAll()'><i class='icon-ok-sign'></i>  Check All</a></li>" +
+						"<li class='col-xs-12'><a data-ng-click='deselectAll();'><i class='icon-remove-sign'></i>  Uncheck All</a></li>" +                    
+						"<li class='divider col-xs-12'></li>" +
+						"<li class='col-xs-12' data-ng-repeat='option in options'> <a data-ng-click='setSelectedItem()'>{{option.Name}}<span data-ng-class='isChecked(option._id)'></span></a></li>" +                                        
+					"</ul>" +
+                 "</div>" ,
+       controller: function($scope) {
+           
+           $scope.openDropdown = function() {        
+				$scope.selected_items = [];
+				for (var i = 0; i < $scope.pre_selected.length; i++) {
+					$scope.selected_items.push($scope.pre_selected[i]._id);
+				}
+            };
+           
+            $scope.selectAll = function () {
+                $scope.model = _.pluck($scope.options, '_id');
+                console.log($scope.model);
+            };            
+            $scope.deselectAll = function() {
+                $scope.model = [];
+                console.log($scope.model);
+            };
+            $scope.setSelectedItem = function() {
+                var id = this.option._id;
+                if (_.contains($scope.model, id)) {
+                    $scope.model = _.without($scope.model, id);
+                } else {
+                    $scope.model.push(id);
+                }
+                console.log($scope.model);
+                return false;
+            };
+            $scope.isChecked = function (id) {
+                if (_.contains($scope.model, id)) {
+                    return 'glyphicon glyphicon-ok pull-right';
+                }
+                return '';
+            };
+       }
+   } 
 });
 
 function recurseApply(target, data) {
