@@ -500,8 +500,10 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
         link: function(scope, elem, attr, modelCtrl) {
             if (attr['type'] === 'date'){
                 modelCtrl.$formatters.push(function(modelValue) {
-                    if (modelValue){
-                        return new Date(modelValue);
+                    if (modelValue) {
+						d = Date(modelValue);
+						d.toISOString().slice(0,10);
+                        return new d;
                     }
                     else {
                         return null;
