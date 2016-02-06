@@ -17,22 +17,23 @@
     "ejs": "^2.3.2",
     "express": "~4.12.4",
     "express-session": "^1.11.3",
+    "express-sslify": "^1.0.1",
     "forever": "^0.14.2",
     "forever-monitor": "^1.5.2",
     "gridfs-stream": "^1.1.1",
     "gulp-coffeelint-threshold": "^1.0.0",
     "gulp-util": "^3.0.6",
+    "json-templater": "^1.0.0",
     "mongoose": "^4.0.6",
     "morgan": "~1.5.3",
+    "node-schedule": "^1.0.0",
     "nodemailer": "0.7.1",
     "numeral": "1.5.3",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
     "passport-remember-me": "0.0.1",
     "pdfkit": "^0.7.1",
-    "serve-favicon": "~2.2.1",
-    "json-templater": "^1.0.0",
-    "node-schedule": "^1.0.0"
+    "serve-favicon": "~2.2.1"
   },
   "devDependencies": {
     "coffeelint": "^1.10.1",
@@ -46,5 +47,3 @@
     "supertest": "^1.0.1"
   }
 }
-
-

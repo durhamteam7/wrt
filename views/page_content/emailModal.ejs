@@ -75,15 +75,15 @@
 
                                 <div class="row">
                                     <div class="col-sm-6">
-                                    Recipients:<br><span ng-repeat="v in selected()"><span style="text-transform: uppercase;">{{v.First_Name}} {{v.Last_Name}}</span></span>,<br>
+                                    Recipients:<br><span ng-repeat="v in selected()"><span style="text-transform: uppercase;">{{v.First_Name}} {{v.Last_Name}}</span>, </span><br>
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            Subject:<input class="form-control" ng-model="email.subject" ng-change="emailChange()">
-                                            Body:<%- include('editor.ejs') %>
+                                            <input class="form-control" ng-model="email.subject" ng-change="emailChange()" placeholder="Enter message subject here...">
+                                            <%- include('editor.ejs') %>
                                             
                                         </div>
                                         

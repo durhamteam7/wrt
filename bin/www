@@ -7,6 +7,7 @@ require('coffee-script/register');
 var app = require('../app.coffee');
 var debug = require('debug')('csi:server');
 var http = require('http');
+var enforce = require('express-sslify');
 
 /**
  * Get port from environment and store in Express.
@@ -14,12 +15,19 @@ var http = require('http');
 var port = normalizePort(process.env.PORT || 3000);
 app.set('port', port);
 
+app.use(enforce.HTTPS({ trustProtoHeader: true }))
+
 var host = process.env.OPENSHIFT_NODEJS_IP || 'localhost';
 /**
  * Create HTTP server.
  */
 
 var server = http.createServer(app);
+
+
+
+
+
 
 /**
  * Listen on provided port, on all network interfaces.
