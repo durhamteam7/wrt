@@ -4,6 +4,7 @@
         var userId = '<%-userID%>';
     </script>
     <script src="/checklist-model.js"></script>
+	<script src="/confirmClick.js"></script>
     <script src="//static.scripting.com/bootstrap/1.4.0/js/bootstrap-tabs.js"></script>
     <script src="//d1l4stvdmqmdzl.cloudfront.net/4.0.0-rc2/mongoose.min.js"></script>
     <script src="/api/schemas/volunteer" type="text/coffeescript"></script>
@@ -34,14 +35,15 @@
       }
 	  
 	  /* Custom half-column */
-	  .col-xs-point5 {
+	  .col-xs-point5, .col-xs-1point5 {
 		  position: relative;
 		  min-height: 1px;
 		  padding-right: 15px;
 		  padding-left: 15px;
 	  }
-	  .col-xs-point5 { float: left; }	
+	  .col-xs-point5, .col-xs-1point5 { float: left; }	
 	  .col-xs-point5 {  width: 4.16666667%; }
+	  .col-xs-1point5 {  width: 12.5%; }
 
 
       @media screen and (min-width: 768px) {
@@ -171,7 +173,7 @@
 								<a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" class="btn btn-xs btn-primary" ng-click="validate(v)">
 									<span class="glyphicon glyphicon-pencil"></span>
 								</a>
-								<a id="{{v._id}}bin" href="" onclick="return false;" ng-click="delete(v._id,$index)" class="btn btn-xs btn-danger">
+								<a id="{{v._id}}bin" href="" confirm-click="delete(v._id, $index);" confirm-message="Sure?" class="btn btn-xs btn-danger">
 									<span class="glyphicon glyphicon-trash"></span>
 								</a>
 								<a id="{{v._id}}approve" href="" onclick="return false;" ng-click="approve(v._id,$index)" ng-if="mode != 'normal'" class="btn btn-xs btn-success">

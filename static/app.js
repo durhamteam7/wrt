@@ -10,7 +10,7 @@ function coffeeLoaded() {
 //console.log(getTag("body"))
 
 // app.js
-angular.module('sortApp', ["checklist-model",'ngSanitize'])
+angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
 
 // Service
 .factory('ajax', ['$http', function($http) {
@@ -73,15 +73,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 
 
 // Controller
-.controller('mainController', ['$scope','$window', 'ajax', function($scope, $window, serverComm) {                     
-    $scope.roles = [
-          {"id": 1, "name": "Manager", "assignable": true},
-          {"id": 2, "name": "Developer", "assignable": true},
-          {"id": 3, "name": "Reporter", "assignable": true}
-    ];
-    
-    $scope.member = {roles: []};
-    $scope.selected_items = [];
+.controller('mainController', ['$scope','$window', 'ajax', function($scope, $window, serverComm) {
   
   $scope.user = {};
 
@@ -150,6 +142,10 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 		  return false
 	  }
   }
+  
+  $scope.readable = function(string) {
+      return string.replace(/_/g, " ")
+  }
 
   //****************Main data modification*****************************
   //Volunteers
@@ -196,7 +192,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
           return $scope.numberOfUnapprovedVolunteers;
       }
   }
-
+  
   $scope.delete = function(id, index) {
     serverComm.deleteVolunteers(id).success(function(data) {
       //Remove record from $scope.volunteers
@@ -219,7 +215,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
 	});
   }
 
-    function getIndexFromId(id) {
+  function getIndexFromId(id) {
     for (i = 0; i < $scope.volunteers.length; i++) { 
       if ($scope.volunteers[i]._id == id) {
         return i
@@ -242,7 +238,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   }
   
   //USER
-  
   $scope.getUser = function() {
 	  serverComm.getUser(userId).success(function(data) {
 		  $scope.user = data;
@@ -255,10 +250,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   
   $scope.updateUser = function() {
 	  serverComm.updateUser({ "_id": userId, "tableHeadings": JSON.stringify($scope.tableHeadings) }).success();
-  }
-  
-  $scope.readable = function(string) {
-      return string.replace(/_/g, " ")
   }
   
 
