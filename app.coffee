@@ -28,7 +28,7 @@ mongoose.connect urls.mongoDB
 require './models/host.coffee'
 require './models/user.coffee'
 require './models/volunteer.coffee'
-require './models/project.coffee'
+require './models/volunteeringOpportunity.coffee'
 require './models/settings.coffee'
 require './models/message.coffee'
 User = mongoose.model 'User'
@@ -109,8 +109,8 @@ app.use passport.session()
 #Login - no authentication to get here
 app.use '/',require('./routes/login.coffee')
 
-#Allows Volunteer signup form to access project data without auth
-app.use '/api/projectUnauth',require('./routes/api/projectUnauth.coffee')
+#Allows Volunteer signup form to access volunteeringOpportunity data without auth
+app.use '/api/volunteeringOpportunityUnauth',require('./routes/api/volunteeringOpportunityUnauth.coffee')
 
 #Allows Volunteer signup form to create new volunteers without auth
 app.use '/api/volunteerUnauth',require('./routes/api/volunteerUnauth.coffee')
@@ -159,7 +159,7 @@ app.use '/api/schemas', require('./routes/api/schemas.coffee')
 
 app.use '/api/volunteer', require('./routes/api/volunteer.coffee')
 
-app.use '/api/project', require('./routes/api/project.coffee')
+app.use '/api/volunteeringOpportunity', require('./routes/api/volunteeringOpportunity.coffee')
 
 app.use '/api/message', require('./routes/api/message.coffee')
 

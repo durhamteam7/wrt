@@ -2,22 +2,21 @@ express = require 'express'
 router = express.Router()
 mongoose = require 'mongoose'
 
-Project = mongoose.model 'Project'
+Volunteering_Opportunity = mongoose.model 'Volunteering_Opportunity'
 User = mongoose.model 'User'
-
 ObjId = mongoose.Types.ObjectId
 
 
 router.get '/', (req,res)->
 	console.log("getting")
 	try
-		Project.
+		Volunteering_Opportunity.
 		find().
-		exec (err, project)->
+		exec (err, volunteeringOpportunity)->
 			if err
 				return console.log err
 			try
-				res.json project
+				res.json volunteeringOpportunity
 			catch
 				res.json {'error':'no sites found'}
 	catch
@@ -25,14 +24,14 @@ router.get '/', (req,res)->
 
 router.get '/:id', (req,res)->
 	try
-		Project.
+		Volunteering_Opportunity.
 		findById(req.params.id).
-		exec (err, project)->
+		exec (err, volunteeringOpportunity)->
 			if err
 				return console.log err
 			try
 				console.log("JSONing")
-				res.json project.toJSON()
+				res.json volunteeringOpportunity.toJSON()
 			catch
 				res.json {'error':'site not found'}
 	catch
@@ -40,24 +39,24 @@ router.get '/:id', (req,res)->
 
 
 router.post '/', (req,res)->	#CREATE
-	console.log "Making new project"
-	project = new Project()
-	project.save (err)->
+	console.log "Making new volunteeringOpportunity"
+	volunteeringOpportunity = new Volunteering_Opportunity()
+	volunteeringOpportunity.save (err)->
 		if !err
-			res.json project.toJSON()
+			res.json volunteeringOpportunity.toJSON()
 
 
 router.patch '/:id',(req,res)->
-	Project.
+	Volunteering_Opportunity.
 	findById(req.params.id).
-	exec (err,project)->
+	exec (err,volunteeringOpportunity)->
 		if err
 			res.json err
-		else if project == null
+		else if volunteeringOpportunity == null
 			res.send 404
 		else
-			project = recurseUpdate(project,req.body) #see function def below
-			project.save (err)->
+			volunteeringOpportunity = recurseUpdate(volunteeringOpportunity,req.body) #see function def below
+			volunteeringOpportunity.save (err)->
 				if err
 					console.log err
 					res.status 500
@@ -76,15 +75,15 @@ recurseUpdate = (obj,diff)->
 #
 
 router.delete '/:id', (req,res,next)->	#DELETE
-	Project.
+	Volunteering_Opportunity.
 	findById(req.params.id).
-	exec (err,project)->
+	exec (err,volunteeringOpportunity)->
 		if err
 			res.json err
 		else if site == null
 			res.sendStatus 404
 		else
-			Project.findByIdAndRemove project._id, (err)->
+			Volunteering_Opportunity.findByIdAndRemove volunteeringOpportunity._id, (err)->
 				if err
 					console.log err
 			res.sendStatus 204

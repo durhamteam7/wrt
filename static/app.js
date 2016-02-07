@@ -39,8 +39,8 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
         console.log("deleted")
       });
     },
-    getProjects: function() {
-      return $http.get('/api/project').success(function() {
+    getVolunteeringOpportunities: function() {
+      return $http.get('/api/volunteeringOpportunity').success(function() {
       });
     },
     getUsers: function() {
@@ -235,9 +235,9 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
     serverComm.updateVolunteers(volunteer).success();
   }
   
-  $scope.getProjects = function() {
-	  serverComm.getProjects().success(function(data) {
-		  $scope.projects = data;
+  $scope.getVolunteeringOpportunities = function() {
+	  serverComm.getVolunteeringOpportunities().success(function(data) {
+		  $scope.volunteeringOpportunities = data;
 	  });
   }
   
@@ -374,7 +374,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
   
   $scope.getUser();
   $scope.getVolunteers();
-  $scope.getProjects();
+  $scope.getVolunteeringOpportunities();
   
 }])
 
@@ -524,7 +524,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize'])
             pre_selected: '=preSelected'
        },
        template: "<div class='btn-group btn-block' data-ng-class='{open: open}'>"+
-                	"<button class='form-control btn btn-text dropdown-toggle' data-ng-click='open=!open;openDropdown()'>Select Projects <span class='caret'></span></button>"+
+                	"<button class='form-control btn btn-text dropdown-toggle' data-ng-click='open=!open;openDropdown()'>Choose Volunteering Opportunities <span class='caret'></span></button>"+
 					"<ul class='dropdown-menu control-group list-inline' aria-labelledby='dropdownMenu'>" + 
 						"<li class='col-xs-12'><a data-ng-click='selectAll()'><i class='icon-ok-sign'></i>  Check All</a></li>" +
 						"<li class='col-xs-12'><a data-ng-click='deselectAll();'><i class='icon-remove-sign'></i>  Uncheck All</a></li>" +                    

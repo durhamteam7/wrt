@@ -20,4 +20,4 @@ User.methods.validPassword = (password) ->
 	console.log 'Checking login details'
 	return bcrypt.compareSync password,this.hash
 
-mongoose.model 'User',User
+mongoose.model 'User', User

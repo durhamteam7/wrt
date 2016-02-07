@@ -120,13 +120,13 @@ volunteerCore =
 		type: Boolean,
 		default: false,
 
-	#stores an array of all the projects
-	Projects: [{type:Schema.Types.ObjectId,ref:'Project'}]
+	#stores an array of all the volunteering opportunities
+	Volunteering_Opportunities: [{ type: Schema.Types.ObjectId, ref: 'Volunteering_Opportunity' }]
 
 	Trained: #dropdown
 		type: Boolean,
 
-Volunteer = new Schema volunteerCore,{validateBeforeSave:false,timestamps:true} #TEMP DISABLED VALIDATION
+Volunteer = new Schema volunteerCore, { validateBeforeSave: false, timestamps: true } #TEMP DISABLED VALIDATION
 
 
 try #Server-side

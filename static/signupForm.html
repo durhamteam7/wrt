@@ -35,7 +35,7 @@
 		text-decoration: none !important; /* no underline */
 	}
 
-	.projectBox:hover {
+	.volunteeringOpportunityBox:hover {
 		box-shadow: 1px 1px 5px grey;
     }
 
@@ -61,14 +61,14 @@
 							<div class="panel-heading">
 								<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
 									<h4 class="panel-title">
-										Choose Projects <span class="fa fa-caret-down pull-right"></span>
+										Choose Volunteering Opportunities <span class="fa fa-caret-down pull-right"></span>
 									</h4>
 								</a>
 							</div>
 							<div id="collapseOne" class="panel-collapse collapse in">
 								<div class="panel-body">
 									Click to select which volunteering opportunities you are interested in:<br><br>
-									<div id="projectSection"></div>
+									<div id="volunteeringOpportunitySection"></div>
 
 									<script>
 										SCRIPT_URL = ""
@@ -85,32 +85,32 @@
 												}
 										}
 
-										//Do AJAX request to get project data
-										$.getJSON(SCRIPT_URL + '/api/projectUnauth', function(projects) {
+										//Do AJAX request to get volunteering opportunity data
+										$.getJSON(SCRIPT_URL + '/api/volunteeringOpportunityUnauth', function(volunteeringOpportunities) {
 
 											fitnessHTML = {"high":'label-danger',"moderate":'label-warning',"low":'label-success'}
 
-											//Replace projects with the html
-											for (i = 0; i < projects.length; i++) { 
+											//Replace volunteeringOpportunities with the html
+											for (i = 0; i < volunteeringOpportunities.length; i++) { 
 												for (j = 0; j < Object.keys(fitnessHTML).length; j++) { 
 													fitness = Object.keys(fitnessHTML)[j]
 													re = new RegExp(fitness,'gi');
-													projects[i].Fitness_Level = projects[i].Fitness_Level.replace(re,'<span class="label '+fitnessHTML[fitness]+'">'+fitness+'</span>');
+													volunteeringOpportunities[i].Fitness_Level = volunteeringOpportunities[i].Fitness_Level.replace(re,'<span class="label '+fitnessHTML[fitness]+'">'+fitness+'</span>');
 												}
 											}
 
-											for (i = 0; i < projects.length; i++) {
+											for (i = 0; i < volunteeringOpportunities.length; i++) {
 												training = ""
-												if (projects[i]["Requires_Training"]){
+												if (volunteeringOpportunities[i]["Requires_Training"]){
 													training = "<br><em>Requires Certified Training</em><br>"
 												} 
-												html = '<a href="javascript:void(0)" onclick="check(\''+projects[i]["_id"]+'\')" ><div class="panel panel-default projectBox" id="'+projects[i]["_id"]+'"><div class="panel-heading"><h3 class="panel-title">'+projects[i]["Name"]+'</h3></div>'+
+												html = '<a href="javascript:void(0)" onclick="check(\''+volunteeringOpportunities[i]["_id"]+'\')" ><div class="panel panel-default volunteeringOpportunityBox" id="'+volunteeringOpportunities[i]["_id"]+'"><div class="panel-heading"><h3 class="panel-title">'+volunteeringOpportunities[i]["Name"]+'</h3></div>'+
 												'<div class = "panel-body">'+
-												projects[i]["Description"]+
-												'<br>'+training+'<br><b>Difficulty: '+projects[i]["Fitness_Level"]+'</span></b></div></div></a>'+
-												'<input type="checkbox" style="display:none" name="Projects" value="'+projects[i]["_id"]+'"><br>'
+												volunteeringOpportunities[i]["Description"]+
+												'<br>'+training+'<br><b>Difficulty: '+volunteeringOpportunities[i]["Fitness_Level"]+'</span></b></div></div></a>'+
+												'<input type="checkbox" style="display:none" name="Volunteering_Opportunities" value="'+volunteeringOpportunities[i]["_id"]+'"><br>'
 
-												$("#projectSection").append(html);
+												$("#volunteeringOpportunitySection").append(html);
 											}
 										});
 									</script>
