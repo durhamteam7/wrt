@@ -274,7 +274,27 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
       $scope.volunteeringOpportunities.splice(getIndexFromId($scope.volunteeringOpportunities, id), 1);
 		});
 	}
-  
+
+	// 
+	$scope.opportunityName = function(ids) {
+		if ($scope.volunteeringOpportunities) {
+			var names = [];
+			angular.forEach(ids, function(id) {
+				var index = "";
+				for (var i = 0; i < $scope.volunteeringOpportunities.length; i++) {
+					if ($scope.volunteeringOpportunities[i]._id == id) {
+						index = i
+					}
+				}
+				if (index !== "") {
+					o = $scope.volunteeringOpportunities[index];
+					names.push(o.Name);
+				}
+			});
+			return names.join(", ");
+		}
+	}
+ 
 	//INLINE EDITING
 	// gets the template to ng-include for a table row / item
 	$scope.getTemplate = function (o) {
@@ -424,8 +444,8 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
   });
   
   $scope.getUser();
-  $scope.getVolunteers();
   $scope.getVolunteeringOpportunities();
+  $scope.getVolunteers();
   
 }])
 

@@ -25,12 +25,12 @@
 	}
 
 	.btn[disabled]{
-	background-color:#c1e7f0;
-	border-color: #c1e7f0;
+		background-color:#c1e7f0;
+		border-color: #c1e7f0;
 	}
 
 	.form-control-feedback{
-	margin-top:25px;
+		margin-top:25px;
 	}
 
 	/* Custom half-column */
@@ -41,8 +41,8 @@
 		padding-left: 15px;
 	}
 	.col-xs-point5, .col-xs-1point5 { float: left; }	
-	.col-xs-point5 {  width: 4.16666667%; }
-	.col-xs-1point5 {  width: 12.5%; }
+	.col-xs-point5 { width: 4.16666667%; }
+	.col-xs-1point5 { width: 12.5%; }
 
 	@media screen and (min-width: 768px) {
 		.modal-dialog {
@@ -161,7 +161,7 @@
                 <tbody id="volunteer-table">
                     <tr ng-repeat="v in filteredList | orderBy:sortType:sortReverse | filter:searchTerm | startFrom:currentPage*pageSize | limitTo:pageSize" ng-class="{ selected: v.isSelected }">
                         <td class="col-xs-point5"><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
-                        <td ng-repeat="th in tableHeadings" ng-click="v.isSelected = !v.isSelected" ng-bind="v[th] | date:'MM/dd/yyyy'"></td>
+                        <td ng-repeat="th in tableHeadings" ng-click="v.isSelected = !v.isSelected" ng-bind="th == 'Volunteering_Opportunities' ? opportunityName(v[th]) : (v[th] | date:'MM/dd/yyyy')"></td>
                         <td class="col-xs-1 text-center">
 													<div class="btn-group">
 														<a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" class="btn btn-xs btn-primary" ng-click="validate(v)">
@@ -180,10 +180,8 @@
             </table>
             
         </div>
-        
     </div>
     <div class="row">
-        
         <div class="col-xs-6">
             <p>Showing {{volunteers.length == 0 ? 0 : (currentPage * pageSize) + 1}} to {{rowsShown()}} of {{volunteers.length}} entries</p>
         </div>
@@ -207,7 +205,6 @@
             </ul>
         </nav>
     </div>
-
 
 	<%- include('editModal.ejs') %>
 	<%- include('emailModal.ejs') %>
