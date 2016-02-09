@@ -312,7 +312,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
   $scope.updateUser = function() {
 	  serverComm.updateUser({ "_id": userId, "tableHeadings": JSON.stringify($scope.tableHeadings) }).success();
   }
-  
 
   //Email
   $scope.sendEmail = function(id,index) {
@@ -552,8 +551,9 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
         link: function(scope, elem, attr, modelCtrl) {
             if (attr['type'] === 'date'){
                 modelCtrl.$formatters.push(function(modelValue) {
-                    if (modelValue){
-                        return new Date(modelValue);
+                    if (modelValue) {
+												date = new Date(modelValue);
+                        return date;
                     }
                     else {
                         return null;

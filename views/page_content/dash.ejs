@@ -159,21 +159,21 @@
                     </tr>
                 </thead>
                 <tbody id="volunteer-table">
-                    <tr ng-repeat="v in filteredList | orderBy:sortType:sortReverse | filter:searchTerm | startFrom:currentPage*pageSize | limitTo:pageSize" ng-class="{selected:v.isSelected}">
+                    <tr ng-repeat="v in filteredList | orderBy:sortType:sortReverse | filter:searchTerm | startFrom:currentPage*pageSize | limitTo:pageSize" ng-class="{ selected: v.isSelected }">
                         <td class="col-xs-point5"><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
-                        <td ng-repeat="th in tableHeadings" ng-click="v.isSelected = !v.isSelected">{{ v[th] }}</td>
+                        <td ng-repeat="th in tableHeadings" ng-click="v.isSelected = !v.isSelected" ng-bind="v[th] | date:'MM/dd/yyyy'"></td>
                         <td class="col-xs-1 text-center">
-							<div class="btn-group">
-								<a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" class="btn btn-xs btn-primary" ng-click="validate(v)">
-									<span class="glyphicon glyphicon-pencil"></span>
-								</a>
-								<a id="{{v._id}}bin" href="" confirm-click="delete(v._id, $index);" confirm-message="Sure?" class="btn btn-xs btn-danger">
-									<span class="glyphicon glyphicon-trash"></span>
-								</a>
-								<a id="{{v._id}}approve" href="" onclick="return false;" ng-click="approve(v._id,$index)" ng-if="mode != 'normal'" class="btn btn-xs btn-success">
-									<span class="glyphicon glyphicon-ok"></span>
-								</a>
-							</div>
+													<div class="btn-group">
+														<a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" class="btn btn-xs btn-primary" ng-click="validate(v)">
+															<span class="glyphicon glyphicon-pencil"></span>
+														</a>
+														<a id="{{v._id}}bin" href="" confirm-click="delete(v._id, $index);" confirm-message="Sure?" class="btn btn-xs btn-danger">
+															<span class="glyphicon glyphicon-trash"></span>
+														</a>
+														<a id="{{v._id}}approve" href="" onclick="return false;" ng-click="approve(v._id,$index)" ng-if="mode != 'normal'" class="btn btn-xs btn-success">
+															<span class="glyphicon glyphicon-ok"></span>
+														</a>
+													</div>
                         </td>
                     </tr>
                 </tbody>
