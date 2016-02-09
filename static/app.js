@@ -43,6 +43,13 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
       return $http.get('/api/volunteeringOpportunity').success(function() {
       });
     },
+    updateVolunteeringOpportunity: function($params) {
+      $params._method = 'patch';
+      console.log("update method", $params);
+      return $http.patch('/api/volunteeringOpportunity/' + $params._id, $params).success(function() {
+        delete $params._method;
+      });
+    },
     getUsers: function() {
       return $http.get('/api/user').success(function() {
       });
@@ -88,6 +95,8 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
   $scope.approvedVolunteers = {};
   $scope.unapprovedVolunteers = {};
   $scope.mode = "normal";
+  
+  $scope.unseenMessages = 0; // set to actual number of unseen messages
 
   $scope.select = [];
   $scope.email = { "subject": "", "body": "", "select": $scope.select }
@@ -95,13 +104,14 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
   $scope.email.communicationType = "commPref"
   $scope.messageLog = {}
 
-  $scope.allTableHeadings = ["Title", "First_Name", "Last_Name", "Email", "Telephone_Home", "Telephone_Mobile", "Telephone_Other", "Address", "Volunteering_Type", "Has_Transport", "Communication_Preference"];
+  $scope.allTableHeadings = ["Title", "First_Name", "Last_Name", "Email", "Date_of_Birth", "Telephone_Home", "Telephone_Mobile", "Telephone_Other", "Address", "Volunteering_Type", "Has_Transport", "Communication_Preference"];
   $scope.tableHeadings = ["First_Name", "Last_Name", "Email", "Telephone_Home"]; // Default headings if user preference not set
 
   // Pagination variables
   $scope.currentPage = 0;
   $scope.pageSizeOptions = [10, 25, 50, 100];
   $scope.pageSize = $scope.pageSizeOptions[1];
+  
   $scope.numberOfPages = function() {
     return Math.ceil($scope.volunteers.length/$scope.pageSize);
   }
@@ -234,6 +244,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
   $scope.getVolunteeringOpportunities = function() {
 	  serverComm.getVolunteeringOpportunities().success(function(data) {
 		  $scope.volunteeringOpportunities = data;
+		  $scope.selectedOpportunity = {};
 	  });
   }
   
@@ -275,7 +286,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
     var re = new RegExp(String.fromCharCode(160), "g");
     body =  body.replace(/&nbsp;/g, ' ');
     console.log(body)
-    $scope.emailPreview = {"subject":Mustache.render($scope.email.subject, $scope.select[0]),"body":Mustache.render(body, $scope.select[0])}
+    $scope.emailPreview = {"subject": Mustache.render($scope.email.subject, $scope.select[0]),"body":Mustache.render(body, $scope.select[0])}
     console.log($scope.emailPreview.body)
   }
   
@@ -362,6 +373,40 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
   $scope.$watch('searchTerm', function () {
     $scope.filteredList = $scope.$eval('volunteers | filter:searchTerm');
   });
+  
+  
+  $scope.updateVolunteeringOpportunity = function(opportunity) {
+    serverComm.updateVolunteeringOpportunity(opportunity).success();
+  }
+  
+//INLINE EDITING
+	// gets the template to ng-include for a table row / item
+	$scope.getTemplate = function (o) {
+		if (o._id === $scope.selectedOpportunity._id) return 'edit';
+		else return 'display';
+	};
+
+	$scope.editOpportunity = function (o) {
+		$scope.selectedOpportunity = angular.copy(o);
+	};
+	
+	$scope.addOpportunity = function() {
+		$scope.volunteeringOpportunities.push({ "Name": "Default name", "Description": "Default description", "Fitness_Level": "", "Requires_Training": false });
+	}
+
+	$scope.saveOpportunity = function (idx) {
+		console.log("Saving Opportunity");
+		$scope.volunteeringOpportunities[idx] = angular.copy($scope.selectedOpportunity);
+		$scope.updateVolunteeringOpportunity($scope.selectedOpportunity);
+		$scope.resetSelectedOpportunity();
+	};
+
+	$scope.resetSelectedOpportunity = function () {
+		$scope.selectedOpportunity = {};
+	};
+//INLINE EDITING
+
+
   
   $scope.getUser();
   $scope.getVolunteers();

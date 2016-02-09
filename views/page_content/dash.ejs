@@ -17,60 +17,73 @@
 
     <link rel="stylesheet" href="loader.css">
     <style type="text/css">
-      .container {
-          margin-top: 20px;
-      }
-      .margin-top {
-          margin-top: 25px;
-          margin-bottom: 10px;
-      }
+		.container {
+			margin-top: 20px;
+		}
+		.margin-top {
+			margin-top: 25px;
+			margin-bottom: 10px;
+		}
 
-      .btn[disabled]{
-        background-color:#c1e7f0;
-        border-color: #c1e7f0;
-      }
+		.btn[disabled]{
+		background-color:#c1e7f0;
+		border-color: #c1e7f0;
+		}
 
-      .form-control-feedback{
-        margin-top:25px;
-      }
-	  
-	  /* Custom half-column */
-	  .col-xs-point5, .col-xs-1point5 {
-		  position: relative;
-		  min-height: 1px;
-		  padding-right: 15px;
-		  padding-left: 15px;
-	  }
-	  .col-xs-point5, .col-xs-1point5 { float: left; }	
-	  .col-xs-point5 {  width: 4.16666667%; }
-	  .col-xs-1point5 {  width: 12.5%; }
+		.form-control-feedback{
+		margin-top:25px;
+		}
+
+		/* Custom half-column */
+		.col-xs-point5, .col-xs-1point5 {
+			position: relative;
+			min-height: 1px;
+			padding-right: 15px;
+			padding-left: 15px;
+		}
+		.col-xs-point5, .col-xs-1point5 { float: left; }	
+		.col-xs-point5 {  width: 4.16666667%; }
+		.col-xs-1point5 {  width: 12.5%; }
 
 
-      @media screen and (min-width: 768px) {
-          .modal-dialog {
-              width: 850px; /* New width for default modal */
-          }
-          .modal-sm {
-              width: 350px; /* New width for small modal */
-          }
-      }
-      @media screen and (min-width: 992px) {
-          .modal-lg {
-              width: 950px; /* New width for large modal */
-      	  }
-  	  }
-
-      .multiselect {
-            width:20em;
-            height:15em;
-            border:solid 1px #c0c0c0;
-            overflow:auto;
-        }
+		@media screen and (min-width: 768px) {
+			.modal-dialog {
+				width: 850px; /* New width for default modal */
+			}
+			.modal-sm {
+				width: 350px; /* New width for small modal */
+			}
+		}
+		@media screen and (min-width: 992px) {
+			.modal-lg {
+				width: 950px; /* New width for large modal */
+			}
+		}
+		
+		
+        .multiselect {
+            overflow: auto;
+            height: 15em;
+			margin-top: 1em;
+		}
+		
+        .multiselect .list-group-item {
+			padding: 0.5em;
+		}
          
         .multiselect label {
-            display:block;
+            display: block;
         }
-
+		
+	    /*
+        .multiselect {
+            border:solid 1px #c0c0c0;
+			border-radius: 4px;
+            overflow:auto;
+			padding: 0.8em 1em;
+			line-height: 1.5em;
+        }
+		*/
         .selected{
             background-color: hsl(0, 0%, 98%);
         }
@@ -137,7 +150,7 @@
                 </a>
                 <a href="#" class="btn btn-info" data-toggle="modal" data-target="#emailModal"  ng-click="getMessages()">
                     <span class="glyphicon glyphicon-envelope"></span>
-                    Communication
+                    Communication <span class="badge" ng-if="unseenMessages > 0">{{ unseenMessages }}</span>
                 </a>
             </div>
         </div>

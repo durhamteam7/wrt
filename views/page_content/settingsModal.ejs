@@ -10,16 +10,146 @@
                 <h4 class="modal-title">Settings</h4>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="form-group">
-                            <label for="ths">Change Table Headings Shown</label>
-                            <div class="multiselect">
-                                <label ng-repeat="th in allTableHeadings"><input type="checkbox" name="ths" ng-model="tableHeadings" checklist-model="tableHeadings" checklist-value="th" />{{readable(th)}}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+				
+				<div class="divDialogElements">
+					
+					<ul class="nav nav-tabs" data-tabs="tabs">
+						<li class="active"><a href="#userSettings">User Settings</a></li>
+						<li><a href="#credentials">User Credentials</a></li>
+						<li><a href="#opportunities">Volunteering Opportunities</a></li>
+					</ul>
+					
+					<div id="my-tab-content" class="tab-content">
+						
+						<div class="tab-pane active" id="userSettings">
+							<div class="row">
+								<div class="col-xs-6">
+									<br>
+									<h4>Change Table Headings Shown</h4>
+									<i>Please select headings in the order you want them to appear</i>
+									<div class="form-group">
+										<div class="multiselect panel panel-default">
+											<ul class="list-group">
+												<li class="list-group-item" ng-repeat="th in allTableHeadings">
+													<label>
+														<input type="checkbox" name="ths" ng-model="tableHeadings" checklist-model="tableHeadings" checklist-value="th" /> 
+														{{readable(th)}}
+													</label>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<br>
+									<h4>Some other settings</h4>
+								</div>
+							</div>
+						</div><!--tab-pane-->
+						
+						<div class="tab-pane" id="credentials">
+							<div class="row">
+								<div class="col-xs-6">
+									<br>
+									<div class="form-group">
+										<label for="username">Change Username</label>
+										<!--<input type="text" name="username" class="form-control" placeholder="no functionality">-->
+									</div>
+									<div class="form-group">
+										<label for="password">Change Password</label>
+										<!--<input type="password" name="password" class="form-control" placeholder="no functionality">-->
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<br>
+									<h4>Some other settings</h4>
+								</div>
+							</div>
+						</div><!--tab-pane-->
+						
+						<div class="tab-pane" id="opportunities">
+							<div class="row">
+								<div class="col-xs-12">
+									<br>
+									<table class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th class="col-xs-1point5">
+													Name
+												</th>
+												<th class="col-xs-7">
+													Description
+												</th>
+												<th class="col-xs-1point5">
+													Fitness Level
+												</th>
+												<th class="col-xs-1">
+													Requires Training
+												</th>
+												<th class="col-xs-1">
+													Operation
+												</th>
+											</tr>
+										</thead>
+										<tbody id="opportunities-table">
+											<tr ng-repeat="o in volunteeringOpportunities" ng-include="getTemplate(o)"></tr>
+										</tbody>
+									</table>
+									<a class="btn btn-success pull-right" ng-click="addOpportunity()">Add Volunteering Opportunity</a>
+    
+									<script type="text/ng-template" id="display">
+										<td>{{o.Name}}</td>
+										<td>{{o.Description}}</td>
+										<td>{{o.Fitness_Level}}</td>
+										<td>{{o.Requires_Training}}</td>
+										<td>
+											<div class="btn-group">
+												<a href="" class="btn btn-xs btn-primary" ng-click="editOpportunity(o)">
+													<span class="glyphicon glyphicon-pencil"></span>
+												</a>
+												<a href="" class="btn btn-xs btn-danger" confirm-click="deleteOpportunity(o._id, $index);" confirm-message="Sure?">
+													<span class="glyphicon glyphicon-trash"></span>
+												</a>
+											</div>
+										</td>
+									</script>
+									<script type="text/ng-template" id="edit">
+										<td><input type="text" class="form-control" ng-model="selectedOpportunity.Name" /></td>
+										<td><textarea rows="4" class="form-control" ng-model="selectedOpportunity.Description">{{selectedOpportunity.Description}}</textarea></td>
+										<td>
+											<!--
+											<label class="text-success"><input type="checkbox"> Low</label>
+											<label class="text-warning"><input type="checkbox"> Moderate</label>
+											<label class="text-danger"><input type="checkbox"> High</label>
+											-->
+											<input type="text" class="form-control" ng-model="selectedOpportunity.Fitness_Level" />
+										</td>
+										<td>
+											<!--
+											<input type="radio"> Yes
+											<br>
+											<input type="radio"> No
+											-->
+											<input type="text" class="form-control" ng-model="selectedOpportunity.Requires_Training" />
+										</td>
+										<td>
+											<div class="btn-group">
+												<a href="" class="btn btn-xs btn-success" ng-click="saveOpportunity($index)">
+													<span class="glyphicon glyphicon-ok"></span>
+												</a>
+												<a href="" class="btn btn-xs btn-warning" ng-click="resetSelectedOpportunity()">
+													<span class="glyphicon glyphicon-remove"></span>
+												</a>
+											</div>
+										</td>
+									</script>
+									
+								</div>
+							</div>
+						</div><!--tab-pane-->
+						
+					</div>
+				</div>
             </div>
 			<div class="modal-footer">
 				<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" ng-click="updateUser()">Close</button>

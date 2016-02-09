@@ -22,34 +22,6 @@ router.get '/', (req,res)->
 	catch
 		res.redirect '/404.htm'
 
-router.get '/unapproved', (req,res)->
-	try
-		Volunteer.
-		find({ Approved: {$in: [null, false]} }).
-		exec (err, volunteer)->
-			if err
-				return console.log err
-			try
-				res.json volunteer
-			catch
-				res.json {'error':'no sites found'}
-	catch
-		res.redirect '/404.htm'
-
-router.get '/approved', (req,res)->
-	try
-		Volunteer.
-		find({ Approved: true }).
-		exec (err, volunteer)->
-			if err
-				return console.log err
-			try
-				res.json volunteer
-			catch
-				res.json {'error':'no sites found'}
-	catch
-		res.redirect '/404.htm'
-
 router.patch '/approve/:id',(req,res)->
     console.log("approving", req.params.id)
     Volunteer.

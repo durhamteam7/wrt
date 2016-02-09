@@ -47,6 +47,7 @@ router.post '/', (req,res)->	#CREATE
 
 
 router.patch '/:id',(req,res)->
+	console.log("modifying",req.params.id)
 	Volunteering_Opportunity.
 	findById(req.params.id).
 	exec (err,volunteeringOpportunity)->
@@ -62,6 +63,7 @@ router.patch '/:id',(req,res)->
 					res.status 500
 					return err
 				res.json {'message':'Object updated'}
+
 
 recurseUpdate = (obj,diff)->				
 	#Loop through key value pairs, if value is an object recurse else update values
