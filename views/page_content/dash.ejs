@@ -1,98 +1,79 @@
-	<title>Volunteer Database - Dashboard</title>
-    <script>
-        //Fix to pass user ID to angular
-        var userId = '<%-userID%>';
-    </script>
-    <script src="/checklist-model.js"></script>
-	<script src="/confirmClick.js"></script>
-    <script src="//static.scripting.com/bootstrap/1.4.0/js/bootstrap-tabs.js"></script>
-    <script src="//d1l4stvdmqmdzl.cloudfront.net/4.0.0-rc2/mongoose.min.js"></script>
-    <script src="/api/schemas/volunteer" type="text/coffeescript"></script>
-    <script type="text/coffeescript">
-        window.coffeeLoaded()
-    </script>
-    <script src="/coffee-script.js"></script>
-    <script src="/app.js"></script>
+<title>Volunteer Database - Dashboard</title>
+<script>
+	//Fix to pass user ID to angular
+	var userId = '<%-userID%>';
+</script>
+<script src="/checklist-model.js"></script>
+<script src="/confirmClick.js"></script>
+<script src="//static.scripting.com/bootstrap/1.4.0/js/bootstrap-tabs.js"></script>
+<script src="//d1l4stvdmqmdzl.cloudfront.net/4.0.0-rc2/mongoose.min.js"></script>
+<script src="/api/schemas/volunteer" type="text/coffeescript"></script>
+<script type="text/coffeescript">
+	window.coffeeLoaded()
+</script>
+<script src="/coffee-script.js"></script>
+<script src="/app.js"></script>
 
+<link rel="stylesheet" href="loader.css">
+<style type="text/css">
+	.container {
+		margin-top: 20px;
+	}
+	.margin-top {
+		margin-top: 25px;
+		margin-bottom: 10px;
+	}
 
-    <link rel="stylesheet" href="loader.css">
-    <style type="text/css">
-		.container {
-			margin-top: 20px;
-		}
-		.margin-top {
-			margin-top: 25px;
-			margin-bottom: 10px;
-		}
+	.btn[disabled]{
+	background-color:#c1e7f0;
+	border-color: #c1e7f0;
+	}
 
-		.btn[disabled]{
-		background-color:#c1e7f0;
-		border-color: #c1e7f0;
-		}
+	.form-control-feedback{
+	margin-top:25px;
+	}
 
-		.form-control-feedback{
-		margin-top:25px;
-		}
+	/* Custom half-column */
+	.col-xs-point5, .col-xs-1point5 {
+		position: relative;
+		min-height: 1px;
+		padding-right: 15px;
+		padding-left: 15px;
+	}
+	.col-xs-point5, .col-xs-1point5 { float: left; }	
+	.col-xs-point5 {  width: 4.16666667%; }
+	.col-xs-1point5 {  width: 12.5%; }
 
-		/* Custom half-column */
-		.col-xs-point5, .col-xs-1point5 {
-			position: relative;
-			min-height: 1px;
-			padding-right: 15px;
-			padding-left: 15px;
+	@media screen and (min-width: 768px) {
+		.modal-dialog {
+			width: 850px; /* New width for default modal */
 		}
-		.col-xs-point5, .col-xs-1point5 { float: left; }	
-		.col-xs-point5 {  width: 4.16666667%; }
-		.col-xs-1point5 {  width: 12.5%; }
-
-
-		@media screen and (min-width: 768px) {
-			.modal-dialog {
-				width: 850px; /* New width for default modal */
-			}
-			.modal-sm {
-				width: 350px; /* New width for small modal */
-			}
+		.modal-sm {
+			width: 350px; /* New width for small modal */
 		}
-		@media screen and (min-width: 992px) {
-			.modal-lg {
-				width: 950px; /* New width for large modal */
-			}
+	}
+	@media screen and (min-width: 992px) {
+		.modal-lg {
+			width: 950px; /* New width for large modal */
 		}
-		
-		
-        .multiselect {
-            overflow: auto;
-            height: 15em;
-			margin-top: 1em;
-		}
-		
-        .multiselect .list-group-item {
-			padding: 0.5em;
-		}
-         
-        .multiselect label {
-            display: block;
-        }
-		
-	    /*
-        .multiselect {
-            border:solid 1px #c0c0c0;
-			border-radius: 4px;
-            overflow:auto;
-			padding: 0.8em 1em;
-			line-height: 1.5em;
-        }
-		*/
-        .selected{
-            background-color: hsl(0, 0%, 98%);
-        }
-
-      
+	}
+	.multiselect {
+		overflow: auto;
+		height: 15em;
+		margin-top: 1em;
+	}
+	.multiselect .list-group-item {
+		padding: 0.5em;
+	}   
+	.multiselect label {
+		display: block;
+	}
+	
+	.selected {
+		background-color: hsl(0, 0%, 98%);
+	}
 </style>
-
-
-
+		
 <div id="loader">
     <div>
         <div class="spinner"></div>
@@ -103,9 +84,9 @@
 <div class="container" ng-app="sortApp" ng-controller="mainController">
 	<div class="row">
 		<div class="col-xs-12">
-            <div class="alert alert-info ng-hide" ng-class="mode == 'normal' ? 'alert-info' : 'alert-success'" ng-show="numberOfUnapprovedVolunteers > 0" role="alert">
-                <a href="#" class="alert-link" ng-click="mode == 'normal' ? getUnapproved() : getVolunteers()">{{ mode == "normal" ? getNumberOfUnapprovedVolunteers() + " new registrations to approve" : "Back to volunteer table"}} </a>
-            </div>
+			<div class="alert alert-info ng-hide" ng-class="mode == 'normal' ? 'alert-info' : 'alert-success'" ng-show="numberOfUnapprovedVolunteers > 0" role="alert">
+					<a href="#" class="alert-link" ng-click="mode == 'normal' ? getUnapproved() : getVolunteers()">{{ mode == "normal" ? getNumberOfUnapprovedVolunteers() + " new registrations to approve" : "Back to volunteer table"}} </a>
+			</div>
 		</div>
 	</div>
     <div class="row">
@@ -122,7 +103,7 @@
                     <span class="glyphicon glyphicon-log-out"></span>
                     Log Out
                 </a>
-            </div>
+						</div>
         </div>
     </div>
     <hr>

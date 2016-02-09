@@ -50,6 +50,15 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
         delete $params._method;
       });
     },
+    addVolunteeringOpportunity: function() {
+      return $http.post('/api/volunteeringOpportunity/').success(function() {
+      });
+    },
+    deleteVolunteeringOpportunity: function(id) {
+      return $http.delete('/api/volunteeringOpportunity/' + id).success(function() {
+        console.log("deleted")
+      });
+    },
     getUsers: function() {
       return $http.get('/api/user').success(function() {
       });
@@ -206,14 +215,14 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
   $scope.delete = function(id, index) {
     serverComm.deleteVolunteers(id).success(function(data) {
       //Remove record from $scope.volunteers
-      $scope.volunteers.splice(getIndexFromId(id), 1);
-    }); 
+      $scope.volunteers.splice(getIndexFromId($scope.volunteers, id), 1);
+    });
   }
 
   $scope.approve = function(id, index) {
     serverComm.approveVolunteers(id).success(function(data) {
       //Remove record from $scope.volunteers
-      $scope.volunteers.splice(getIndexFromId(id), 1);
+      $scope.volunteers.splice(getIndexFromId($scope.volunteers, id), 1);
     }); 
   }
 
@@ -225,9 +234,9 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
 	});
   }
 
-  function getIndexFromId(id) {
-    for (i = 0; i < $scope.volunteers.length; i++) { 
-      if ($scope.volunteers[i]._id == id) {
+  function getIndexFromId(list, id) {
+    for (i = 0; i < list.length; i++) { 
+      if (list[i]._id == id) {
         return i
       }
     }
@@ -241,12 +250,53 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
     serverComm.updateVolunteers(volunteer).success();
   }
   
+  //Volunteering Opportunity
   $scope.getVolunteeringOpportunities = function() {
 	  serverComm.getVolunteeringOpportunities().success(function(data) {
 		  $scope.volunteeringOpportunities = data;
 		  $scope.selectedOpportunity = {};
 	  });
   }
+  
+  $scope.updateVolunteeringOpportunity = function(opportunity) {
+    serverComm.updateVolunteeringOpportunity(opportunity).success();
+  }
+
+	$scope.newOpportunity = function() {
+		serverComm.addVolunteeringOpportunity().success(function(data) {
+			$scope.volunteeringOpportunities.push(data);
+			$scope.selectedOpportunity = data;
+		});
+	}
+
+	$scope.deleteOpportunity = function(id, index) {
+		serverComm.deleteVolunteeringOpportunity(id).success(function(data) {
+      $scope.volunteeringOpportunities.splice(getIndexFromId($scope.volunteeringOpportunities, id), 1);
+		});
+	}
+  
+	//INLINE EDITING
+	// gets the template to ng-include for a table row / item
+	$scope.getTemplate = function (o) {
+		if (o._id === $scope.selectedOpportunity._id) return 'edit';
+		else return 'display';
+	};
+
+	$scope.editOpportunity = function (o) {
+		$scope.selectedOpportunity = angular.copy(o);
+	};
+
+	$scope.saveOpportunity = function (idx) {
+		console.log("Saving Opportunity");
+		$scope.volunteeringOpportunities[idx] = angular.copy($scope.selectedOpportunity);
+		$scope.updateVolunteeringOpportunity($scope.selectedOpportunity);
+		$scope.resetSelectedOpportunity();
+	};
+
+	$scope.resetSelectedOpportunity = function () {
+		$scope.selectedOpportunity = {};
+	};
+	//INLINE EDITING
   
   //USER
   $scope.getUser = function() {
@@ -373,40 +423,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
   $scope.$watch('searchTerm', function () {
     $scope.filteredList = $scope.$eval('volunteers | filter:searchTerm');
   });
-  
-  
-  $scope.updateVolunteeringOpportunity = function(opportunity) {
-    serverComm.updateVolunteeringOpportunity(opportunity).success();
-  }
-  
-//INLINE EDITING
-	// gets the template to ng-include for a table row / item
-	$scope.getTemplate = function (o) {
-		if (o._id === $scope.selectedOpportunity._id) return 'edit';
-		else return 'display';
-	};
-
-	$scope.editOpportunity = function (o) {
-		$scope.selectedOpportunity = angular.copy(o);
-	};
-	
-	$scope.addOpportunity = function() {
-		$scope.volunteeringOpportunities.push({ "Name": "Default name", "Description": "Default description", "Fitness_Level": "", "Requires_Training": false });
-	}
-
-	$scope.saveOpportunity = function (idx) {
-		console.log("Saving Opportunity");
-		$scope.volunteeringOpportunities[idx] = angular.copy($scope.selectedOpportunity);
-		$scope.updateVolunteeringOpportunity($scope.selectedOpportunity);
-		$scope.resetSelectedOpportunity();
-	};
-
-	$scope.resetSelectedOpportunity = function () {
-		$scope.selectedOpportunity = {};
-	};
-//INLINE EDITING
-
-
   
   $scope.getUser();
   $scope.getVolunteers();

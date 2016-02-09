@@ -82,7 +82,7 @@ router.delete '/:id', (req,res,next)->	#DELETE
 	exec (err,volunteeringOpportunity)->
 		if err
 			res.json err
-		else if site == null
+		else if volunteeringOpportunity == null
 			res.sendStatus 404
 		else
 			Volunteering_Opportunity.findByIdAndRemove volunteeringOpportunity._id, (err)->
