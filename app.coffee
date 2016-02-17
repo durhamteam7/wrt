@@ -163,7 +163,7 @@ app.use '/api/message', require('./routes/api/message.coffee')
 
 app.use '/gridfs', require('./routes/gridfs.coffee')
 
-app.use '/email', require('./routes/email.coffee')
+app.use '/email', require('./routes/communicationRoutes.coffee')
 
 
 # catch 404 and forward to error handler
