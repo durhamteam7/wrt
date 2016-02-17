@@ -8,6 +8,7 @@
   },
   "main": "app.coffee",
   "dependencies": {
+    "angular-ui-bootstrap": "^1.1.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.12.4",
     "busboy": "^0.2.9",

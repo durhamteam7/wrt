@@ -24,13 +24,13 @@
 		margin-bottom: 10px;
 	}
 
-	.btn[disabled]{
-		background-color:#c1e7f0;
+	.btn[disabled] {
+		background-color: #c1e7f0;
 		border-color: #c1e7f0;
 	}
 
-	.form-control-feedback{
-		margin-top:25px;
+	.form-control-feedback {
+		margin-top: 25px;
 	}
 
 	/* Custom half-column */
@@ -161,7 +161,7 @@
                 <tbody id="volunteer-table">
                     <tr ng-repeat="v in filteredList | orderBy:sortType:sortReverse | filter:searchTerm | startFrom:currentPage*pageSize | limitTo:pageSize" ng-class="{ selected: v.isSelected }">
                         <td class="col-xs-point5"><input type="checkbox" name="rowSelection" value="{{v._id}}selected" checklist-model="select" checklist-value="v" ng-model="v.isSelected"></td>
-                        <td ng-repeat="th in tableHeadings" ng-click="v.isSelected = !v.isSelected" ng-bind="th == 'Volunteering_Opportunities' ? opportunityName(v[th]) : (v[th] | date:'MM/dd/yyyy')"></td>
+                        <td ng-repeat="th in tableHeadings" ng-click="v.isSelected = !v.isSelected" ng-bind="th == 'Volunteering_Opportunities' ? opportunityName(v[th]) : ((v[th].indexOf('.000Z') > -1) ? dateFormat(v[th]) : v[th])"></td>
                         <td class="col-xs-1 text-center">
 													<div class="btn-group">
 														<a id="{{v._id}}edit" href="" onclick="return false;" data-toggle="modal" data-target="#editModal{{v._id}}" class="btn btn-xs btn-primary" ng-click="validate(v)">
