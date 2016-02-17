@@ -7,6 +7,8 @@ User = mongoose.model 'User'
 
 ObjId = mongoose.Types.ObjectId
 
+WELCOME_SUBJECT = "RE: Registration as a volunteer"
+WELCOME_BODY = "Dear {{First_Name}} {{Last_Name}}\n\nOn behalf of the Trustees I would like to welcome you to Wear Rivers Trust, your volunteer application has been successfully registered.\n\nWe will notify you of any up and coming volunteering opportunities and training events that you have expressed an interest in pursuing.\n\nI would like to thank you for choosing to donate your time; this is in invaluable to us and the environment and look forward to working with you in the future.\n\nYours Sincerely\n\n\n\nDiane Maughan\nOffice Manager\n\n"
 
 router.get '/', (req,res)->
 	try
@@ -108,12 +110,19 @@ router.patch '/:id',(req,res)->
 		else if volunteer == null
 			res.send 404
 		else
+			vEmail = volunteer.Email
 			volunteer = recurseUpdate(volunteer,req.body) #see function def below
 			volunteer.save (err)->
 				if err
 					console.log err
 					res.status 500
 					return err
+				if(typeof vEmail == "undefined" && typeof req.body.Email != "undefined")
+					#if new volunteer
+					#send email
+					console.log("New Volunteer")
+					require("../sendCommunication.coffee")("commPref",WELCOME_BODY,WELCOME_SUBJECT,[volunteer])
+
 				res.json {'message':'Object updated'}
 
 recurseUpdate = (obj,diff)->				
