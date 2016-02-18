@@ -10,7 +10,7 @@ function coffeeLoaded() {
 //console.log(getTag("body"))
 
 // app.js
-angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
+angular.module('sortApp', ["checklist-model","ngSanitize","confirmClick"])
 
 // Service
 .factory('ajax', ['$http', function($http) {
@@ -89,7 +89,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
 
 
 // Controller
-.controller('mainController', ['$scope','$window', 'ajax', function($scope, $window, serverComm) {
+.controller('mainController', ['$scope', '$window', '$filter', 'ajax', function($scope, $window, $filter, serverComm) {
   
   $scope.user = {};
 
@@ -294,9 +294,13 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
 			return names.join(", ");
 		}
 	}
+	
+	$scope.dateFormat = function(value) {
+		return $filter('date')(value, 'yyyy-MM-dd');
+	}
  
-	//INLINE EDITING
-	// gets the template to ng-include for a table row / item
+	// Inline editing for Volunteering Opportunities
+	// Gets the template to ng-include for a table row / item
 	$scope.getTemplate = function (o) {
 		if (o._id === $scope.selectedOpportunity._id) return 'edit';
 		else return 'display';
@@ -316,7 +320,6 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
 	$scope.resetSelectedOpportunity = function () {
 		$scope.selectedOpportunity = {};
 	};
-	//INLINE EDITING
   
   //USER
   $scope.getUser = function() {
@@ -639,7 +642,7 @@ angular.module('sortApp', ["checklist-model",'ngSanitize','confirmClick'])
             };
        }
    } 
-});
+})
 
 function recurseApply(target, data) {
   var key, subDiff;

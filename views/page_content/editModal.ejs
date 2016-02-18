@@ -1,4 +1,21 @@
-    <!-- Modal for editing volunteer data -->
+	<!-- Modal for editing volunteer data -->
+	
+	<!-- Style and scripting for date picker -->
+	<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.min.css">
+	<script type="text/javascript" src="/bootstrap-datepicker.min.js"></script>
+	<script>
+		var haveDatesBeenFormatted = false;
+		$(document).click(function(event) {
+			if (!haveDatesBeenFormatted) {
+				$('.date > input').each(function() {
+					// Ensures correct initial formatting
+					var formattedDate = $(this).val().substr(0, 10);
+					$(this).val(formattedDate);
+				});
+				haveDatesBeenFormatted = true;
+			}
+		});
+	</script>
 	
 	<!-- Script and styling for volunteering opportunity select -->
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
@@ -27,7 +44,7 @@
 			padding-right: 8px;
 			box-sizing: border-box !important;
 		}
-		.dropdown-menu li {
+		.dropdown-menu li, .input-group-addon {
 			cursor: pointer;
 		}
 	</style>
@@ -95,7 +112,12 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="Date_of_Birth">Date of Birth:</label>
-                                                <input type="date" name="Date_of_Birth" size="25" value="" class="form-control" ng-model="v.Date_of_Birth">
+																								<div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+																										<input name="Date_of_Birth" type="text" class="form-control" ng-model="v.Date_of_Birth">
+																										<div class="input-group-addon">
+																												<span class="glyphicon glyphicon-th"></span>
+																										</div>
+																								</div>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -208,7 +230,12 @@
                                         <div class="col-sm-8">
                                             <div class="form-group">
                                                 <label for="Last_Tetanus">If relevant, what date was you last Tetanus?</label>
-                                                <input type="date" name="Last_Tetanus" size="25" value="" class="form-control" ng-model="v.Last_Tetanus">
+																								<div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+																										<input name="Last_Tetanus" type="text" class="form-control" ng-model="v.Last_Tetanus">
+																										<div class="input-group-addon">
+																												<span class="glyphicon glyphicon-th"></span>
+																										</div>
+																								</div>
                                                 <span class="help-block">(if more than 10 years ago please consult your GP)</span>
                                             </div>
                                         </div>
