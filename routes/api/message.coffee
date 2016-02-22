@@ -26,10 +26,10 @@ router.get '/unsent', (req,res)->
 	Message.$where('!this.emailSent && typeof this.volunteersEmail !== "undefined" && this.volunteersEmail.length!=0').count()
 	.exec (err, count) ->
 		mainCount += count
-		Message.$where('!this.letterSent && typeof this.letterSent !== "undefined" && this.volunteersLetter.length!=0').count()
+		Message.$where('!this.letterSent && typeof this.volunteersLetter !== "undefined" && this.volunteersLetter.length!=0').count()
 		.exec (err, count) ->
 			mainCount += count
-			Message.$where('!this.telSent && typeof this.telSent !== "undefined" && this.volunteersTel.length!=0').count()
+			Message.$where('!this.telSent && typeof this.volunteersTel !== "undefined" && this.volunteersTel.length!=0').count()
 			.exec (err, count) ->
 				mainCount += count
 				res.json mainCount
