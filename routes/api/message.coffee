@@ -20,4 +20,49 @@ router.get '/', (req,res)->
 		res.redirect '/404.htm'
 
 
+#GET number of unread messages
+router.get '/unsent', (req,res)->
+	mainCount = 0
+	Message.$where('!this.emailSent && this.volunteersEmail.length!=0').count()
+	.exec (err, count) ->
+		mainCount += count
+		Message.$where('!this.letterSent && this.volunteersLetter.length!=0').count()
+		.exec (err, count) ->
+			mainCount += count
+			Message.$where('!this.telSent && this.volunteersTel.length!=0').count()
+			.exec (err, count) ->
+				mainCount += count
+				res.json mainCount
+
+
+router.patch '/sendTelephone/:id', (req,res)->
+	Message.
+	findById(req.params.id).
+	exec (e,message)->
+		if e
+			return next e
+		message.telSent = true
+		message.save()
+		res.json message
+
+router.patch '/sendLetter/:id', (req,res)->
+	Message.
+	findById(req.params.id).
+	exec (e,message)->
+		if e
+			return next e
+		message.letterSent = true
+		message.save()
+		res.json message
+
+router.patch '/sendEmail/:id', (req,res)->
+	Message.
+	findById(req.params.id).
+	exec (e,message)->
+		if e
+			return next e
+		message.emailSent = true
+		message.save()
+		res.json message
+
 module.exports = router

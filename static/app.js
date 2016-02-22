@@ -78,6 +78,15 @@ angular.module('sortApp', ["checklist-model","ngSanitize","confirmClick"])
       return $http.get('/api/message/').success(function() {
       });
     },
+    getUnseen: function() {
+      return $http.get('/api/message/unsent').success(function() {
+      });
+    },
+    setRead: function(id,type) {
+      console.log("setReAD")
+      return $http.post('/api/message/send'+type+'/'+id,{_method:'patch'}).success(function() {
+      });
+    },
     sendEmail: function($params) {
       console.log($params)
       return $http.post('/email/', $params).success(function() {
@@ -367,9 +376,32 @@ angular.module('sortApp', ["checklist-model","ngSanitize","confirmClick"])
      serverComm.getMessages().success(function(data) {
         $scope.messageLog = data
         console.log(data)
+        $scope.getUnseen();
      });
   }
 
+  $scope.getUnseen = function() {
+     serverComm.getUnseen().success(function(data) {
+        $scope.unseenMessages = data
+        console.log(data)
+          title = $window.document.title.split(" (")[0];
+        if (data > 0){
+          $window.document.title = title + " ("+data+")";
+        }
+        else{
+          $window.document.title = title
+        }
+     });
+  }
+
+  $scope.read = function(id,type){
+    console.log(id,type);
+    serverComm.setRead(id,type).success(function(data){
+      //get updated total of unread messages
+      $scope.unseenMessages--;
+      $scope.getMessages();
+    })
+  }
 
   // Logic for check-all checkbox
   $scope.checkAll = function () {
@@ -438,6 +470,7 @@ angular.module('sortApp', ["checklist-model","ngSanitize","confirmClick"])
     console.log("Model init", $scope.VolunteerModel);
     $scope.getVolunteers();
     $scope.getMessages();
+    $scope.getUnseen();
   };
 
   

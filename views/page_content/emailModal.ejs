@@ -12,7 +12,9 @@
                 <div class="divDialogElements">
                     <ul class="nav nav-tabs" data-tabs="tabs">
                         <li class="active"><a href="#log" ng-click="getMessages()">Log</a></li>
-                        <li><a href="#createNew">Create New <span class="glyphicon glyphicon-plus"></span></a></li>
+                        <li ng-if="select.length > 0"><a href="#createNew">Create New <span class="glyphicon glyphicon-plus"></span></a></li>
+                        <li ng-if="select.length == 0"><a href="#" style="color:black"><strike>Create New <span class="glyphicon glyphicon-plus"></span></strike> <span class="label label-danger">No Volunteers Selected</span></a></li>
+
                     </ul>
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="log">
@@ -42,7 +44,7 @@
                                     <tr ng-repeat="m in messageLog | orderBy:'-createdAt'">
                                         <td>{{m.createdAtPretty}}</td>
                                         <td>{{m.subject}}</td>
-                                        <td><b ng-if="!m.letterSent"><a ng-href="{{m.emailList}}" ng-if="m.volunteersEmail.length > 0" target="_blank">{{m.volunteersEmail.length}} Email Addresses <i class="fa fa-envelope-o"></i></a></b>
+                                        <td><a ng-href="{{m.emailList}}" ng-if="m.volunteersEmail.length > 0" target="_blank" ng-click="read(m._id,'Email')" ng-class="{bold: !m.emailSent}">{{m.volunteersEmail.length}} Email Addresses <i class="fa fa-envelope-o"></i></a>
 
                                         <i ng-if="!(m.volunteersEmail.length > 0)">
                                         No Emails sent
@@ -51,14 +53,14 @@
                                         </td>
 
                                         <td>
-                                        <b ng-if="!m.letterSent"><a ng-href="{{m.letterURL}}" target="_blank" ng-if="m.volunteersLetter.length > 0">{{m.volunteersLetter.length}} Letters <i class="fa fa-file-pdf-o"></i></a></b>
+                                        <a ng-href="{{m.letterURL}}" target="_blank" ng-if="m.volunteersLetter.length > 0" ng-click="read(m._id,'Letter')" ng-class="{bold: !m.letterSent}">{{m.volunteersLetter.length}} Letters <i class="fa fa-file-pdf-o"></i></a>
 
                                         <i ng-if="!(m.volunteersLetter.length > 0)">
                                         No Letters
                                         </i>
                                         </td>
                                         <td>
-                                            <b ng-if="!m.telSent"><a ng-href="{{m.telephoneList}}" target="_blank" ng-if="m.volunteersTel.length > 0">{{m.volunteersTel.length}} Telephone Number<span ng-if="m.volunteersTel.length > 1">s</span> <i class="fa fa-file-pdf-o"></i></a></b>
+                                           <a ng-href="{{m.telephoneList}}" target="_blank" ng-if="m.volunteersTel.length > 0" ng-click="read(m._id,'Telephone')" ng-class="{bold: !m.telSent}">{{m.volunteersTel.length}} Telephone Number<span ng-if="m.volunteersTel.length > 1">s</span> <i class="fa fa-file-pdf-o"></i></a>
 
                                             <i ng-if="!(m.volunteersTel.length > 0)">
                                                 No Telephone Numbers
