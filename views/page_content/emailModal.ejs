@@ -11,7 +11,7 @@
 
                 <div class="divDialogElements">
                     <ul class="nav nav-tabs" data-tabs="tabs">
-                        <li class="active"><a href="#log" ng-click="getMessages()">Log</a></li>
+                        <li class="active"><a href="#log" ng-click="getMessages()">Log <span class="badge" ng-if="unseenMessages > 0">{{ unseenMessages }}</span></a> </li>
                         <li ng-if="select.length > 0"><a href="#createNew">Create New <span class="glyphicon glyphicon-plus"></span></a></li>
                         <li ng-if="select.length == 0"><a href="#" style="color:black"><strike>Create New <span class="glyphicon glyphicon-plus"></span></strike> <span class="label label-danger">No Volunteers Selected</span></a></li>
 
@@ -122,6 +122,8 @@
 
                                     <div class="col-sm-3">
                                     <button class="btn btn-primary" ng-click="sendEmail()">Send</button>
+                                    <span ng-if="sendStatus==1">Sending...</span>
+                                    <span ng-if="sendStatus==2">Sent</span>
                                     </div>
                                 </div>
                             </div>

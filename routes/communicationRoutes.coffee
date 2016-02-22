@@ -17,6 +17,7 @@ serverUrl = process.env.SERVERURL || 'http://localhost:3000'
 router.post '/', (req,res)->
 	console.log("Comm route")
 	require("./sendCommunication.coffee")(req.body.communicationType,req.body.body,req.body.subject,req.body.select)
+	res.send 200
 				
 
 
