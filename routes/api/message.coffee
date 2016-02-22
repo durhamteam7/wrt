@@ -23,13 +23,13 @@ router.get '/', (req,res)->
 #GET number of unread messages
 router.get '/unsent', (req,res)->
 	mainCount = 0
-	Message.$where('!this.emailSent && this.volunteersEmail.length!=0').count()
+	Message.$where('!this.emailSent && typeof(this.volunteersEmail) !== "undefined" && this.volunteersEmail.length!=0').count()
 	.exec (err, count) ->
 		mainCount += count
-		Message.$where('!this.letterSent && this.volunteersLetter.length!=0').count()
+		Message.$where('!this.letterSent && typeof(this.letterSent) !== "undefined" && this.volunteersLetter.length!=0').count()
 		.exec (err, count) ->
 			mainCount += count
-			Message.$where('!this.telSent && this.volunteersTel.length!=0').count()
+			Message.$where('!this.telSent && typeof(this.telSent) !== "undefined" && this.volunteersTel.length!=0').count()
 			.exec (err, count) ->
 				mainCount += count
 				res.json mainCount

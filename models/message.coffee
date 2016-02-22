@@ -22,13 +22,6 @@ messageCore =
 
 Message = new Schema messageCore,{timestamps: true}
 
-Message.pre('save', (next) ->
-    this.emailSent = this.emailSent or this.volunteersEmail.length==0
-    this.letterSent = this.letterSent or this.volunteersLetter.length==0
-    this.volunteersTel = this.volunteersTel or this.volunteersTel.length==0
-    next()
-    )
-
 Message.set 'toObject', { virtuals: true }
 Message.set 'toJSON', {getters:true,virtuals:true}	
 
