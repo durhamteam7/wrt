@@ -39,8 +39,10 @@ router.patch '/approve/:id',(req,res)->
                 console.log err
                 res.status 500
                 return err
+            require("../sendCommunication.coffee")("commPref",WELCOME_BODY,WELCOME_SUBJECT,[volunteer])
             res.json volunteer
 
+#NEEDED?
 router.patch '/unapprove/:id',(req,res)->
     console.log("unapproving", req.params.id)
     Volunteer.
