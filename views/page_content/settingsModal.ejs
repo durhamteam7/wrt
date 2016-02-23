@@ -46,19 +46,25 @@
 										<div class="panel-body">
 										<div class="form-group">
 											<label for="username">New Username</label>
-											<input type="text" name="newUsername" class="form-control" ng-model="user.username">
+											<input type="text" name="newUsername" class="form-control" ng-model="username">
+										</div>
+										<div class="form-group">
+											<label for="password">Old Password</label>
+											<input type="password" name="oldPassword" class="form-control" ng-model="oldPassword">
 										</div>
 										<div class="form-group">
 											<label for="password">New Password</label>
-											<input type="password" name="newPassword" class="form-control" ng-model="user.password">
+											<input type="password" name="newPassword" class="form-control" ng-model="newPassword">
 										</div>
 										<div class="form-group">
 											<label for="password">Confirm Password</label>
-											<input type="password" name="confirmPassword" class="form-control" ng-model="user.passwordConfirm">
-											<span ng-show="user.password != user.passwordConfirm" class="text-danger">Passwords do not match</span>
+											<input type="password" name="confirmPassword" class="form-control" ng-model="passwordConfirm">
+											<span ng-show="newPassword != passwordConfirm" class="text-danger">Passwords do not match</span>
+
 										</div>
 										<div class="form-group">
-											<button type="submit" class="btn btn-primary" ng-click="updateUserCredentials()">Update</button>
+											<button type="submit" class="btn btn-primary" ng-click="updatePassword()">Update</button><span ng-show="passwordSuccess==1"> <span class="glyphicon glyphicon-ok"></span> Details successfully updated</span>
+											<span ng-show="passwordSuccess==-1"> <span class="glyphicon glyphicon-exclamation-sign"></span> Old password Incorrect</span>
 										</div>
 										</div>
 									</div>

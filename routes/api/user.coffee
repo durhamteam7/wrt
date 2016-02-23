@@ -26,7 +26,8 @@ router.post '/:info?', (req,res,next)->	#CREATE
 	delete deets._id
 	console.log deets
 	user = new User deets
-	setPassword(deets,user)
+	user.username = "admin"
+	user.hash = user.generateHash "admin"
 	user.save (err)->
 		if err
 			console.log err
@@ -77,9 +78,14 @@ router.patch '/:id', (req, res)->
 		else if user == null
 			res.send 404
 		else
-			console.log user
 			user = recurseUpdate(user, req.body) #see function def below
-			console.log user
+			if req.body.password
+				if user.validPassword user.oldPassword
+					user.hash = user.generateHash req.body.password
+				else
+					res.sendStatus 400
+					return
+
 			user.save (err)->
 				if err
 					console.log err
@@ -107,23 +113,5 @@ setPassword = (deets,user)->
 	for i in [0..8]
 		pw+='qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890'[Math.floor Math.random()*62]
 	deets.hash=user.generateHash pw
-	Host.
-	findOne {'service':'sendemail'}, (err,host)->
-		smtpTransport = nodemailer.createTransport 'SMTP',{
-			host:host.host,
-			auth:
-				user:host.user,
-				pass:host.pass
-		}
-		smtpTransport.sendMail {
-			from:host.sender,
-			to:deets.email,
-			subject:'Your new password',
-			text:'Hello '+deets.firstName+'!  Your new password is '+pw
-		},(err,response)->
-			if err
-				console.log err
-			pw = 'XXXXXXXXXXXXXXXXXXXX'
-			pw = undefined
 
 module.exports = router

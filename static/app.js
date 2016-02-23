@@ -113,8 +113,10 @@ angular.module('sortApp', ["checklist-model","ngSanitize","confirmClick"])
   $scope.approvedVolunteers = {};
   $scope.unapprovedVolunteers = {};
   $scope.mode = "normal";
+
   
   $scope.unseenMessages = 0; // set to actual number of unseen messages
+  $scope.sendStatus = 0;
 
   $scope.select = [];
   $scope.email = { "subject": "", "body": "", "select": $scope.select }
@@ -334,15 +336,39 @@ angular.module('sortApp', ["checklist-model","ngSanitize","confirmClick"])
   $scope.getUser = function() {
 	  serverComm.getUser(userId).success(function(data) {
 		  $scope.user = data;
+      $scope.username = $scope.user.username;
+
 		  console.log("User", $scope.user);
 		  if ($scope.user.tableHeadings != "") {
 		  	  $scope.tableHeadings = JSON.parse($scope.user.tableHeadings);
 		  }
 	  });
   }
+
+  $scope.updatePassword = function() {
+
+    if ($scope.newPassword !== "" && $scope.newPassword === $scope.passwordConfirm){
+      $scope.user.password = $scope.newPassword;
+      $scope.user.oldPassword = $scope.oldPassword
+    }
+    if ($scope.username !== ""){
+      $scope.user.username = $scope.username;
+    }
+    serverComm.updateUser($scope.user).success(function(data){
+      $scope.passwordSuccess = 1
+      $scope.newPassword = "";
+      $scope.passwordConfirm = "";
+    }).error(function(data){
+      $scope.passwordSuccess = -1;
+    });
+
+    $scope.oldPassword = "";
+
+  }
   
   $scope.updateUser = function() {
-	  serverComm.updateUser({ "_id": userId, "tableHeadings": JSON.stringify($scope.tableHeadings) }).success();
+    $scope.user.tableHeadings = JSON.stringify($scope.tableHeadings)
+	  serverComm.updateUser($scope.user).success();
   }
 	
 	$scope.updateUserCredentials = function() {
@@ -356,17 +382,16 @@ angular.module('sortApp', ["checklist-model","ngSanitize","confirmClick"])
 
   //Email
   $scope.sendEmail = function(id,index) {
+    $scope.sendStatus = 1
     body = $scope.email.body.replace(/<\/p>/gi, "\n").replace(/<br\/?>/gi, "\n").replace(/<\/?[^>]+(>|$)/g, "");
     var re = new RegExp(String.fromCharCode(160), "g");
     body =  body.replace(/&nbsp;/g, ' ');
     email = $scope.email
     email.body = body
     pdfLink = serverComm.sendEmail($scope.email).success(function(data) {
-      if (data){
-        console.log(data);
-        $window.open(data, '_blank');
-        $scope.getMessages()
-      }
+      console.log("EMAIL SENT");
+      $scope.getMessages();
+      $scope.sendStatus = 2;
     });
   }
 

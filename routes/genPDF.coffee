@@ -6,8 +6,8 @@ module.exports = (req, res, volunteerData)->
 	doc = new PDFDocument
 		size: 'A4',
 		info:
-		    Title: 'Test Document'
-		    Author: 'Devon Govett'
+		    Title: volunteerData[0].subject
+		    Author: 'Wear Rivers Trust'
 	doc.pipe res
 
 	for volunteer in volunteerData
@@ -30,8 +30,15 @@ module.exports = (req, res, volunteerData)->
 		doc.moveTo(75, 170)
 	   .lineTo(545, 170)
 	   .stroke()
+	   doc.font 'Helvetica'
+	   console.log(volunteer.address)
+	   doc.text(volunteer.address,75 ,200, {
+			width: 200,
+			height: 80,
+			})
 
-		doc.text(volunteer.subject,75 ,230, {
+		doc.font 'Helvetica-Bold'
+		doc.text(volunteer.subject,75 ,300, {
 			width: 612,
 			height: 300,
 			})
@@ -39,7 +46,7 @@ module.exports = (req, res, volunteerData)->
 		doc.fontSize 12
 		doc.font 'Helvetica'
 
-		doc.text(volunteer.body,75 ,260, {
+		doc.text(volunteer.body,75 ,330, {
 			width: 470,
 			height: 300,
 			})
