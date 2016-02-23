@@ -344,6 +344,15 @@ angular.module('sortApp', ["checklist-model","ngSanitize","confirmClick"])
   $scope.updateUser = function() {
 	  serverComm.updateUser({ "_id": userId, "tableHeadings": JSON.stringify($scope.tableHeadings) }).success();
   }
+	
+	$scope.updateUserCredentials = function() {
+		//console.log($scope.user);
+		// $scope.user.password = $scope.user.passwordConfirm is the new password
+		// use this to generate the db hash
+		//serverComm.updateUser(user).success();
+		$scope.user.password = "";
+		$scope.user.passwordConfirm = "";
+	}
 
   //Email
   $scope.sendEmail = function(id,index) {
