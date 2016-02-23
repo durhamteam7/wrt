@@ -26,7 +26,8 @@ router.post '/:info?', (req,res,next)->	#CREATE
 	delete deets._id
 	console.log deets
 	user = new User deets
-	setPassword(deets,user)
+	user.username = "admin"
+	user.hash = user.generateHash "admin"
 	user.save (err)->
 		if err
 			console.log err
@@ -77,9 +78,14 @@ router.patch '/:id', (req, res)->
 		else if user == null
 			res.send 404
 		else
-			console.log user
 			user = recurseUpdate(user, req.body) #see function def below
-			console.log user
+			if req.body.password
+				if user.validPassword user.oldPassword
+					user.hash = user.generateHash req.body.password
+				else
+					res.sendStatus 400
+					return
+
 			user.save (err)->
 				if err
 					console.log err

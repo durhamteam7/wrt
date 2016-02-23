@@ -113,6 +113,7 @@ angular.module('sortApp', ["checklist-model","ngSanitize","confirmClick"])
   $scope.approvedVolunteers = {};
   $scope.unapprovedVolunteers = {};
   $scope.mode = "normal";
+
   
   $scope.unseenMessages = 0; // set to actual number of unseen messages
   $scope.sendStatus = 0;
@@ -335,15 +336,39 @@ angular.module('sortApp', ["checklist-model","ngSanitize","confirmClick"])
   $scope.getUser = function() {
 	  serverComm.getUser(userId).success(function(data) {
 		  $scope.user = data;
+      $scope.username = $scope.user.username;
+
 		  console.log("User", $scope.user);
 		  if ($scope.user.tableHeadings != "") {
 		  	  $scope.tableHeadings = JSON.parse($scope.user.tableHeadings);
 		  }
 	  });
   }
+
+  $scope.updatePassword = function() {
+
+    if ($scope.newPassword !== "" && $scope.newPassword === $scope.passwordConfirm){
+      $scope.user.password = $scope.newPassword;
+      $scope.user.oldPassword = $scope.oldPassword
+    }
+    if ($scope.username !== ""){
+      $scope.user.username = $scope.username;
+    }
+    serverComm.updateUser($scope.user).success(function(data){
+      $scope.passwordSuccess = 1
+      $scope.newPassword = "";
+      $scope.passwordConfirm = "";
+    }).error(function(data){
+      $scope.passwordSuccess = -1;
+    });
+
+    $scope.oldPassword = "";
+
+  }
   
   $scope.updateUser = function() {
-	  serverComm.updateUser({ "_id": userId, "tableHeadings": JSON.stringify($scope.tableHeadings) }).success();
+    $scope.user.tableHeadings = JSON.stringify($scope.tableHeadings)
+	  serverComm.updateUser($scope.user).success();
   }
 
   //Email
