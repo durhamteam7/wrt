@@ -16,11 +16,17 @@ messageCore =
 	telSent:
 		type:Boolean,
 		default:false,
+	expireAt:
+	    type: Date,
+	    default: ()->
+        	return new Date(new Date().valueOf() + 60*60*24*7)
 
 
 
 
 Message = new Schema messageCore,{timestamps: true}
+
+Message.index({ expireAt: 1 }, { expireAfterSeconds : 0 })
 
 Message.set 'toObject', { virtuals: true }
 Message.set 'toJSON', {getters:true,virtuals:true}	
@@ -39,5 +45,7 @@ Message.virtual('telephoneList').get ->
 Message.virtual('createdAtPretty').get ->
 	date = this.createdAt
 	return date.toLocaleString();
+
+
 
 mongoose.model 'Message',Message
