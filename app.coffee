@@ -92,7 +92,7 @@ passport.use new LocalStrategy (username, password, done)->
 
 
 app.use session
-	secret:'verylongsecretnameherewhichweshouldnotrevealandchangeforproduction'
+	secret: urls.secret,
 	resave: true,
 	saveUninitialized: true
 
