@@ -1,4 +1,5 @@
 mongoose = require 'mongoose'
+ttl = require 'mongoose-ttl'
 Schema = mongoose.Schema
 
 messageCore =
@@ -22,6 +23,13 @@ messageCore =
 
 
 Message = new Schema messageCore,{timestamps: true}
+
+
+#Remove message after a week
+Message.plugin(ttl, { ttl: '7d' , interval:'1d'});
+Cache = mongoose.model('Cache', Message);
+Cache.startTTLReaper();
+
 
 
 Message.set 'toObject', { virtuals: true }

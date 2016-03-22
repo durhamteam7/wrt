@@ -34,7 +34,8 @@
     "passport-local": "^1.0.0",
     "passport-remember-me": "0.0.1",
     "pdfkit": "^0.7.1",
-    "serve-favicon": "~2.2.1"
+    "serve-favicon": "~2.2.1",
+    "mongoose-ttl": "0.0.3"
   },
   "devDependencies": {
     "coffeelint": "^1.10.1",
