@@ -22,7 +22,7 @@ module.exports = (volunteers,body,subject)->
 			body = jsontemplate.string(body,volunteer)
 			subject = jsontemplate.string(subject,volunteer)
 			smtpTransport.sendMail {
-				from:"durhamteam7@gmail.com",
+				from:"admin@wear-rivers-trust.org.uk",
 				to:volunteer.Email,
 				subject:subject,
 				text:body#,
