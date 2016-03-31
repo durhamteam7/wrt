@@ -162,9 +162,9 @@
 							<h2>Restore</h2>
 							<form action="/api/backup" enctype="multipart/form-data" method="POST">
 								<input type="file" accept=".tar" name="upload"><br>
-								<input type="checkbox" name="drop" value="true">Clear existing data<br>
-
+								<!-- <input type="checkbox" name="drop" value="true" ng-modal="drop">Clear existing data<br> -->
 								<input type="submit" value="Upload" class="btn btn-primary">
+								 Warning: Will overwrite current data
 							</form>
 
 
