@@ -16,6 +16,7 @@
 					<ul class="nav nav-tabs" data-tabs="tabs">
 						<li class="active"><a href="#userSettings">User Settings</a></li>
 						<li><a href="#opportunities">Volunteering Opportunities</a></li>
+						<li><a href="#backup">Backup & Restore</a></li>
 					</ul>
 					
 					<div id="my-tab-content" class="tab-content">
@@ -152,6 +153,22 @@
 								</div>
 							</div>
 						</div><!--tab-pane-->
+
+						<div class="tab-pane" id="backup">
+							<br>
+							<h2>Backup</h2>
+							<a href="/api/backup"><button class="btn btn-primary">Download backup</button></a> (May take a few seconds to generate)<br><br>
+							
+							<h2>Restore</h2>
+							<form action="/api/backup" enctype="multipart/form-data" method="POST">
+								<input type="file" accept=".tar" name="upload"><br>
+								<input type="checkbox" name="drop" value="true">Clear existing data<br>
+
+								<input type="submit" value="Upload" class="btn btn-primary">
+							</form>
+
+
+						</div>
 						
 					</div>
 				</div>

@@ -165,6 +165,8 @@ app.use '/gridfs', require('./routes/gridfs.coffee')
 
 app.use '/email', require('./routes/communicationRoutes.coffee')
 
+app.use '/api/backup', require('./routes/api/backup.coffee')
+
 
 # catch 404 and forward to error handler
 app.use (req, res, next) ->
