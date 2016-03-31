@@ -45,27 +45,4 @@ router.post '/', (req,res)->	#READ
 
 
 
-#CSV download
-
-router.get '/csv', (req,res,next)->	#READ
-
-	res.writeHead(200, {
-    	'Content-Type': 'text/csv',
-    	'Content-Disposition': "attachment;filename=" + "backup - "+Date.now()+".tar"
-  	});
-
-	Volunteer.plugin mongooseToCsv, 
-	{
-  	headers: 'Firstname Email',
-	constraints: {
-	'Username': 'First_Name',
-	'Email': 'Email'
-	}}
-
-	Volunteer.findAndStreamCsv({}).pipe(res)
-
-	response.send(data)
-
-
-
 module.exports = router
