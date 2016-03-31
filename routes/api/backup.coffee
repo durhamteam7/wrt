@@ -33,7 +33,7 @@ router.post '/', (req,res)->	#READ
 		#DB BACKUP
 		restore({
 		  uri: urls.mongoDB,
-		  drop: req.drop,
+		  drop: !req.drop,
 		  stream: file
 		})
 
